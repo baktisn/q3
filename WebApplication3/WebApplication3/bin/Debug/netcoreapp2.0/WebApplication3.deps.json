@@ -4248,28 +4248,28 @@
     "Microsoft.ApplicationInsights/2.4.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-4dX/zu3Psz9oM3ErU64xfOHuSxOwMxN6q5RabSkeYbX42Yn6dR/kDToqjs+txCRjrfHUxyYjfeJHu+MbCfvAsg==",
+      "sha512": "sha512-PygGIvOZET0TUfMJgHzK7tOb4L2T/5+w+E+v2H0vW8yfRVDpOEMpqGElUTCINXGoKzp+zPfUf2apk04AtTteIQ==",
       "path": "microsoft.applicationinsights/2.4.0",
       "hashPath": "microsoft.applicationinsights.2.4.0.nupkg.sha512"
     },
     "Microsoft.ApplicationInsights.AspNetCore/2.1.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kiGmzl9Cav34dF7AHVMoJxdJJQEeLB8KZGNwX1LjImG9iem5hGk4DkHpW7/m9Nh3DrL8IKSL3mqQo+IPqWfMRQ==",
+      "sha512": "sha512-nF3MyI2hvOzRmjU9wSXEF6MlC3SqsZ0BM0sIge9ahYeTctUC4chIgUIIhAXothsFVl2tD2/q459ATbU62iWB0w==",
       "path": "microsoft.applicationinsights.aspnetcore/2.1.1",
       "hashPath": "microsoft.applicationinsights.aspnetcore.2.1.1.nupkg.sha512"
     },
     "Microsoft.ApplicationInsights.DependencyCollector/2.4.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-RWxdX90MY6tNF8S5lwRvJcHiBMIWwVLCxd4TGIEl3X0yAKaolY2vs4zTCvyCIVkEAMs1aInTgWkYwOjzYvAHWw==",
+      "sha512": "sha512-l40C2rSN4SpGghK3NIA3nPy0xYsQf3sQU8uENWvIyW+KJrSmxHIQZpPw85TyXRe2FofWahwMrhU0b6ULlleGmQ==",
       "path": "microsoft.applicationinsights.dependencycollector/2.4.1",
       "hashPath": "microsoft.applicationinsights.dependencycollector.2.4.1.nupkg.sha512"
     },
     "Microsoft.AspNetCore/2.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Pp4CNfgJgKTyU+oRQYh6InA1lwcZLi5ZsfTxWwixagbRsVdWrROBFnKGw+FvbbuzKNyMn4Cg5zRv99LjqxVIJA==",
+      "sha512": "sha512-zjs1gdmW+deFI9QuWAtVLjwUlDiQNn/W3XSLvXfB9cRtH2CtDydxAfUVg6dt3YprVkbwerQ8a7cReM1QIJDPZw==",
       "path": "microsoft.aspnetcore/2.0.0",
       "hashPath": "microsoft.aspnetcore.2.0.0.nupkg.sha512"
     },
@@ -4584,7 +4584,7 @@
     "Microsoft.AspNetCore.Mvc/2.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-9KmSDGw3XXosv3+c7TX8An91ya+jtzbAuquHVp6t/qB1CA+MZI7r2d6n3dvUZUcKbrpmB8cfbvzbeEGv/QKp3Q==",
+      "sha512": "sha512-ttq36Furo2XFFM2gxpw2L8hMFIX2uCnY7alAN1WHYRsX+Ci9O0MPaNkoPBgv6XvTgKEZ6JCi/NbB6aFigg1Uhw==",
       "path": "microsoft.aspnetcore.mvc/2.0.0",
       "hashPath": "microsoft.aspnetcore.mvc.2.0.0.nupkg.sha512"
     },
@@ -4605,7 +4605,7 @@
     "Microsoft.AspNetCore.Mvc.Core/2.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-VQTTuotnhiLwE6CJHldwIm2UgVEy6BEijdHv09P8VpCv7bokds260bH74RA2Pjp975zqCd2BqVgXM0KSu+K1sw==",
+      "sha512": "sha512-q3Od0NCxeoJZYPuMYX7guTEtfOKgnjkg2rj29O8cdzBKut6hqu21HtzAZj0pijrQe1GM6wOAQR7Cu9nH+HsSTQ==",
       "path": "microsoft.aspnetcore.mvc.core/2.0.0",
       "hashPath": "microsoft.aspnetcore.mvc.core.2.0.0.nupkg.sha512"
     },
@@ -4633,7 +4633,7 @@
     "Microsoft.AspNetCore.Mvc.Formatters.Xml/2.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-TTdFRm4/HOFijGFCO1pRS08M+nXIrdfKwSX+dMvq/HZmYKWG2EZGMxha5TgYL2r0XtfyflcVFptdWfRryAsWpw==",
+      "sha512": "sha512-meJaIuRFkQ/sGtNOXISBdxA7zxKc7UoxhAfhMmbqaOO7klkdYNOZEMC5Co0xi/fC47OhpvgI+WXqU+KUTJwyMg==",
       "path": "microsoft.aspnetcore.mvc.formatters.xml/2.0.0",
       "hashPath": "microsoft.aspnetcore.mvc.formatters.xml.2.0.0.nupkg.sha512"
     },
@@ -4829,7 +4829,7 @@
     "Microsoft.AspNetCore.StaticFiles/2.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-HBMJQ1WPdHO0thltwi7agvfis3c1Kd5HFQDgyy0nV3X4mJvhVGUnymT0+QQU+GGNK9FG/uEQNE3YDSrrBamP7w==",
+      "sha512": "sha512-G9tJFnprw0v+0ZTSL8UngL3exYbEkBlbcD5pkIdIJIF8+sUVAwbnS6qoox1M8rzcj/T7R3xP8IQuqX5Y4eIl0w==",
       "path": "microsoft.aspnetcore.staticfiles/2.0.0",
       "hashPath": "microsoft.aspnetcore.staticfiles.2.0.0.nupkg.sha512"
     },
