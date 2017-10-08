@@ -47,8 +47,8 @@ namespace WebApplication3.Data
 
             var bills = new Bills[]
                 {
-            new Bills{ID=345345,userId = "345345",amount =10,description="fdafghdav"},
-             new Bills{ID=345346,userId = "345345",amount =20,description="hjbibkn"}
+            new Bills{ID=345345,UserId = "345345",Amount =10,Description="fdafghdav"},
+             new Bills{ID=345346,UserId = "345345",Amount =20,Description="hjbibkn"}
                 };
             foreach (Bills f in bills)
             {

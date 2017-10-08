@@ -20,3 +20,14 @@ C:\Users\greg\Documents\GitHub\q3\WebApplication3\WebApplication3\obj\Debug\netc
 C:\Users\greg\Documents\GitHub\q3\WebApplication3\WebApplication3\obj\Debug\netcoreapp2.0\WebApplication3.AssemblyInfo.cs
 C:\Users\greg\Documents\GitHub\q3\WebApplication3\WebApplication3\obj\Debug\netcoreapp2.0\WebApplication3.dll
 C:\Users\greg\Documents\GitHub\q3\WebApplication3\WebApplication3\obj\Debug\netcoreapp2.0\WebApplication3.pdb
+C:\project_q3\WebApplication3\WebApplication3\obj\Debug\netcoreapp2.0\WebApplication3.csprojResolveAssemblyReference.cache
+C:\project_q3\WebApplication3\WebApplication3\obj\Debug\netcoreapp2.0\WebApplication3.csproj.CoreCompileInputs.cache
+C:\project_q3\WebApplication3\WebApplication3\obj\Debug\netcoreapp2.0\WebApplication3.AssemblyInfoInputs.cache
+C:\project_q3\WebApplication3\WebApplication3\obj\Debug\netcoreapp2.0\WebApplication3.AssemblyInfo.cs
+C:\project_q3\WebApplication3\WebApplication3\obj\Debug\netcoreapp2.0\WebApplication3.dll
+C:\project_q3\WebApplication3\WebApplication3\obj\Debug\netcoreapp2.0\WebApplication3.pdb
+C:\project_q3\WebApplication3\WebApplication3\bin\Debug\netcoreapp2.0\WebApplication3.deps.json
+C:\project_q3\WebApplication3\WebApplication3\bin\Debug\netcoreapp2.0\WebApplication3.runtimeconfig.json
+C:\project_q3\WebApplication3\WebApplication3\bin\Debug\netcoreapp2.0\WebApplication3.runtimeconfig.dev.json
+C:\project_q3\WebApplication3\WebApplication3\bin\Debug\netcoreapp2.0\WebApplication3.dll
+C:\project_q3\WebApplication3\WebApplication3\bin\Debug\netcoreapp2.0\WebApplication3.pdb

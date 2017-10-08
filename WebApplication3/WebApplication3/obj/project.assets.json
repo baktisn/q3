@@ -13124,11 +13124,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\greg\\Documents\\GitHub\\q3\\WebApplication3\\WebApplication3\\WebApplication3.csproj",
+      "projectUniqueName": "C:\\project_q3\\WebApplication3\\WebApplication3\\WebApplication3.csproj",
       "projectName": "WebApplication3",
-      "projectPath": "C:\\Users\\greg\\Documents\\GitHub\\q3\\WebApplication3\\WebApplication3\\WebApplication3.csproj",
+      "projectPath": "C:\\project_q3\\WebApplication3\\WebApplication3\\WebApplication3.csproj",
       "packagesPath": "C:\\Users\\greg\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\greg\\Documents\\GitHub\\q3\\WebApplication3\\WebApplication3\\obj\\",
+      "outputPath": "C:\\project_q3\\WebApplication3\\WebApplication3\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
