@@ -1,5 +1,5 @@
 ﻿
-ASP.NET MVC core dependencies have been added to the project.
+ASP.NET MVC core                               adshave been added to the project.
 (These dependencies include packages required to enable scaffolding)
 
 However you may still need to do make changes to your project.
