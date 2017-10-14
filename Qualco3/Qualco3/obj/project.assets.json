@@ -13116,7 +13116,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nik\\.nuget\\packages\\": {},
+    "C:\\Users\\sp\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -13125,17 +13125,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\nik\\Documents\\Visual Studio 2017\\Projects\\Qualco3\\Qualco3\\Qualco3.csproj",
+      "projectUniqueName": "C:\\Users\\sp\\q3-master\\Qualco3\\Qualco3\\Qualco3.csproj",
       "projectName": "Qualco3",
-      "projectPath": "C:\\Users\\nik\\Documents\\Visual Studio 2017\\Projects\\Qualco3\\Qualco3\\Qualco3.csproj",
-      "packagesPath": "C:\\Users\\nik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nik\\Documents\\Visual Studio 2017\\Projects\\Qualco3\\Qualco3\\obj\\",
+      "projectPath": "C:\\Users\\sp\\q3-master\\Qualco3\\Qualco3\\Qualco3.csproj",
+      "packagesPath": "C:\\Users\\sp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sp\\q3-master\\Qualco3\\Qualco3\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\nik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\sp\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
