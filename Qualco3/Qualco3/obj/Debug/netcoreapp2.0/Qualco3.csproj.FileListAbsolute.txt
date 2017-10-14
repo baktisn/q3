@@ -10,3 +10,15 @@ C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\obj\Debug\net
 C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyInfo.cs
 C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.dll
 C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.pdb
+C:\Users\sp\q3-master\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.deps.json
+C:\Users\sp\q3-master\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.runtimeconfig.json
+C:\Users\sp\q3-master\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.runtimeconfig.dev.json
+C:\Users\sp\q3-master\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.dll
+C:\Users\sp\q3-master\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.pdb
+C:\Users\sp\q3-master\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.csprojResolveAssemblyReference.cache
+C:\Users\sp\q3-master\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.csproj.CoreCompileInputs.cache
+C:\Users\sp\q3-master\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\sp\q3-master\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyInfoInputs.cache
+C:\Users\sp\q3-master\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyInfo.cs
+C:\Users\sp\q3-master\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.dll
+C:\Users\sp\q3-master\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.pdb

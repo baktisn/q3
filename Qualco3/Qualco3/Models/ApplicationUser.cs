@@ -11,6 +11,6 @@ namespace Qualco3.Models
     {
         public int isActive { get; set; }
       //  int isActive1;
-
+      public string VAT { get; set; }
     }
 }
