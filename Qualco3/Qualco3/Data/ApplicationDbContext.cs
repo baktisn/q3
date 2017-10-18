@@ -22,5 +22,11 @@ namespace Qualco3.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<Qualco3.Models.Bills> Bills { get; set; }
+
+        public DbSet<Qualco3.Models.ApplicationUser> ApplicationUser { get; set; }
+
+        public DbSet<Qualco3.Models.Settlements> Settlements { get; set; }
     }
 }

@@ -12,7 +12,8 @@ namespace Qualco3.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Login", "Account");
+            //return View();
         }
 
         public IActionResult About()

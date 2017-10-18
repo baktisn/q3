@@ -1,0 +1,61 @@
+﻿@model Qualco3.Models.Settlements
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Settlements</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RequestDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DownPayment)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DownPayment)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Installments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Installments)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Interest)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Interest)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAccepted)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsAccepted)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SettlementType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SettlementType.ID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
