@@ -1,0 +1,63 @@
+﻿@model Qualco3.Models.Settlements
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+<h4>Settlements</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RequestDate" class="control-label"></label>
+                <input asp-for="RequestDate" class="form-control" />
+                <span asp-validation-for="RequestDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DownPayment" class="control-label"></label>
+                <input asp-for="DownPayment" class="form-control" />
+                <span asp-validation-for="DownPayment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Installments" class="control-label"></label>
+                <input asp-for="Installments" class="form-control" />
+                <span asp-validation-for="Installments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Interest" class="control-label"></label>
+                <input asp-for="Interest" class="form-control" />
+                <span asp-validation-for="Interest" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsAccepted" class="control-label"></label>
+                <input asp-for="IsAccepted" class="form-control" />
+                <span asp-validation-for="IsAccepted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SettlementTypeId" class="control-label"></label>
+                <select asp-for="SettlementTypeId" class ="form-control" asp-items="ViewBag.SettlementTypeId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
