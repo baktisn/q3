@@ -8,9 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Qualco3.Data;
 using Qualco3.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 
-    namespace Qualco3.Controllers
+namespace Qualco3.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
@@ -19,17 +20,25 @@ using Microsoft.AspNetCore.Authorization;
     {
         private readonly ApplicationDbContext _context;
 
-        public BillsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public BillsController(ApplicationDbContext context, UserManager<ApplicationUser> usermanager)
         {
             _context = context;
+            _userManager = usermanager;
         }
 
         // GET: Bills
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Bills.Include(b => b.ApplicationUser).Include(b => b.PaymentMethods).Include(b => b.Settlement);
+            var userid = _userManager.GetUserId(User);
+            var user = GetCurrentUserAsync();
+
+            var applicationDbContext = _context.Bills.Include(b => b.ApplicationUser).Include(b => b.PaymentMethods).Include(b => b.Settlement).Where(b => b.UserId == userid);
             return View(await applicationDbContext.ToListAsync());
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(User); 
 
         // GET: Bills/Details/5
         public async Task<IActionResult> Details(int? id)
