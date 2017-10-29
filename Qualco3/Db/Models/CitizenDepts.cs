@@ -1,10 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Db.Models
 {
-    class CitizenDepts
+    public class CitizenDepts
     {
+        public string VAT { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Address { get; set; }
+        public string County { get; set; }
+        public int ID { get; set; }
+        public string Bill_description { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime DueDate { get; set; }
+
     }
 }

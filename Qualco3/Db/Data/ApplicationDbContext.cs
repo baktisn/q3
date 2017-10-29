@@ -33,6 +33,7 @@ namespace Db.Data
 
         public DbSet<Db.Models.PaymentMethods> PaymentMethods { get; set; }
 
+        public DbSet<Db.Models.CitizenDepts> CitizenDepts { get; set; }
 
     }
 }
