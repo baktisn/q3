@@ -29,9 +29,9 @@ namespace Db.Data
 
         public DbSet<Db.Models.Settlements> Settlements { get; set; }
 
-        public DbSet<Db.Models.Settlements> SettlementTYpes { get; set; }
+        public DbSet<Db.Models.SettlementTypes> SettlementTypes { get; set; }
 
-        public DbSet<Db.Models.Settlements> PaymentMethods { get; set; }
+        public DbSet<Db.Models.PaymentMethods> PaymentMethods { get; set; }
 
 
     }

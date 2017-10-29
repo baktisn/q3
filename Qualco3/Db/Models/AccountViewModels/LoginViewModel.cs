@@ -30,9 +30,10 @@ namespace Db.Models.AccountViewModels
 
         public int? Flag { get; set; }
 
- 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+
 
     }
 }

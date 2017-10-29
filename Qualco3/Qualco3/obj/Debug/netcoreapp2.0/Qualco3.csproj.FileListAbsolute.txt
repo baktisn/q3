@@ -5,7 +5,6 @@ C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\bin\Debug\net
 C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.pdb
 C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.csprojResolveAssemblyReference.cache
 C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.csproj.CoreCompileInputs.cache
-C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
 C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyInfoInputs.cache
 C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyInfo.cs
 C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.dll
@@ -22,3 +21,5 @@ C:\Users\sp\q3-master\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyIn
 C:\Users\sp\q3-master\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyInfo.cs
 C:\Users\sp\q3-master\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.dll
 C:\Users\sp\q3-master\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.pdb
+C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Db.dll
+C:\Users\nik\Documents\Visual Studio 2017\Projects\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Db.pdb
