@@ -12,7 +12,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Db.Models;
 using Db.Models.AccountViewModels;
+using Db.Models.ManageViewModels;
 using Qualco3.Services;
+using Db.Data;
 
 namespace Qualco3.Controllers
 {
@@ -24,21 +26,29 @@ namespace Qualco3.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly Microsoft.AspNetCore.Http.IHttpContextAccessor _contextAccessor;
+        private readonly ApplicationDbContext _context;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            Microsoft.AspNetCore.Http.IHttpContextAccessor contextAccessor,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _contextAccessor = contextAccessor;
+            _context = context;
         }
+
 
         [TempData]
         public string ErrorMessage { get; set; }
+        public string StatusMessage { get; set; }
 
         [HttpGet]
         [AllowAnonymous]
@@ -61,11 +71,34 @@ namespace Qualco3.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+
+                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                //var result = await _signInManager.PreSignInCheck(model.Email);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+
+
+                    //var user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
+                    var user = _context.Users.Single(x => x.Email == model.Email);
+                  
+
+                    if (user.IsFirst == false)
+                    {
+                        _logger.LogInformation("User logged in.");
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+
+                        // return View(nameof(ChangePassword));
+                        // return RedirectToAction("ChangePassword1stTime", "Account");
+                        ChangePassword1stTimeViewModel model1 = new ChangePassword1stTimeViewModel() ;
+                        model1.Email = model.Email;
+                        model1.OldPassword = model.Password;
+                        return RedirectToAction("ChangePassword1stTime", "Account", new { model  });
+
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -86,6 +119,134 @@ namespace Qualco3.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> HelloAjax(LoginViewModel model)
+        {
+            string returnUrl = null;
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+
+
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                //var result = await _signInManager.PreSignInCheck(model.Email);
+                if (result.Succeeded)
+                {
+
+                    //var user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
+                    var user = _context.Users.Single(x => x.Email == model.Email);
+
+                    if (user.IsFirst == false)
+                    {
+                        _logger.LogInformation("User logged in.");
+                        //return RedirectToAction(nameof(IndexViewModel));
+                        //return RedirectToAction("Index", "Account");
+                        //return RedirectToAction("Default");
+                        model.Flag = 1;
+                        return HelloAjaxBack(model);
+                    }
+                    else
+                    {
+                        if ((model.NewPswd1 == model.NewPswd2) && (model.NewPswd1 != null))
+                        {
+                            
+                            var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.Password, model.NewPswd1);
+                           
+                            if (changePasswordResult.Succeeded)
+                            {
+                                
+                                var cols = _context.ApplicationUser.Where(w => w.Id == user.Id);
+                                foreach (var item in cols)
+                                {
+                                    item.IsFirst = false;
+                                }
+                                await _context.SaveChangesAsync();
+                            
+                                model.Flag = 1;
+                                return HelloAjaxBack(model);
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Error result1 not secceed" );
+                                await _signInManager.SignOutAsync();
+                                model.Flag = 2;
+
+                                return HelloAjaxBack(model);
+
+                            }
+
+                        }
+                        else
+                        {
+                        await _signInManager.SignOutAsync();
+                        model.Flag = 2;
+
+                        return HelloAjaxBack(model);
+                        }
+                        // return View(nameof(ChangePassword));
+                        // return RedirectToAction("ChangePassword1stTime", "Account");
+                        // ChangePassword1stTimeViewModel model1 = new ChangePassword1stTimeViewModel();
+                        //model1.Email = model.Email;
+                        //model1.OldPassword = model.Password;
+                        //return RedirectToAction("ChangePassword1stTime", "Account", new { model });
+
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("email -------- " + model.Email);
+                    model.Flag = 3;
+                   // return Json(new { success = false, issue = model, errors = ModelState.Values.Where(i => i.Errors.Count > 0) });
+                    // ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                   
+                    return HelloAjaxBack(model);
+                }
+
+            }
+            Console.WriteLine("email -------- " + model.Email);
+            //  return RedirectToAction("Index", "Account");
+            //retutn RedirectToAction("Default");
+            return HelloAjaxBack(model);
+
+        }
+        private IActionResult HelloAjaxBack(LoginViewModel model)
+        {
+            // do something with the model here
+            // ...
+             Console.WriteLine( "iiiiiiiiiiii"+ model.Flag.ToString());
+             return Json(model);
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var model = new Db.Models.AccountViewModels.IndexViewModel
+            {
+                Username = user.UserName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                IsEmailConfirmed = user.EmailConfirmed,
+                StatusMessage = StatusMessage
+            };
+
+            return View(model);
+        }
+
+
+
 
         [HttpGet]
         [AllowAnonymous]
@@ -396,6 +557,7 @@ namespace Qualco3.Controllers
                 throw new ApplicationException("A code must be supplied for password reset.");
             }
             var model = new ResetPasswordViewModel { Code = code };
+        
             return View(model);
         }
 
