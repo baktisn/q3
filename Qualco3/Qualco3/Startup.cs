@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Qualco3.Data;
-using Qualco3.Models;
+using Db.Data;
+using Db.Models;
 using Qualco3.Services;
 
 namespace Qualco3

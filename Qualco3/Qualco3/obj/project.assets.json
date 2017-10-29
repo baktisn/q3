@@ -266,7 +266,7 @@
           "lib/netcoreapp2.0/_._": {}
         },
         "build": {
-          "build/netcoreapp2.0/Microsoft.AspNetCore.All.targets": {}
+          "build/netcoreapp2.0/_._": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/2.0.0": {
@@ -1040,7 +1040,7 @@
           "Microsoft.AspNetCore.Mvc.RazorPages": "2.0.0"
         },
         "build": {
-          "build/netstandard2.0/Microsoft.AspNetCore.Mvc.Razor.ViewCompilation.targets": {}
+          "build/netstandard2.0/_._": {}
         }
       },
       "Microsoft.AspNetCore.Mvc.RazorPages/2.0.0": {
@@ -1973,7 +1973,7 @@
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.dll": {}
         },
         "build": {
-          "build/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.targets": {}
+          "build/netstandard2.0/_._": {}
         }
       },
       "Microsoft.Extensions.Configuration.Xml/2.0.0": {
@@ -5028,6 +5028,20 @@
         },
         "runtime": {
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
+        }
+      },
+      "Db/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.All": "2.0.0",
+          "Microsoft.EntityFrameworkCore.Tools": "2.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Db.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Db.dll": {}
         }
       }
     }
@@ -13105,12 +13119,16 @@
         "windowsazure.storage.8.1.4.nupkg.sha512",
         "windowsazure.storage.nuspec"
       ]
+    },
+    "Db/1.0.0": {
+      "type": "project",
+      "path": "../Db/Db.csproj",
+      "msbuildProject": "../Db/Db.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
-      "Microsoft.AspNetCore.All >= 2.0.0",
-      "Microsoft.EntityFrameworkCore.Tools >= 2.0.0",
+      "Db >= 1.0.0",
       "Microsoft.NETCore.App >= 2.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.0.0"
     ]
@@ -13147,7 +13165,11 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\nik\\Documents\\Visual Studio 2017\\Projects\\Qualco3\\Db\\Db.csproj": {
+              "projectPath": "C:\\Users\\nik\\Documents\\Visual Studio 2017\\Projects\\Qualco3\\Db\\Db.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -13159,11 +13181,6 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Tools": {
-            "suppressParent": "All",
-            "target": "Package",
-            "version": "2.0.0"
-          },
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "suppressParent": "All",
             "target": "Package",
@@ -13173,10 +13190,6 @@
             "target": "Package",
             "version": "2.0.0",
             "autoReferenced": true
-          },
-          "Microsoft.AspNetCore.All": {
-            "target": "Package",
-            "version": "2.0.0"
           }
         },
         "imports": [

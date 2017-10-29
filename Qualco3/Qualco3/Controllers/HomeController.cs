@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Qualco3.Models;
+using Db.Models;
 
 namespace Qualco3.Controllers
 {
