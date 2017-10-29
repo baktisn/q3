@@ -23,62 +23,41 @@ namespace ImportExportWebJOb
                 var allCitDebtsLines = new string[10000000];
                 var allSettlementsLines = new string[10000000];
                 var allPaymentLines = new string[10000000];
-                //while (true)
-                //{
-                //    if (DateTime.Now.AddHours(3).ToShortTimeString() == "12:00 PM")
-                //    {
-                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
-    CloudConfigurationManager.GetSetting("AzureWebJobsStorage1"));
-
-                CloudFile fileCitDebts = null,fileSetllements=null,filePayments=null;
-                CloudFileClient fileClient = storageAccount.CreateCloudFileClient();
-                CloudFileShare fileShare = fileClient.GetShareReference("import");
-                if (fileShare.Exists())
+                while (true)
                 {
-                    CloudFileDirectory rootDir = fileShare.GetRootDirectoryReference();
-                    fileCitDebts = rootDir.GetFileReference("CitizenDebts_1M.txt");
-                    fileSetllements = rootDir.GetFileReference("SETTLEMENTS_20171003.txt");
-                    filePayments = rootDir.GetFileReference("PAYMENTS_20171003.txt");
-
-
-                    //TODO: in development use file = rootDir.GetFileReference($"PAYMENTS_{DateTime.Now.ToString("yyyyMMdd")}.txt");
-                    //      or file = rootDir.GetFileReference($"PAYMENTS_{DateTime.Now.AddDays(-1).ToString("yyyyMMdd")}.txt");
-                    if (fileCitDebts.Exists() && filePayments.Exists() && fileSetllements.Exists())
+                    if (DateTime.Now.AddHours(3).ToShortTimeString() == "12:00 PM")
                     {
-                        
-                        using (var stream = fileCitDebts.OpenRead())
+                        List<string> fileNames = new List<string>();
+                        List<string[]> lstCloudFilesdata = new List<string[]>();
+                        CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("AzureWebJobsStorage1"));
+                        CloudFileClient fileClient = storageAccount.CreateCloudFileClient();
+                        CloudFileShare fileShare = fileClient.GetShareReference("import");
+                        //looks for a file share in the cloud
+                        if (fileShare.Exists())
                         {
-                            using (StreamReader reader = new StreamReader(stream))
+                            List<CloudFile> lstCloudFiles = new List<CloudFile>();
+                            CloudFileDirectory rootDir = fileShare.GetRootDirectoryReference();
+                            //for each file in my fileshare
+                            foreach (CloudFile fiile in rootDir.ListFilesAndDirectories())
                             {
-                                string s = String.Empty;
-                                int x = 0;
-                                while ((s = reader.ReadLine()) != null)
+                                //if the file exists
+                                if (fiile.Exists())
                                 {
-                                    allPaymentLines[x] = reader.ReadLine();
-                                    x++;
+                                    //adds new datasting array
+                                    ReadData(lstCloudFilesdata,fiile,fileNames);
                                 }
                             }
-
                         }
-                        if (allPaymentLines.Length <= 10000000)
+                        if (lstCloudFilesdata != null && fileNames!=null)
                         {
-                            doStuffLowerThanMillion(allPaymentLines);
+                            ProccessData(lstCloudFilesdata,fileNames);
                         }
-
-                        //for (int i = 1; i < allPaymentLines.Length; i++)
-                        //{
-                        //    ReadingAndProcessingLinesFromFile_DoStuff(allPaymentLines[i]);
-                        //}
-
                     }
                 }
-                //}
-                //    allLines = new string[10000000];
-                //}
             }
             catch (Exception ex)
             {
-
+                string s = ex.Message;
             }
             finally
             {
@@ -87,28 +66,67 @@ namespace ImportExportWebJOb
 
         }
 
-        private static void doStuffLowerThanMillion(string[] allPaymentLines)
+        private static void ProccessData(List<string[]> lstCloudFilesdata,List<string> fileNames)
         {
-            int end=0, start = 0;
+            int i = 0;
+            foreach (string[] str in lstCloudFilesdata)
+            {
+                ReadingAndProcessingData(str, fileNames[i]);
+                i++;
+            }
             
         }
-
-        private static void ReadingAndProcessingLinesFromFile_DoStuff(string v)
+        /// <summary>
+        /// Reads data and populates a list of string arrays
+        /// </summary>
+        /// <param name="lstFileData">my Initialized list</param>
+        /// <param name="fiile">file data</param>
+        private static List<string> ReadData(List<string[]> lstFileData,CloudFile fiile,List<string> filNames)
         {
-            try
+            lstFileData.Add(new string[1000000]);
+            filNames.Add(fiile.Name);
+            using (var stream = fiile.OpenRead())
             {
-                if (!string.IsNullOrEmpty(v)) { Console.WriteLine(v); }
-                else return;
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string s = String.Empty;
+                    int x = 0;
+                    while ((s = reader.ReadLine()) != null)
+                    {
+                       lstFileData.Last()[x] = reader.ReadLine();
+                        x++;
+                    }
+                }
             }
-            catch (Exception ex)
-            {
-
-
-            }
-            finally
-            {
-                Main();
-            }
+            return filNames;
         }
-    }
+        private static void ReadingAndProcessingData(string[] data,string objectToUse)
+        {
+            switch (objectToUse)
+            {
+                case "CitizenDebts_1M_3.txt":
+                    //TODO: insertCitizenDebts();
+                    break;
+                case "PAYMENTS_20171003.txt":
+                    //TODO: insertPayments()
+                    break;
+                case "SETTLEMENTS_20171003.txt":
+                    //TODO: insertSettlements()
+                    break;
+
+            }
+            //foreach (string str in data)
+            //{
+            //    int count = 0;
+            //    if (!string.IsNullOrEmpty(str))
+            //    {
+            //        count = str.Length - str.Replace(";", "").Length;
+            //    }
+            //    for (int i = 0; i < count; i++)
+            //    {
+
+            //    }
+            //}
+        }
+    } 
 }
