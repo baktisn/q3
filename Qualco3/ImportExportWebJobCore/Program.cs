@@ -129,7 +129,18 @@ namespace ImportExportWebJobCore
                 case "SETTLEMENTS_20171003.txt":
                     //TODO: insertSettlements()
                     break;
+                    //foreach (string str in data)
+                    //{
+                    //    int count = 0;
+                    //    if (!string.IsNullOrEmpty(str))
+                    //    {
+                    //        count = str.Length - str.Replace(";", "").Length;
+                    //    }
+                    //    for (int i = 0; i < count; i++)
+                    //    {
 
+                    //    }
+                    //}
             }
         }
     }
