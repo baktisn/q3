@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Qualco3.Data;
-using Qualco3.Models;
+using Db.Data;
+using Db.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Qualco3.Controllers

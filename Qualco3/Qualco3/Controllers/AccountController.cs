@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Qualco3.Models;
-using Qualco3.Models.AccountViewModels;
+using Db.Models;
+using Db.Models.AccountViewModels;
 using Qualco3.Services;
 
 namespace Qualco3.Controllers

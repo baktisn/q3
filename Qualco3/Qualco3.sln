@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qualco3", "Qualco3\Qualco3.csproj", "{7B9581DD-CB24-47A5-8E61-93AD962CA266}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Qualco3", "Qualco3\Qualco3.csproj", "{7B9581DD-CB24-47A5-8E61-93AD962CA266}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Db", "Db\Db.csproj", "{0BE9723D-B139-408D-A105-FF63D9E1EBB4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImportExportWebJobCore", "ImportExportWebJobCore\ImportExportWebJobCore.csproj", "{1BF30517-5CB8-467F-B8D9-1D55A2CA4C1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{7B9581DD-CB24-47A5-8E61-93AD962CA266}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B9581DD-CB24-47A5-8E61-93AD962CA266}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B9581DD-CB24-47A5-8E61-93AD962CA266}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BE9723D-B139-408D-A105-FF63D9E1EBB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BE9723D-B139-408D-A105-FF63D9E1EBB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BE9723D-B139-408D-A105-FF63D9E1EBB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BE9723D-B139-408D-A105-FF63D9E1EBB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BF30517-5CB8-467F-B8D9-1D55A2CA4C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BF30517-5CB8-467F-B8D9-1D55A2CA4C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BF30517-5CB8-467F-B8D9-1D55A2CA4C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BF30517-5CB8-467F-B8D9-1D55A2CA4C1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
