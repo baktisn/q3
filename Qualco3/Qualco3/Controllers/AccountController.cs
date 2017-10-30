@@ -73,7 +73,7 @@ namespace Qualco3.Controllers
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
 
 
-                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
                 //var result = await _signInManager.PreSignInCheck(model.Email);
                 if (result.Succeeded)
                 {
@@ -100,10 +100,10 @@ namespace Qualco3.Controllers
 
                     }
                 }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
-                }
+                //if (result.RequiresTwoFactor)
+                //{
+                //    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, false });
+                //}
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
@@ -132,7 +132,7 @@ namespace Qualco3.Controllers
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
 
 
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password,false, lockoutOnFailure: false);
                 //var result = await _signInManager.PreSignInCheck(model.Email);
                 if (result.Succeeded)
                 {
@@ -158,23 +158,31 @@ namespace Qualco3.Controllers
                            
                             if (changePasswordResult.Succeeded)
                             {
-                                
+                                //update flag isFirst
                                 var cols = _context.ApplicationUser.Where(w => w.Id == user.Id);
                                 foreach (var item in cols)
                                 {
                                     item.IsFirst = false;
                                 }
                                 await _context.SaveChangesAsync();
-                            
+
+
+        //                        _context.CitizenDepts.Add(new CitizenDepts
+        //                        {
+        //                            VAT ="xwedwe",FirstName="nikos",  LastName="bak" , Email="baknik@hotmail.com",
+        //Phone ="43243214132",  Address="sgsba 9",  County="athens",  Bill_description ="deh", Amount =10    });
+        //                        await _context.SaveChangesAsync();
+
                                 model.Flag = 1;
                                 return HelloAjaxBack(model);
 
                             }
                             else
                             {
-                                Console.WriteLine("Error result1 not secceed" );
+                                model.Error = "Wrong new password!Re-enter!" ;
                                 await _signInManager.SignOutAsync();
                                 model.Flag = 2;
+                                
 
                                 return HelloAjaxBack(model);
 
@@ -185,8 +193,9 @@ namespace Qualco3.Controllers
                         {
                         await _signInManager.SignOutAsync();
                         model.Flag = 2;
+                            model.Error = "Enter New Password";
 
-                        return HelloAjaxBack(model);
+                            return HelloAjaxBack(model);
                         }
                         // return View(nameof(ChangePassword));
                         // return RedirectToAction("ChangePassword1stTime", "Account");
@@ -199,7 +208,7 @@ namespace Qualco3.Controllers
                 }
                 else
                 {
-                    Console.WriteLine("email -------- " + model.Email);
+                    model.Error = "You cannot login!Try again";
                     model.Flag = 3;
                    // return Json(new { success = false, issue = model, errors = ModelState.Values.Where(i => i.Errors.Count > 0) });
                     // ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -208,7 +217,7 @@ namespace Qualco3.Controllers
                 }
 
             }
-            Console.WriteLine("email -------- " + model.Email);
+            model.Error = "Fill the fields properly";
             //  return RedirectToAction("Index", "Account");
             //retutn RedirectToAction("Default");
             return HelloAjaxBack(model);
