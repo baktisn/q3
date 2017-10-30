@@ -17,7 +17,7 @@ namespace Db.Models.AccountViewModels
         public string Password { get; set; }
 
     
-        [Display(Name = "Insert New Paasword")]
+        [Display(Name = "Insert New Pasword")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         public string NewPswd1 { get; set; }
@@ -29,9 +29,12 @@ namespace Db.Models.AccountViewModels
 
 
         public int? Flag { get; set; }
+      
+        public string Error { get; set; }
 
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
+
+        //[Display(Name = "Remember me?")]
+        //public bool RememberMe { get; set; }
 
 
 
