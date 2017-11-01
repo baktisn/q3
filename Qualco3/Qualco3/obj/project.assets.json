@@ -13134,7 +13134,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nik\\.nuget\\packages\\": {},
+    "C:\\Users\\Stratos\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -13143,17 +13143,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\nik\\Documents\\Visual Studio 2017\\Projects\\Qualco3\\Qualco3\\Qualco3.csproj",
+      "projectUniqueName": "C:\\Users\\Stratos\\source\\repos\\q3\\Qualco3\\Qualco3\\Qualco3.csproj",
       "projectName": "Qualco3",
-      "projectPath": "C:\\Users\\nik\\Documents\\Visual Studio 2017\\Projects\\Qualco3\\Qualco3\\Qualco3.csproj",
-      "packagesPath": "C:\\Users\\nik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nik\\Documents\\Visual Studio 2017\\Projects\\Qualco3\\Qualco3\\obj\\",
+      "projectPath": "C:\\Users\\Stratos\\source\\repos\\q3\\Qualco3\\Qualco3\\Qualco3.csproj",
+      "packagesPath": "C:\\Users\\Stratos\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Stratos\\source\\repos\\q3\\Qualco3\\Qualco3\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\nik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Stratos\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13166,8 +13166,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\nik\\Documents\\Visual Studio 2017\\Projects\\Qualco3\\Db\\Db.csproj": {
-              "projectPath": "C:\\Users\\nik\\Documents\\Visual Studio 2017\\Projects\\Qualco3\\Db\\Db.csproj"
+            "C:\\Users\\Stratos\\source\\repos\\q3\\Qualco3\\Db\\Db.csproj": {
+              "projectPath": "C:\\Users\\Stratos\\source\\repos\\q3\\Qualco3\\Db\\Db.csproj"
             }
           }
         }

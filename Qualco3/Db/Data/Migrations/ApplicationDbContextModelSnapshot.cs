@@ -174,7 +174,7 @@ namespace Db.Data.Migrations
 
                     b.Property<byte>("IsAccepted");
 
-                    b.Property<DateTime>("LastName");
+                    b.Property<string>("LastName");
 
                     b.Property<DateTime>("RequestDate");
 
