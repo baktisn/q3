@@ -178,6 +178,46 @@ namespace Qualco3.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Bills/CreditCardPayment/5
+        public async Task<IActionResult> CreditCardPayment(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var bills = await _context.Bills
+                .Include(b => b.ApplicationUser)
+                .Include(b => b.PaymentMethods)
+                .Include(b => b.Settlement)
+                .SingleOrDefaultAsync(m => m.ID == id);
+            if (bills == null)
+            {
+                return NotFound();
+            }
+
+            return View(bills);
+        }
+
+        // POST: Bills/CreditCardPayment/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PaymentConfirmed(int id)
+        {
+            Console.WriteLine("Bill Id   ---------  " + id.ToString());
+            var cols = _context.Bills.Where(w => w.ID == id);
+
+            foreach (var b in cols)
+            {
+                b.Status = 1;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
         private bool BillsExists(int id)
         {
             return _context.Bills.Any(e => e.ID == id);
