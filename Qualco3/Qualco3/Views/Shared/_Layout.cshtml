@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Qualco3</title>
 
+
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -67,8 +68,37 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
+        
     </environment>
 
-    @RenderSection("Scripts", required: false)
+    <script src="@Url.Content("~/Scripts/Settlement.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-2.1.4.js")"></script>
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+            $("#btnCalculate").click(function () {
+
+                var DownPayent = $("#DownPayment").val();
+                var Interest = $("#Interest").val() / 100;
+                var Installments = $("#Installments").val();
+
+                var monthlyPayment = getMonthlyPayment(DownPayent, Interest / 12, Installments * 12);
+
+                $("#monthlypayment").val(monthlyPayment);
+
+                // English Currency Format
+                var noCommas = $("#monthlypayment").val().replace(",", "");
+                $("#monthlypayment").val(noCommas);
+
+                $("#mortgageForm").submit();
+
+            });
+        });
+
+    </script>
+
+    
+
 </body>
 </html>

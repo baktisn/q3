@@ -30,19 +30,26 @@ namespace Db.Models
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
+        [Required]
         [Display(Name = "Down Payment")]
         public decimal DownPayment { get; set; }
 
+        [Required]
         public Int16 Installments { get; set; }
 
+        [Required]
         public Int16 Interest { get; set; }
 
         public byte IsAccepted { get; set; }
-
+            
+        [Display(Name = "Settlement Type")]
         [ForeignKey("SettlementTypes")]
         public int SettlementTypeId { get; set; }
 
         public SettlementTypes SettlementType { get; set; }
+
+        [Display(Name = "Monthly Payment")]
+        public decimal monthlypayment { get; set; }
 
 
     }

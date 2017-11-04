@@ -1,0 +1,52 @@
+﻿@model Db.Models.Settlements
+
+@{
+    ViewData["Title"] = "CheckOutput";
+}
+
+<h2>CheckOutput</h2>
+
+<h2>Your monthly payment is <span class="label label-default">$ @Html.DisplayFor(model => model.monthlypayment)</span></h2>
+<hr />
+<div>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.monthlypayment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.monthlypayment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Interest)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Interest)%
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Installments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Installments) years
+        </dd>
+
+        <dt>
+            <b>Informed in</b>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestDate)
+        </dd>
+
+    </dl>
+</div>
+<hr />
+
+<p>
+    @Html.ActionLink("Do another simulation", "Index", null, new { @class = "btn btn-success" })
+</p>

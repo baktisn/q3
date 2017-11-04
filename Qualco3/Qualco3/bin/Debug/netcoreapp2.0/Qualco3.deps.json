@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "cd945696cff90a9745d51031f9ca805e22e8725c"
+    "signature": "ac399bd333aa2aa833edbc0bdd668e4e996d63ac"
   },
   "compilationOptions": {
     "defines": [
@@ -24,8 +24,14 @@
       "Qualco3/1.0.0": {
         "dependencies": {
           "Db": "1.0.0",
+          "Microsoft.AspNet.Mvc": "5.2.3",
+          "Microsoft.AspNet.Web.Optimization": "1.1.3",
           "Microsoft.NETCore.App": "2.0.0",
-          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.0"
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.0",
+          "Modernizr": "2.8.3",
+          "Unity.WebForms": "1.4.0",
+          "bootstrap": "3.3.7",
+          "jQuery": "3.2.1"
         },
         "runtime": {
           "Qualco3.dll": {}
@@ -34,6 +40,28 @@
           "Qualco3.dll": {}
         }
       },
+      "Antlr/3.4.1.9004": {
+        "runtime": {
+          "lib/Antlr3.Runtime.dll": {}
+        },
+        "compile": {
+          "lib/Antlr3.Runtime.dll": {}
+        }
+      },
+      "bootstrap/3.3.7": {
+        "dependencies": {
+          "jQuery": "3.2.1"
+        }
+      },
+      "CommonServiceLocator/1.3.0": {
+        "runtime": {
+          "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
+        },
+        "compile": {
+          "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
+        }
+      },
+      "jQuery/3.2.1": {},
       "Libuv/1.10.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0"
@@ -119,6 +147,56 @@
         },
         "compile": {
           "lib/netstandard1.6/Microsoft.AI.DependencyCollector.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Mvc/5.2.3": {
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "3.2.3",
+          "Microsoft.AspNet.WebPages": "3.2.3"
+        },
+        "runtime": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        },
+        "compile": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Razor/3.2.3": {
+        "runtime": {
+          "lib/net45/System.Web.Razor.dll": {}
+        },
+        "compile": {
+          "lib/net45/System.Web.Razor.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Web.Optimization/1.1.3": {
+        "dependencies": {
+          "Microsoft.Web.Infrastructure": "1.0.0",
+          "WebGrease": "1.5.2"
+        },
+        "runtime": {
+          "lib/net40/System.Web.Optimization.dll": {}
+        },
+        "compile": {
+          "lib/net40/System.Web.Optimization.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebPages/3.2.3": {
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "3.2.3",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
+        },
+        "compile": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
         }
       },
       "Microsoft.AspNetCore/2.0.0": {
@@ -2417,6 +2495,14 @@
           "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll": {}
         }
       },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      },
       "Microsoft.Win32.Primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
@@ -2444,6 +2530,7 @@
           "ref/netstandard2.0/Microsoft.Win32.Registry.dll": {}
         }
       },
+      "Modernizr/2.8.3": {},
       "Newtonsoft.Json/10.0.1": {
         "dependencies": {
           "Microsoft.CSharp": "4.4.0",
@@ -4040,6 +4127,56 @@
           "System.Xml.XPath": "4.3.0"
         }
       },
+      "Unity/4.0.1": {
+        "dependencies": {
+          "CommonServiceLocator": "1.3.0"
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Practices.Unity.Configuration.dll": {},
+          "lib/net45/Microsoft.Practices.Unity.RegistrationByConvention.dll": {},
+          "lib/net45/Microsoft.Practices.Unity.dll": {}
+        },
+        "compile": {
+          "lib/net45/Microsoft.Practices.Unity.Configuration.dll": {},
+          "lib/net45/Microsoft.Practices.Unity.RegistrationByConvention.dll": {},
+          "lib/net45/Microsoft.Practices.Unity.dll": {}
+        }
+      },
+      "Unity.WebForms/1.4.0": {
+        "dependencies": {
+          "Unity": "4.0.1",
+          "WebActivatorEx": "2.0.6"
+        },
+        "runtime": {
+          "lib/net40/Unity.WebForms.dll": {}
+        },
+        "compile": {
+          "lib/net40/Unity.WebForms.dll": {}
+        }
+      },
+      "WebActivatorEx/2.0.6": {
+        "dependencies": {
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "lib/net40/WebActivatorEx.dll": {}
+        },
+        "compile": {
+          "lib/net40/WebActivatorEx.dll": {}
+        }
+      },
+      "WebGrease/1.5.2": {
+        "dependencies": {
+          "Antlr": "3.4.1.9004",
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "runtime": {
+          "lib/WebGrease.dll": {}
+        },
+        "compile": {
+          "lib/WebGrease.dll": {}
+        }
+      },
       "WindowsAzure.Storage/8.1.4": {
         "dependencies": {
           "Microsoft.Data.OData": "5.8.2",
@@ -4056,8 +4193,11 @@
       },
       "Db/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNet.Web.Optimization": "1.1.3",
           "Microsoft.AspNetCore.All": "2.0.0",
-          "Microsoft.EntityFrameworkCore.Tools": "2.0.0"
+          "Microsoft.EntityFrameworkCore.Tools": "2.0.0",
+          "bootstrap": "3.3.7",
+          "jQuery": "3.2.1"
         },
         "runtime": {
           "Db.dll": {}
@@ -4250,6 +4390,34 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Antlr/3.4.1.9004": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-c1S+HBE+KYA5EBxtn25LEK02hHPH/tDQ6RviUTTCJpZIPoputtn8ArsQJy9lVJWZOnw37ufByO2Fmf1M8wpr8Q==",
+      "path": "antlr/3.4.1.9004",
+      "hashPath": "antlr.3.4.1.9004.nupkg.sha512"
+    },
+    "bootstrap/3.3.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3YTWhPNh6UcnUvzw9u6A2/hy2w0h4lznxPbX6FY47lFia3+Ib4zBixTpW6YieYA/b2fLXbkjoD59OjcVF3cJXw==",
+      "path": "bootstrap/3.3.7",
+      "hashPath": "bootstrap.3.3.7.nupkg.sha512"
+    },
+    "CommonServiceLocator/1.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fbjO0SNwbOFPdwVfyqv+B7gIJ2CVBOFPKqn1mDDECK7KER8jFaOdcvroFYoAHa0ktPbxi5s+15qOLnA96f8GSA==",
+      "path": "commonservicelocator/1.3.0",
+      "hashPath": "commonservicelocator.1.3.0.nupkg.sha512"
+    },
+    "jQuery/3.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Sc4jRcsItNXUoNmnPtD9DEnHCy5d4u0GOdDSKYL+b7PKtwajKO1YBJA55241G2M9KRCwSbtxV4ti3gb4n/pIew==",
+      "path": "jquery/3.2.1",
+      "hashPath": "jquery.3.2.1.nupkg.sha512"
+    },
     "Libuv/1.10.0": {
       "type": "package",
       "serviceable": true,
@@ -4277,6 +4445,34 @@
       "sha512": "sha512-RWxdX90MY6tNF8S5lwRvJcHiBMIWwVLCxd4TGIEl3X0yAKaolY2vs4zTCvyCIVkEAMs1aInTgWkYwOjzYvAHWw==",
       "path": "microsoft.applicationinsights.dependencycollector/2.4.1",
       "hashPath": "microsoft.applicationinsights.dependencycollector.2.4.1.nupkg.sha512"
+    },
+    "Microsoft.AspNet.Mvc/5.2.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-i8jZf5QrbcFmjiYWRD7o7qTak/oXKxV80MgP4cZ33A8GC0RBtBIdZ1VHaloGUg+qsHUz5rVkGpwenM+ugDz5PA==",
+      "path": "microsoft.aspnet.mvc/5.2.3",
+      "hashPath": "microsoft.aspnet.mvc.5.2.3.nupkg.sha512"
+    },
+    "Microsoft.AspNet.Razor/3.2.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-leta+Q73O7+pR8ThTqXmwaNMSqwZQQ3BHfpUHd8S1XaUWe1jRVLitMHqo1AmY7wPNLyankPA1beiUKEGj8Q3Dw==",
+      "path": "microsoft.aspnet.razor/3.2.3",
+      "hashPath": "microsoft.aspnet.razor.3.2.3.nupkg.sha512"
+    },
+    "Microsoft.AspNet.Web.Optimization/1.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TWKKpTWEdB8jXp2Vl2TXNKW30GBQg6nnh0y8iZWmGY5c1XY4f649vfDslNHsCsvk9JZxc1Rkm/UGDdfq4gjWRQ==",
+      "path": "microsoft.aspnet.web.optimization/1.1.3",
+      "hashPath": "microsoft.aspnet.web.optimization.1.1.3.nupkg.sha512"
+    },
+    "Microsoft.AspNet.WebPages/3.2.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zbtxBERla5RE/mhftwbrXOzc0r6lh8WcnjpGW7QQe+PvSDDx1BgsTUGzfCXO/vJznHNpY5oCSYLt8Q5vUu7F0g==",
+      "path": "microsoft.aspnet.webpages/3.2.3",
+      "hashPath": "microsoft.aspnet.webpages.3.2.3.nupkg.sha512"
     },
     "Microsoft.AspNetCore/2.0.0": {
       "type": "package",
@@ -5440,6 +5636,13 @@
       "path": "microsoft.visualstudio.web.codegenerators.mvc/2.0.0",
       "hashPath": "microsoft.visualstudio.web.codegenerators.mvc.2.0.0.nupkg.sha512"
     },
+    "Microsoft.Web.Infrastructure/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
+      "path": "microsoft.web.infrastructure/1.0.0",
+      "hashPath": "microsoft.web.infrastructure.1.0.0.nupkg.sha512"
+    },
     "Microsoft.Win32.Primitives/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -5453,6 +5656,13 @@
       "sha512": "sha512-dA36TlNVn/XfrZtmf0fiI/z1nd3Wfp2QVzTdj26pqgP9LFWq0i1hYEUAW50xUjGFYn1+/cP3KGuxT2Yn1OUNBQ==",
       "path": "microsoft.win32.registry/4.4.0",
       "hashPath": "microsoft.win32.registry.4.4.0.nupkg.sha512"
+    },
+    "Modernizr/2.8.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OiV7LzwGvejI0lxQAx7HaAA+H6xC3FL6Pgv23Qo5O+5fKp5bt2zj0qz7ZmF+jtWmm9dcQkoTInO7eTFH1JtXEQ==",
+      "path": "modernizr/2.8.3",
+      "hashPath": "modernizr.2.8.3.nupkg.sha512"
     },
     "Newtonsoft.Json/10.0.1": {
       "type": "package",
@@ -6370,6 +6580,34 @@
       "sha512": "sha512-jw9oHHEIVW53mHY9PgrQa98Xo2IZ0ZjrpdOTmtvk+Rvg4tq7dydmxdNqUvJ5YwjDqhn75mBXWttWjiKhWP53LQ==",
       "path": "system.xml.xpath.xdocument/4.3.0",
       "hashPath": "system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
+    },
+    "Unity/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FQxLlryE47Y5xY7wJfToUrwtyLsgNJK0jK6sPfNC3YUsjzSX7ILXLA4EX8zVxFPOaIMTJBXRIKrnQ/lsECLufg==",
+      "path": "unity/4.0.1",
+      "hashPath": "unity.4.0.1.nupkg.sha512"
+    },
+    "Unity.WebForms/1.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DORh3za3qiiKq79BuA7Fkw/bpzgY+DVl4cRw2/9DLS398oT+eiATib56n7+1MCi1XuNKoL6gyFFVDX/CfAZkdA==",
+      "path": "unity.webforms/1.4.0",
+      "hashPath": "unity.webforms.1.4.0.nupkg.sha512"
+    },
+    "WebActivatorEx/2.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RrQATGFRXQHehwXdCGNFZ0n4MAWsNVAdtI0SWpIhqNE0tErRQhj6KuAcH57XUJ5MaV3cbHO+nnu9lUJIXd+Z6w==",
+      "path": "webactivatorex/2.0.6",
+      "hashPath": "webactivatorex.2.0.6.nupkg.sha512"
+    },
+    "WebGrease/1.5.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VoyDSOOugLx3q5IyOgEcjeYZQOqV9VWZQT57UtN4szlYhAmOcEjVfKWXbtRqBuX43pgyL9E7nMSIPoryC8Cu1Q==",
+      "path": "webgrease/1.5.2",
+      "hashPath": "webgrease.1.5.2.nupkg.sha512"
     },
     "WindowsAzure.Storage/8.1.4": {
       "type": "package",

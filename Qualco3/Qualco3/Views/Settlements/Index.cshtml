@@ -23,6 +23,9 @@
                     @Html.DisplayNameFor(model => model.DownPayment)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.monthlypayment)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Installments)
                 </th>
                 <th>
@@ -31,9 +34,10 @@
                 <th>
                     @Html.DisplayNameFor(model => model.IsAccepted)
                 </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SettlementType)
-            </th>
+               <th>
+                    @Html.DisplayNameFor(model => model.SettlementType)
+               </th>
+
             <th></th>
         </tr>
     </thead>
@@ -48,6 +52,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DownPayment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.monthlypayment)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Installments)
@@ -67,6 +74,8 @@
                 <a asp-action="Delete" asp-route-id="@item.ID">Cancel</a>
             </td>
         </tr>
+
+
 }
     </tbody>
 </table>
