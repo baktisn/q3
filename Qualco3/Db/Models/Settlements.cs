@@ -14,7 +14,7 @@ namespace Db.Models
         public int ID { get; set; }
        
         public DateTime RequestDate { get; set; }
-        public DateTime LastName { get; set; }
+        public DateTime AnswerDate { get; set; }
         public decimal DownPayment { get; set; }
         public Int16 Installments { get; set; }
         public Int16 Interest { get; set; }

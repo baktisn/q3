@@ -60,7 +60,7 @@ namespace Qualco3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,RequestDate,LastName,DownPayment,Installments,Interest,IsAccepted,SettlementTypeId")] Settlements settlements)
+        public async Task<IActionResult> Create([Bind("ID,RequestDate,AnswerDate,DownPayment,Installments,Interest,IsAccepted,SettlementTypeId")] Settlements settlements)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace Qualco3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,RequestDate,LastName,DownPayment,Installments,Interest,IsAccepted,SettlementTypeId")] Settlements settlements)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,RequestDate,AnswerDate,DownPayment,Installments,Interest,IsAccepted,SettlementTypeId")] Settlements settlements)
         {
             if (id != settlements.ID)
             {
