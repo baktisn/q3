@@ -11,7 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
-using Db.Models.AccountViewModels;
+using Db.Models;
+using Db.Data;
+using System.Globalization;
 
 namespace ImportExportWebJobCore
 {
@@ -19,7 +21,7 @@ namespace ImportExportWebJobCore
     {
         static void Main(string[] args)
         {
-            Task.Run(() => mainAsync(args)).GetAwaiter().GetResult();
+          Task.Run(() => mainAsync(args)).GetAwaiter().GetResult();
         }
 
         private static async Task mainAsync(string[] args)
@@ -55,6 +57,9 @@ namespace ImportExportWebJobCore
                             FileResultSegment k = await rootDir.ListFilesAndDirectoriesSegmentedAsync(token);
                             token = k.ContinuationToken;
 
+                            var context_ = new Db.Data.DataBase();
+                            List<string> sl = new List<string>();
+
                             foreach (IListFileItem fiile in k.Results)
                             {
                                 //if the file exists
@@ -63,8 +68,56 @@ namespace ImportExportWebJobCore
                                 if (asd)
                                 {
                                     //adds new datasting array
-                                  await ReadDataAsync(lstCloudFilesdata, file, fileNames);
+                                    sl = await ReadDataAsync(lstCloudFilesdata, file, fileNames);
                                 }
+
+                                foreach (string y in sl)
+                                { Console.WriteLine("From list new : " + y); };
+
+                                IEnumerable<CitizenDepts> o = from eachLine in (
+                                 from inner in sl
+                                 select inner.Split(';')
+                                 )
+                                                              select new CitizenDepts
+                                                              {
+                                                                  VAT = eachLine[0],
+                                                                  FirstName = eachLine[1],
+                                                                  LastName = eachLine[2],
+                                                                  Email = eachLine[3],
+                                                                  Phone = eachLine[4],
+                                                                  Address = eachLine[5],
+                                                                  County = eachLine[6],
+                                                                  UserId = eachLine[7],
+                                                                  Bill_description = eachLine[8],
+                                                                  Amount = Decimal.Parse(eachLine[9]),
+                                                                  DueDate = DateTime.ParseExact(eachLine[10],
+                                                               "yyyyMMdd", CultureInfo.InvariantCulture)
+
+                                                              };
+                                foreach (var p in o)
+                                {
+                                    Console.WriteLine(p.FirstName + " - " + p.UserId + ", - " + p.DueDate);
+                                };
+
+
+
+                                string s = context_.Database.ProviderName;
+                         
+                                Console.WriteLine(s);
+                                var all = from c in context_.CitizenDepts select c;
+                                context_.CitizenDepts.RemoveRange(all);
+                                context_.SaveChanges();
+
+                                foreach (var p in o)
+                                {
+                                    //Add Student object into Students DBset
+                                    if (p.VAT!=null)
+                                    context_.Add(p);
+                                }
+                                //// call SaveChanges method to save student into database
+                                context_.SaveChanges();
+
+
                             }
                         }
                         if (lstCloudFilesdata != null && fileNames != null)
@@ -76,7 +129,9 @@ namespace ImportExportWebJobCore
             }
             catch (Exception ex)
             {
-                string s = ex.Message;
+                Console.WriteLine(ex.Message);
+
+
             }
             finally
             {
@@ -98,6 +153,7 @@ namespace ImportExportWebJobCore
         {
             try
             {
+                List<string> sl = new List<string>();
                 lstCloudFilesData.Add(new string[1000000]);
                 fileNames.Add(fiile.Name);
                 using (var stream = await fiile.OpenReadAsync())
@@ -110,7 +166,11 @@ namespace ImportExportWebJobCore
                         {
                             lstCloudFilesData.Last()[x] = reader.ReadLine();
                             x++;
+
+                            if (s.Contains("VAT") == false)
+                            { sl.Add(s); }
                         }
+                        return sl;
                     }
                 }
                 return fileNames;
@@ -119,11 +179,25 @@ namespace ImportExportWebJobCore
         }
         private static void ReadingAndProcessingData(string[] data, string objectToUse)
         {
-            switch (objectToUse)
+              
+      
+
+        switch (objectToUse)
             {
                 case "CitizenDebts_1M_3.txt":
-                    Db.Models.ApplicationUser user = new Db.Models.ApplicationUser();
-                   
+
+                 //   var context_ = new ApplicationDbContext();
+
+                  
+                   // CitizenDepts o = 
+                   //     new CitizenDepts { VAT = "getgt", FirstName = "fghfghd",  LastName = "sdfsddsfv",Email = "gwtgtew@wef.gr",Phone = "45324532",Address = "fghdgfh",County = "jhgjgjgf",UserId = "gfjdfhgcmvm",Bill_description = "cgfbxfhgf", Amount = 14.45M,DueDate = new DateTime(2017, 1, 18)
+                   // };
+
+                   //context_.CitizenDepts.Add(o);
+                   // context_.SaveChanges();
+
+
+
                     //TODO:insertCitizenDebts();
                     break;
                 case "PAYMENTS_20171003.txt":
