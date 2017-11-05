@@ -10,6 +10,7 @@ namespace Db.Models
     public class Bills
     {
         public int ID { get; set; }
+        public string GuId { get; set; }
         public decimal Amount { get; set; }
         public DateTime DueDate { get; set; }
         public string Bill_description  { get; set; }
