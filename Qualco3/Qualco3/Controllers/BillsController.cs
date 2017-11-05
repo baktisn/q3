@@ -34,9 +34,75 @@ namespace Qualco3.Controllers
             var userid = _userManager.GetUserId(User);
             var user = GetCurrentUserAsync();
 
-            var applicationDbContext = _context.Bills.Include(b => b.ApplicationUser).Include(b => b.PaymentMethods).Include(b => b.Settlement).Where(b => b.UserId == userid);
-            return View(await applicationDbContext.ToListAsync());
+            var applicationDbContext = _context.Bills
+                .Include(b => b.ApplicationUser)
+                .Include(b => b.PaymentMethods)
+                .Include(b => b.Settlement)
+                .Where(b => b.UserId == userid);
+
+            //return View(await applicationDbContext.ToListAsync());
+            var db = await applicationDbContext.ToListAsync();
+            var model = new BillSelectionViewModel();
+            foreach (var bill in db)
+            {
+                var editorViewModel = new SelectBillEditorViewModel()
+                {
+                    ID = bill.ID,
+                    Bill_description = string.Format("{0}", bill.Bill_description),
+                 Selected = false,
+                 Status=bill.Status
+                };
+                model.Bills.Add(editorViewModel);
+            }
+            return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SubmitSelected(BillSelectionViewModel model)
+        {
+            // get the ids of the items selected:
+            var selectedIds = model.getSelectedIds();
+            // Use the ids to retrieve the records for the selected people
+            // from the database:
+            var userid = _userManager.GetUserId(User);
+            var user = GetCurrentUserAsync();
+
+            var applicationDbContext = _context.Bills.Include(b => b.ApplicationUser).Include(b => b.PaymentMethods).Include(b => b.Settlement).Where(b => b.UserId == userid);
+            //return View(await applicationDbContext.ToListAsync());
+            var db = await applicationDbContext.ToListAsync();
+            decimal amount = 0;
+            var selectedBill = from x in db
+                               where selectedIds.Contains(x.ID)
+                                 select x;
+            // Process according to your requirements:
+            foreach (var bill in selectedBill)
+            {
+                //bill.Amount = bill.Amount + amount;
+                 amount += bill.Amount;
+             
+                System.Diagnostics.Debug.WriteLine(bill.ID + " " +bill.Bill_description  +"  " + bill.Amount.ToString() );
+            }
+           
+            model.TotalAmount = amount;
+            System.Diagnostics.Debug.WriteLine(model.TotalAmount.ToString());
+
+
+            // Redirect somewhere meaningful (probably to somewhere showing 
+            // the results of your processing):
+            // return RedirectToAction("Index", "Settlements");
+
+            SubmitSelected model2 = new SubmitSelected
+            {
+                Bills = selectedBill,
+                TotalAmount = model.TotalAmount
+
+            };
+
+            return View(model2);
+        }
+
+
+
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(User); 
 

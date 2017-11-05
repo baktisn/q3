@@ -11,9 +11,10 @@ using System;
 namespace Db.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171105190648_10")]
+    partial class _10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,8 +100,6 @@ namespace Db.Data.Migrations
                     b.Property<string>("Bill_description");
 
                     b.Property<DateTime>("DueDate");
-
-                    b.Property<string>("GuId");
 
                     b.Property<short>("PaymentMethodId");
 

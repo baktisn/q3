@@ -1,0 +1,33 @@
+﻿@model Db.Models.SubmitSelected
+@{
+    ViewData["Title"] = "SubmitSelected";
+}
+
+<h2>SubmitSelected</h2>
+
+To synoliko poso einai :
+   @Html.DisplayFor(model =>  model.TotalAmount)
+
+
+@foreach (var item in Model.Bills)
+{
+    <table>
+        <thead>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bill_description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+            </tr>
+        </tbody>
+</table>
+}

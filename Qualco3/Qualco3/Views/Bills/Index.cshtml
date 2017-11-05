@@ -1,78 +1,26 @@
-﻿@model IEnumerable<Db.Models.Bills>
+﻿@model Db.Models.BillSelectionViewModel
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Bills";
 }
 
-<h2>Index</h2>
+<h2>Bills</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+@using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
+{
+    <table class="table">
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DueDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Bill_description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
+                Select
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PaymentMethods)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Settlement)
+                Name
             </th>
             <th></th>
         </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DueDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Bill_description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaymentMethods.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Settlement.ID)
-            </td>
-            <td>
-                @if (item.Status == 0)
-                {
-                    <a asp-action="CreditCardPayment" asp-route-id="@item.ID">Pay Bill</a>
-                }
-                else
-                {
-                    <p>Paid Bill</p>
-
-                }
-            </td>
-        </tr>
+        @Html.EditorFor(model => model.Bills)
+    </table>
+    <hr />
+    <br />
+    <input type="submit" name="operation" id="submit" value="Submit Selected" />
 }
-    </tbody>
-</table>
