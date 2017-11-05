@@ -9,6 +9,7 @@ namespace Db.Models
         public bool Selected { get; set; }
         public int ID { get; set; }
         public string Bill_description { get; set; }
+        public byte Status { get; set; }
 
     }
 }
