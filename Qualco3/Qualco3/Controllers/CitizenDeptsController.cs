@@ -105,10 +105,15 @@ namespace Qualco3.Controllers
                             Console.WriteLine(p.FirstName + " - " + p.UserId + ", - " + p.DueDate);
                         };
 
-                        //Console.WriteLine(o.ElementAt(0));
 
-                       
-                            foreach (var p in o)
+
+
+                        //Console.WriteLine(o.ElementAt(0));
+                        var all = from c in _context.CitizenDepts select c;
+                        _context.CitizenDepts.RemoveRange(all);
+                        _context.SaveChanges();
+
+                        foreach (var p in o)
                             {
                                //Add Student object into Students DBset
                                _context.Add(p);

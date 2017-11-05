@@ -9,7 +9,5 @@ namespace Db.Models
     {
         public Int16 ID { get; set; }
         public string Description { get; set; }
-       
-
     }
 }

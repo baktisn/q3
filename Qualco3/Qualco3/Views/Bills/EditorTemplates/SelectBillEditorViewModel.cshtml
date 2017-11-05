@@ -1,0 +1,44 @@
+﻿
+@model  Db.Models.SelectBillEditorViewModel
+
+@{
+    ViewData["Title"] = "SelectBillEditorViewModel";
+}
+
+<tr>
+    <td style="text-align:center">
+        @if (@Model.Status == 0)
+        {
+           @Html.CheckBoxFor(model => model.Selected)
+        }
+        else
+        {
+            <p>Paid Bill</p>
+        }
+
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Bill_description)
+    </td>
+    <td>
+        @Html.HiddenFor(model => model.ID)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Details", "Details", new { id = Model.ID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.ID })
+    </td>
+    <td>
+        @if (@Model.Status == 0)
+        {
+            <a asp-action="CreditCardPayment" asp-route-id="@Model.ID">Pay Bill</a>
+        }
+        else
+        {
+            <p>Paid Bill</p>
+
+        }
+    </td>
+
+</tr>
+

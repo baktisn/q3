@@ -26,7 +26,5 @@ namespace Db.Models
         public PaymentMethods PaymentMethods { get; set; }
         public Settlements Settlement { get; set; }
 
-
-
     }
 }

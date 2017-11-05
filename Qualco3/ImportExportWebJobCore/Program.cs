@@ -57,7 +57,7 @@ namespace ImportExportWebJobCore
                             FileResultSegment k = await rootDir.ListFilesAndDirectoriesSegmentedAsync(token);
                             token = k.ContinuationToken;
 
-                            var context_ = new Db.Data.DataBase();
+                            //var context_ = new Db.Data.();
                             List<string> sl = new List<string>();
 
                             foreach (IListFileItem fiile in k.Results)
@@ -101,21 +101,21 @@ namespace ImportExportWebJobCore
 
 
 
-                                string s = context_.Database.ProviderName;
+                                //string s = context_.Database.ProviderName;
                          
-                                Console.WriteLine(s);
-                                var all = from c in context_.CitizenDepts select c;
-                                context_.CitizenDepts.RemoveRange(all);
-                                context_.SaveChanges();
+                               // Console.WriteLine(s);
+                               /// var all = from c in context_.CitizenDepts select c;
+                                //context_.CitizenDepts.RemoveRange(all);
+                               /// context_.SaveChanges();
 
                                 foreach (var p in o)
                                 {
                                     //Add Student object into Students DBset
-                                    if (p.VAT!=null)
-                                    context_.Add(p);
+                                    //if (p.VAT!=null)
+                                    //context_.Add(p);
                                 }
                                 //// call SaveChanges method to save student into database
-                                context_.SaveChanges();
+                                //context_.SaveChanges();
 
 
                             }
