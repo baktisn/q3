@@ -42,21 +42,16 @@ namespace Qualco3.Controllers
 
             //return View(await applicationDbContext.ToListAsync());
             var db = await applicationDbContext.ToListAsync();
-
             var model = new BillSelectionViewModel();
-
             foreach (var bill in db)
             {
                 var editorViewModel = new SelectBillEditorViewModel()
                 {
                     ID = bill.ID,
-                    Amount = bill.Amount,
-                    DueDate = bill.DueDate,
                     Bill_description = string.Format("{0}", bill.Bill_description),
-                    Selected = false,
-                    Status=bill.Status
+                 Selected = false,
+                 Status=bill.Status
                 };
-
                 model.Bills.Add(editorViewModel);
             }
             return View(model);
@@ -70,14 +65,9 @@ namespace Qualco3.Controllers
             // Use the ids to retrieve the records for the selected people
             // from the database:
             var userid = _userManager.GetUserId(User);
-            var user = await GetCurrentUserAsync();
+            var user = GetCurrentUserAsync();
 
-            var applicationDbContext = _context.Bills
-                .Include(b => b.ApplicationUser)
-                .Include(b => b.PaymentMethods)
-                .Include(b => b.Settlement)
-                .Where(b => b.UserId == userid);
-
+            var applicationDbContext = _context.Bills.Include(b => b.ApplicationUser).Include(b => b.PaymentMethods).Include(b => b.Settlement).Where(b => b.UserId == userid);
             //return View(await applicationDbContext.ToListAsync());
             var db = await applicationDbContext.ToListAsync();
             decimal amount = 0;
@@ -110,6 +100,9 @@ namespace Qualco3.Controllers
 
             return View(model2);
         }
+
+
+
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(User); 
 
@@ -272,7 +265,7 @@ namespace Qualco3.Controllers
             return View(bills);
         }
 
-        // POST: Bills/PaymentConfirmed/5
+        // POST: Bills/CreditCardPayment/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PaymentConfirmed(int id)

@@ -6,21 +6,28 @@
 }
 
 <tr>
-    <td>
+    <td style="text-align:center">
         @if (@Model.Status == 0)
         {
            @Html.CheckBoxFor(model => model.Selected)
         }
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.Amount)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.DueDate)
+        else
+        {
+            <p>Paid Bill</p>
+        }
+
     </td>
     <td>
         @Html.DisplayFor(model => model.Bill_description)
-    </td>    
+    </td>
+    <td>
+        @Html.HiddenFor(model => model.ID)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Details", "Details", new { id = Model.ID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.ID })
+    </td>
     <td>
         @if (@Model.Status == 0)
         {
@@ -29,6 +36,7 @@
         else
         {
             <p>Paid Bill</p>
+
         }
     </td>
 

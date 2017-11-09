@@ -11,22 +11,16 @@
     <table class="table">
         <tr>
             <th>
+                Select
             </th>
             <th>
-                Amount
+                Name
             </th>
-            <th>
-                Due Date
-            </th>
-            <th>
-                Bill Description
-            </th>
-            <th>
-                Status
-            </th>
+            <th></th>
         </tr>
         @Html.EditorFor(model => model.Bills)
     </table>
     <hr />
-    <input type="submit" name="operation" id="submit" value="Request Settlement" />
+    <br />
+    <input type="submit" name="operation" id="submit" value="Submit Selected" />
 }
