@@ -4,6 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Db.Models;
+using Microsoft.AspNetCore.Identity;
+using MimeKit;
+using MailKit.Net.Smtp;
+
+
 
 ///
 using Microsoft.Extensions.Configuration;
@@ -25,10 +30,12 @@ namespace Qualco3.Controllers
     {
 
         private readonly Db.Data.ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CitizenDeptsController(Db.Data.ApplicationDbContext context)
+        public CitizenDeptsController(UserManager<ApplicationUser> userManager, Db.Data.ApplicationDbContext context)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> GetFile()
@@ -59,91 +66,197 @@ namespace Qualco3.Controllers
 
                     List<CloudFile> lstCloudFiles = new List<CloudFile>();
                     CloudFileDirectory rootDir = fileShare.GetRootDirectoryReference();
-                    //for each file in my fileshare
-                    FileContinuationToken token = null;
-                    FileResultSegment k = await rootDir.ListFilesAndDirectoriesSegmentedAsync(token);
-                    token = k.ContinuationToken;
 
                     List<string> sl = new List<string>();
-                    foreach (IListFileItem fiile in k.Results)
+
+                    CloudFile file = rootDir.GetFileReference("CitizenDebts_1M_3.txt");
+                    //if the file exists
+                    bool asd = await file.ExistsAsync();
+                    if (asd)
                     {
-                        //if the file exists
-                        CloudFile file = (CloudFile)fiile;
-                        bool asd = await file.ExistsAsync();
-                        if (asd)
+                        //adds new datasting array
+                        sl = await ReadDataAsync(file);
+                    }
+
+                    //foreach (string y in sl)
+                    //{ Console.WriteLine("From list new : " + y); };
+
+                    IEnumerable<CitizenDepts> o = from eachLine in (
+                     from inner in sl
+                     select inner.Split(';')
+                 )
+
+                                                  select new CitizenDepts
+                                                  {
+                                                      VAT = eachLine[0],
+                                                      FirstName = eachLine[1],
+                                                      LastName = eachLine[2],
+                                                      Email = eachLine[3],
+                                                      Phone = eachLine[4],
+                                                      Address = eachLine[5],
+                                                      County = eachLine[6],
+                                                      BillId = eachLine[7],
+                                                      Bill_description = eachLine[8],
+                                                      Amount = Decimal.Parse(eachLine[9]),
+                                                      DueDate = DateTime.ParseExact(eachLine[10],
+                                                    "yyyyMMdd", CultureInfo.InvariantCulture)
+
+                                                  };
+                    //foreach (var p in o)
+                    //{
+                    //    Console.WriteLine(p.FirstName + " - " + p.UserId + ", - " + p.DueDate);
+                    //};
+
+                    //clear citizen depts table
+                    var all = from c in _context.CitizenDepts select c;
+                    _context.CitizenDepts.RemoveRange(all);
+                    await _context.SaveChangesAsync();
+
+                    // add new citizendepts
+                    foreach (var p in o)
+                    {
+                        _context.Add(p);
+                    }
+                    await _context.SaveChangesAsync();
+
+                    //filter citizens
+                    IEnumerable<CitizenDepts> NewCitizens = o.Where(x => !((_context.ApplicationUser.Any(y => y.VAT == x.VAT)) || (_context.ApplicationUser.Any(y => y.Email == x.Email))))
+                        .Select(x => x).AsEnumerable();
+
+
+                    foreach (var p in NewCitizens)
+                    {
+                        Console.WriteLine(p.VAT + " , " + p.Email + " , " + p.LastName + " , " + p.Bill_description);
+
+                    }
+
+                    //only new citizens
+                    foreach (var p in NewCitizens.Distinct())
+                    {
+                        var user = new ApplicationUser { UserName = p.Email, Email = p.Email };
+
+                        var TempPass = GeneratePassword(3, 3, 3, 3);
+                        // int lowercase, int uppercase, int numerics, int symbols
+                        Console.WriteLine(TempPass);
+                        var result = await _userManager.CreateAsync(user, TempPass);
+                        if (result.Succeeded)
                         {
-                            //adds new datasting array
-                            sl = await ReadDataAsync(lstCloudFilesdata, file, fileNames);
+                            SendMail(p.LastName, p.Email, TempPass);
+                            var query =
+                              from UserUpd in _context.ApplicationUser
+                              where UserUpd.Email == p.Email
+                              select UserUpd;
+
+                            foreach (ApplicationUser UserUpd in query)
+                            {
+                                UserUpd.VAT = p.VAT;
+                                UserUpd.IsFirst = true;
+                                UserUpd.LastName = p.LastName;
+                                UserUpd.FirstName = p.FirstName;
+                                UserUpd.Phone = p.Phone;
+                                UserUpd.County = p.County;
+                                UserUpd.Address = p.Address;
+
+                            }
                         }
-
-                        foreach (string y in sl)
-                        { Console.WriteLine("From list new : " + y); };
-
-                        IEnumerable<CitizenDepts> o = from eachLine in (
-                         from inner in sl
-                         select inner.Split(';')
-                     )
-
-                                select new CitizenDepts
-                                {
-                                    VAT = eachLine[0],
-                                    FirstName = eachLine[1],
-                                    LastName = eachLine[2],
-                                    Email = eachLine[3],
-                                    Phone = eachLine[4],
-                                    Address = eachLine[5],
-                                    County = eachLine[6],
-                                    UserId = eachLine[7],
-                                    Bill_description = eachLine[8],
-                                    Amount = Decimal.Parse(eachLine[9]),
-                                    DueDate =DateTime.ParseExact(eachLine[10],
-                                  "yyyyMMdd",CultureInfo.InvariantCulture)
+                        else
+                        { Console.WriteLine("#############################ALREADY REGISTERED " + p.VAT + " , " + p.Email + " , " + p.LastName); }
 
                     };
-                        foreach (var p in o)
-                        {
-                            Console.WriteLine(p.FirstName + " - " + p.UserId + ", - " + p.DueDate);
-                        };
+                    await _context.SaveChangesAsync();
 
 
+                    // IEnumerable<Bills> NewBills = o.Where(x => o.Any())
+                    //.Select(x => new
+                    //{
+                    //    NewBills.GuId = x.UserId,
+                    //    NewBills.Amount = x.Amount,
+                    //    NewBills.DueDate = x.DueDate,
+                    //    NewBills.Bill_description = x.Bill_description,
+                    //    NewBills.Status = 0,
+                    //    NewBills.User_id = x.VAT,
+                    //    NewBills.PaymentMethodId = 1,
+                    //    NewBills.SettlementId = 0
+                    //});
 
-
-                        //Console.WriteLine(o.ElementAt(0));
-                        var all = from c in _context.CitizenDepts select c;
-                        _context.CitizenDepts.RemoveRange(all);
-                        _context.SaveChanges();
-
-                        foreach (var p in o)
-                            {
-                               //Add Student object into Students DBset
-                               _context.Add(p);
-                           }
-                        //// call SaveChanges method to save student into database
-                        _context.SaveChanges();
-                        
-                        // List<CitizenDepts> o = new List<CitizenDepts>()
-                        //{
-                        //    new CitizenDepts { VAT = "getgt", FirstName = "fghfghd",  LastName = "sdfsddsfv",Email = "gwtgtew@wef.gr",Phone = "45324532",Address = "fghdgfh",County = "jhgjgjgf",ID = 4,Bill_description = "cgfbxfhgf", Amount = 14.45M,DueDate = new DateTime(2017, 1, 18)},
-                        //    new CitizenDepts { VAT = "getgt", FirstName = "fghfghd",  LastName = "sdfsddsfv",Email = "gwtgtew@wef.gr",Phone = "45324532",Address = "fghdgfh",County = "jhgjgjgf",ID = 4,Bill_description = "cgfbxfhgf", Amount = 14.45M,DueDate =new DateTime(2017, 1, 18)},
-                        //    new CitizenDepts { VAT = "getgt", FirstName = "fghfghd",  LastName = "sdfsddsfv",Email = "gwtgtew@wef.gr",Phone = "45324532",Address = "fghdgfh",County = "jhgjgjgf",ID = 4,Bill_description = "cgfbxfhgf", Amount = 14.45M,DueDate = new DateTime(2017, 1, 18)}
-
-                        //};
-
-
-                        // foreach (var p in o)
-                        // {
-                        //     Console.WriteLine(p.FirstName + " - " + p.ID + ", - " + p.DueDate);
-                        // };
-
-                        //ViewData["MyList"]= sl;
-                        return View(o);
-                    }
-                    // }
-                    if (lstCloudFilesdata != null && fileNames != null)
+                   
+                    foreach (var p in _context.ApplicationUser)
                     {
-                        ProccessData(lstCloudFilesdata, fileNames);
+                        var query2 =
+                              from UIdUpd in _context.CitizenDepts
+                              where UIdUpd.VAT == p.VAT
+                              select UIdUpd;
+
+                        foreach (CitizenDepts UIdUpd in query2)
+                        {
+                            UIdUpd.UserGUId = p.Id;
+                        }
+                    };
+
+                    await _context.SaveChangesAsync();
+
+                    //foreach (var p in o)
+                    //{
+                    //    var query3 =
+                    //            from NewBills in _context.Bills
+                    //            select NewBills;
+
+                    //    foreach (Bills NewBills in query3)
+                    //    {
+                    //        NewBills.GuId = p.BillId;
+                    //        NewBills.Amount = p.Amount;
+                    //        NewBills.DueDate = p.DueDate;
+                    //        NewBills.Bill_description = p.Bill_description;
+                    //        NewBills.Status = 0;
+                    //        NewBills.UserId = p.UserGUId;
+                    //        NewBills.PaymentMethodId = 1;
+                    //        NewBills.SettlementId = 1;
+
+                    //    }
+                    //};
+
+
+                    //IEnumerable<Bills> NewBillsls = new List<Bills>();
+                    List<Bills> NewBillsls = new List<Bills>();
+                    Bills NewBill = new Bills();
+                    //etc for your other entities
+
+                    List<CitizenDepts> UpdCit = new List<CitizenDepts>();
+
+                    foreach (var p in _context.CitizenDepts)
+                    {
+                        UpdCit.Add(p);
                     }
+                    foreach (var p in UpdCit)
+                    {
+                       
+                            Console.WriteLine("#############################loop " + p.VAT + " , " + p.Email + " , " + p.UserGUId);
+                            NewBill.GuId = p.BillId;
+                            NewBill.Amount = p.Amount;
+                            NewBill.DueDate = p.DueDate;
+                            NewBill.Bill_description = p.Bill_description;
+                            NewBill.Status = 0;
+                            NewBill.UserId = p.UserGUId;
+                            NewBill.PaymentMethodId = 1;
+                            NewBill.SettlementId = 1;    
+                            NewBillsls.Add(NewBill);
+                           //_context.Bills.Add(NewBill);
+                    }
+
+
+
+                    foreach (var c in NewBillsls)
+                    {
+                        Console.WriteLine("#############################ALREADY REGISTERED " + c.GuId + " , " + c.UserId);
+                        _context.Bills.Add(c);
+                    }
+                    await _context.SaveChangesAsync();
+
+
+                    return View(o);
                 }
+                    // }
+                
                 //}
             }
             catch (Exception ex)
@@ -159,24 +272,87 @@ namespace Qualco3.Controllers
 
         }
 
-        private static void ProccessData(List<string[]> lstCloudFilesdata, List<string> fileNames)
+
+        public static string GeneratePassword(int lowercase, int uppercase, int numerics, int symbols)
         {
-            int i = 0;
-            foreach (string[] str in lstCloudFilesdata)
-            {
-                ReadingAndProcessingData(str, fileNames[i]);
-                i++;
-            }
+            string lowers = "abcdefghijklmnopqrstuvwxyz";
+            string uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string number = "0123456789";
+            string symbol = "~!@#$%^&*()_+=-";
+
+            Random random = new Random();
+
+            string generated = "!";
+            for (int i = 1; i <= lowercase; i++)
+                generated = generated.Insert(
+                    random.Next(generated.Length),
+                    lowers[random.Next(lowers.Length - 1)].ToString()
+                );
+
+            for (int i = 1; i <= uppercase; i++)
+                generated = generated.Insert(
+                    random.Next(generated.Length),
+                    uppers[random.Next(uppers.Length - 1)].ToString()
+                );
+
+            for (int i = 1; i <= numerics; i++)
+                generated = generated.Insert(
+                    random.Next(generated.Length),
+                    number[random.Next(number.Length - 1)].ToString()
+                );
+
+            for (int i = 1; i <= symbols; i++)
+                generated = generated.Insert(
+                    random.Next(generated.Length),
+                    symbol[random.Next(number.Length - 1)].ToString()
+                );
+
+            return generated.Replace("!", string.Empty);
         }
 
-        private static async Task<List<string>> ReadDataAsync(List<string[]> lstCloudFilesData, CloudFile fiile, List<string> fileNames)
+        public static void SendMail(string lastName, string userMail,string TempPass)
+        {
+
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Municipality Portal", "qualco3team@gmail.com"));
+            message.To.Add(new MailboxAddress(lastName, userMail));
+            message.Subject = "Your Temporary Password";
+
+            var bodyBuilder = new BodyBuilder();
+            bodyBuilder.HtmlBody = @"<b>Dear " + lastName + ",</b></br> This is your temporary random generated password --<< <i>" + TempPass + "</i>  >>-- .</br>Please login with that and change it immediatelly ";
+            message.Body = bodyBuilder.ToMessageBody();
+
+            //message.Body = new TextPart("plain")
+            //{
+            //    Text = @"<b>Dear " + lastName + ",<b></br> This is your temporary random generated password --<< <i>" + TempPass + "<i>  >>-- .</br>Please login with that and change it immediatelly "
+            //};
+
+            using (var client = new SmtpClient())
+            {
+
+                // Establishes connection to the specified SMTP
+                client.Connect("smtp.gmail.com", 587, false);
+               // client.AuthenticationMechanisms.Remove("XOAUTH2");
+                //client.AuthenticationMechanisms.Remove("XOAUTH");
+                // Authenticate connection. Only needed if the SMTP server requires authentication.
+                client.Authenticate("qualco3team@gmail.com","Qualco123!");
+
+                client.Send(message);
+                client.Disconnect(true);
+                
+            }
+
+            return;
+        }
+
+      
+
+        private static async Task<List<string>> ReadDataAsync(CloudFile file)
         {
             try
             {
                 List<string> sl = new List<string>();
-                lstCloudFilesData.Add(new string[1000000]);
-                fileNames.Add(fiile.Name);
-                using (var stream = await fiile.OpenReadAsync())
+                using (var stream = await file.OpenReadAsync())
                 {
                     using (StreamReader reader = new StreamReader(stream))
                     {
@@ -184,38 +360,20 @@ namespace Qualco3.Controllers
                         int x = 0;
                         while ((s = reader.ReadLine()) != null)
                         {
-                            lstCloudFilesData.Last()[x] = reader.ReadLine();
-                            x++;
-
-
-                            if (s.Contains("VAT") == false)
-                            { sl.Add(s); }
+                           if (s.Contains("VAT") == false)
+                            {
+                                sl.Add(s);
+                            //Console.WriteLine(s);
+                            }
                         }
-
                         return sl;
                     }
                 }
-                return fileNames;
+               
             }
             catch (Exception ex) { return null; }
         }
-        private static void ReadingAndProcessingData(string[] data, string objectToUse)
-        {
-            switch (objectToUse)
-            {
-                case "CitizenDebts_1M_3.txt":
-                    Db.Models.ApplicationUser user = new Db.Models.ApplicationUser();
 
-                    //TODO:insertCitizenDebts();
-                    break;
-                case "PAYMENTS_20171003.txt":
-                    //TODO: insertPayments()
-                    break;
-                case "SETTLEMENTS_20171003.txt":
-                    //TODO: insertSettlements()
-                    break;
-
-            }
-        }
+        
     }
 }

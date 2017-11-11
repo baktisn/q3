@@ -87,7 +87,7 @@ namespace ImportExportWebJobCore
                                                                   Phone = eachLine[4],
                                                                   Address = eachLine[5],
                                                                   County = eachLine[6],
-                                                                  UserId = eachLine[7],
+                                                                  BillId = eachLine[7],
                                                                   Bill_description = eachLine[8],
                                                                   Amount = Decimal.Parse(eachLine[9]),
                                                                   DueDate = DateTime.ParseExact(eachLine[10],
@@ -96,7 +96,7 @@ namespace ImportExportWebJobCore
                                                               };
                                 foreach (var p in o)
                                 {
-                                    Console.WriteLine(p.FirstName + " - " + p.UserId + ", - " + p.DueDate);
+                                    Console.WriteLine(p.FirstName + " - " + p.BillId + ", - " + p.DueDate);
                                 };
 
 

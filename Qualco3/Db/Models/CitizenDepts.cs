@@ -17,10 +17,11 @@ namespace Db.Models
         public string Phone { get; set; }
         public string Address { get; set; }
         public string County { get; set; }
-        public string UserId { get; set; }
+        public string BillId { get; set; }
         public string Bill_description { get; set; }
         public decimal Amount { get; set; }
         public DateTime DueDate { get; set; }
+        public string UserGUId { get; set; }
 
     }
 }

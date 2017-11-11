@@ -91,13 +91,21 @@ namespace Qualco3.Controllers
             // the results of your processing):
             // return RedirectToAction("Index", "Settlements");
 
+            var applicationDbContext2 = _context.SettlementTypes;
+            //return View(await applicationDbContext.ToListAsync());
+            var db2 = await applicationDbContext2.ToListAsync();
+            var SetTypeDD = from x in db2
+                                select x;
+            foreach (var i in SetTypeDD)
+            {
+              System.Diagnostics.Debug.WriteLine(i.ID + " " + i.DownPaymentPercentage + "  " + i.Interest);
+            }
             SubmitSelected model2 = new SubmitSelected
             {
                 Bills = selectedBill,
-                TotalAmount = model.TotalAmount
-
+                TotalAmount = model.TotalAmount,
+                SettlementTypes = SetTypeDD
             };
-
             return View(model2);
         }
 

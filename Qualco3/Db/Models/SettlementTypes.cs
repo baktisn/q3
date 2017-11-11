@@ -11,7 +11,7 @@ namespace Db.Models
         public string Code { get; set; }
         public Int16 DownPaymentPercentage { get; set; }
         public Int16 MaxNoInstallments { get; set; }
-        public Int16 Interest { get; set; }
+        public decimal Interest { get; set; }
 
     }
 }
