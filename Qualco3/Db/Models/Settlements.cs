@@ -17,7 +17,7 @@ namespace Db.Models
         public DateTime AnswerDate { get; set; }
         public decimal DownPayment { get; set; }
         public Int16 Installments { get; set; }
-        public Int16 Interest { get; set; }
+        public decimal Interest { get; set; }
         public byte IsAccepted { get; set; }
         [ForeignKey("SettlementTypes")]
         public int SettlementTypeId { get; set; }
