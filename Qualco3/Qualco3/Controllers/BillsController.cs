@@ -91,23 +91,61 @@ namespace Qualco3.Controllers
             // the results of your processing):
             // return RedirectToAction("Index", "Settlements");
 
-            var applicationDbContext2 = _context.SettlementTypes;
+
             //return View(await applicationDbContext.ToListAsync());
-            var db2 = await applicationDbContext2.ToListAsync();
-            var SetTypeDD = from x in db2
-                                select x;
-            foreach (var i in SetTypeDD)
-            {
-              System.Diagnostics.Debug.WriteLine(i.ID + " " + i.DownPaymentPercentage + "  " + i.Interest);
-            }
+            var SetTypeDD = _context.SettlementTypes.OrderBy(c => c.Code).Select(x => new { Id = x.ID, Value = x.Code });
+            List<int> Installments = new List<int> () {};
+            //var db2 = await _context.SettlementTypes.ToListAsync();
+            //var SetTypeDD = from x in db2
+            //                    select x;
+            //foreach (var i in SetTypeDD)
+            //{
+            //  Console.WriteLine(i.ID + " " + i.DownPaymentPercentage + "  " + i.Interest);
+            //}
             SubmitSelected model2 = new SubmitSelected
             {
                 Bills = selectedBill,
                 TotalAmount = model.TotalAmount,
-                SettlementTypes = SetTypeDD
+                Interest = 0,
+                IsAccepted = 0,
+                DownPayment = 0
             };
+
+            foreach (var i in selectedIds)
+            { model2.BillsStr = model2.BillsStr+ i + ",";  }
+            
+
+            model2.SettlementTypes = new SelectList(SetTypeDD, "Id", "Value");
+            model2.Installments = new SelectList(Installments);
+
             return View(model2);
         }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> DDAjax(SubmitSelected model)
+        {
+            model.BillsStr = model.BillsStr;
+                model.MaxNoOfInstallments = 1;
+                model.Interest = 3.5M;
+                model.IsAccepted = 1;
+                model.DownPayment = 1.5M;
+   
+            return DDAjaxBack(model);
+        }
+        private IActionResult DDAjaxBack(SubmitSelected model)
+        {
+            // do something with the model here
+            // ...
+            Console.WriteLine("iiiiiiiiiiii" + model.MaxNoOfInstallments.ToString());
+            return Json(model);
+        }
+
+
+
+
+
 
 
 
