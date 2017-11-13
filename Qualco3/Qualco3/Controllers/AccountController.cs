@@ -93,7 +93,7 @@ namespace Qualco3.Controllers
 
                         // return View(nameof(ChangePassword));
                         // return RedirectToAction("ChangePassword1stTime", "Account");
-                        ChangePassword1stTimeViewModel model1 = new ChangePassword1stTimeViewModel() ;
+                        ChangePassword1stTimeViewModel model1 = new ChangePassword1stTimeViewModel();
                         model1.Email = model.Email;
                         model1.OldPassword = model.Password;
                         return RedirectToAction("ChangePassword1stTime", "Account", new { model  });
