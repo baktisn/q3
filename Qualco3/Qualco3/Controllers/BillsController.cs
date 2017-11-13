@@ -49,8 +49,10 @@ namespace Qualco3.Controllers
                 {
                     ID = bill.ID,
                     Bill_description = string.Format("{0}", bill.Bill_description),
-                 Selected = false,
-                 Status=bill.Status
+                    Amount = bill.Amount,
+                    DueDate = bill.DueDate,
+                    Selected = false,
+                    Status=bill.Status
                 };
                 model.Bills.Add(editorViewModel);
             }
