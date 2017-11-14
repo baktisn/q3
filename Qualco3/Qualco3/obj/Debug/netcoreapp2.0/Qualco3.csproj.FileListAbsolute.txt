@@ -39,3 +39,16 @@ C:\Users\Stratos\source\repos\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3
 C:\Users\Stratos\source\repos\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.pdb
 =======
 >>>>>>> master
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.deps.json
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.runtimeconfig.json
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.runtimeconfig.dev.json
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.dll
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.pdb
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Db.dll
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Db.pdb
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.csprojResolveAssemblyReference.cache
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.csproj.CoreCompileInputs.cache
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyInfoInputs.cache
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyInfo.cs
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.dll
+C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.pdb
