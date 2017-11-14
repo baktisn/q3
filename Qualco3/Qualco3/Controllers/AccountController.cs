@@ -61,67 +61,68 @@ namespace Qualco3.Controllers
             return View();
         }
 
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        //{
+        //    ViewData["ReturnUrl"] = returnUrl;
+        //    if (ModelState.IsValid)
+        //    {
+        //        // This doesn't count login failures towards account lockout
+        //        // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+
+
+        //         var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
+        //        //var result = await _signInManager.PreSignInCheck(model.Email);
+        //        if (result.Succeeded)
+        //        {
+
+
+        //            //var user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
+        //            var user = _context.Users.Single(x => x.Email == model.Email);
+                  
+
+        //            if (user.IsFirst == false)
+        //            {
+        //                _logger.LogInformation("User logged in.");
+        //                return RedirectToLocal(returnUrl);
+        //            }
+        //            else
+        //            {
+
+        //                // return View(nameof(ChangePassword));
+        //                // return RedirectToAction("ChangePassword1stTime", "Account");
+        //                ChangePassword1stTimeViewModel model1 = new ChangePassword1stTimeViewModel();
+        //                model1.Email = model.Email;
+        //                model1.OldPassword = model.Password;
+        //                return RedirectToAction("ChangePassword1stTime", "Account", new { model  });
+
+        //            }
+        //        }
+        //        //if (result.RequiresTwoFactor)
+        //        //{
+        //        //    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, false });
+        //        //}
+        //        if (result.IsLockedOut)
+        //        {
+        //            _logger.LogWarning("User account locked out.");
+        //            return RedirectToAction(nameof(Lockout));
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+        //            return View(model);
+        //        }
+        //    }
+
+        //    // If we got this far, something failed, redisplay form
+        //    return View(model);
+        //}
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
-            if (ModelState.IsValid)
-            {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-
-
-                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
-                //var result = await _signInManager.PreSignInCheck(model.Email);
-                if (result.Succeeded)
-                {
-
-
-                    //var user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
-                    var user = _context.Users.Single(x => x.Email == model.Email);
-                  
-
-                    if (user.IsFirst == false)
-                    {
-                        _logger.LogInformation("User logged in.");
-                        return RedirectToLocal(returnUrl);
-                    }
-                    else
-                    {
-
-                        // return View(nameof(ChangePassword));
-                        // return RedirectToAction("ChangePassword1stTime", "Account");
-                        ChangePassword1stTimeViewModel model1 = new ChangePassword1stTimeViewModel() ;
-                        model1.Email = model.Email;
-                        model1.OldPassword = model.Password;
-                        return RedirectToAction("ChangePassword1stTime", "Account", new { model  });
-
-                    }
-                }
-                //if (result.RequiresTwoFactor)
-                //{
-                //    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, false });
-                //}
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToAction(nameof(Lockout));
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
-                }
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> HelloAjax(LoginViewModel model)
         {
             string returnUrl = null;
@@ -193,7 +194,7 @@ namespace Qualco3.Controllers
                         {
                         await _signInManager.SignOutAsync();
                         model.Flag = 2;
-                            model.Error = "Enter New Password";
+                        //    model.Error = "Enter New Password";
 
                             return HelloAjaxBack(model);
                         }
@@ -208,16 +209,16 @@ namespace Qualco3.Controllers
                 }
                 else
                 {
-                    model.Error = "You cannot login!Try again";
                     model.Flag = 3;
-                   // return Json(new { success = false, issue = model, errors = ModelState.Values.Where(i => i.Errors.Count > 0) });
+                    model.Error = "Invalid login attempt.";
+                    // return Json(new { success = false, issue = model, errors = ModelState.Values.Where(i => i.Errors.Count > 0) });
                     // ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                   
+                    
                     return HelloAjaxBack(model);
                 }
 
             }
-            model.Error = "Fill the fields properly";
+           // model.Error = "Fill the fields properly";
             //  return RedirectToAction("Index", "Account");
             //retutn RedirectToAction("Default");
             return HelloAjaxBack(model);

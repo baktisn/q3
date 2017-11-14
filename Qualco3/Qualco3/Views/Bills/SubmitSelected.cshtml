@@ -3,17 +3,15 @@
     ViewData["Title"] = "SubmitSelected";
 }
 
-<h2>SubmitSelected</h2>
-
-To synoliko poso einai :
-   @Html.DisplayFor(model =>  model.TotalAmount)
-
+<hr />
+<h2>Το σύνολο του ποσού είναι: <span class="label label-default">$ @Html.DisplayFor(model => model.TotalAmount)</span></h2>
+<hr />
+<br />
 
 @foreach (var item in Model.Bills)
 {
     <table>
         <thead>
-
         </thead>
         <tbody>
             <tr>
@@ -31,6 +29,14 @@ To synoliko poso einai :
             </tr>
         </tbody>
     </table>
+<<<<<<< HEAD
+ 
+}
+<br />
+<button type="button" class="btn btn-primary">Pay</button>  
+<button type="button" class="btn btn-primary">Request Settlement</button> |
+<a asp-action="Index">Back to List</a>
+=======
 }
 
 <form id="Login" method="post">
@@ -160,6 +166,7 @@ To synoliko poso einai :
 
 
 
+>>>>>>> master
 
 
     </script>
