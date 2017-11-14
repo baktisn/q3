@@ -8,6 +8,7 @@
 <hr />
 <br />
 
+<<<<<<< HEAD
 @foreach (var item in Model.Bills)
 {
     <table>
@@ -31,6 +32,8 @@
     </table>
 }
 
+=======
+>>>>>>> DEV
 <form id="Login" method="post">
     <div class="form-group">
         @*@foreach (var item in Model.Bills)
@@ -44,35 +47,36 @@
             </div>
         }*@
   
-           <label asp-for="SettlementType" class="col-md-2 control-label" hidden="hidden"></label>
+           
         <div class="col-md-10">
+            <label asp-for="SettlementType" class="col-md-2 control-label" hidden="hidden"></label>
             <select asp-for="SettlementType" asp-items="@Model.SettlementTypes" onchange="onChange()"></select>
         </div>
 
         <input asp-for="BillsStr" asp-items="@Model.BillsStr" type="hidden">
        
-        <label asp-for="TotalAmount" class="col-md-2 control-label" type="hidden"></label>
         <div class="col-md-10">
+            <label asp-for="TotalAmount" class="col-md-2 control-label" type="hidden"></label>
             <input asp-for="TotalAmount" asp-items="@Model.TotalAmount.ToString("N2")">
         </div>
 
-        <label asp-for="MaxNoOfInstallments" class="col-md-2 control-label"></label>
         <div class="col-md-10">
+            <label asp-for="MaxNoOfInstallments" class="col-md-2 control-label"></label>
             <select asp-for="MaxNoOfInstallments" asp-items="@Model.Installments" onchange="onChange()"></select>
         </div>
 
-        <label asp-for="Interest" class="col-md-2 control-label"></label>
         <div class="col-md-10">
+            <label asp-for="Interest" class="col-md-2 control-label"></label>
             <input asp-for="Interest" asp-items="@Model.Interest">
         </div>
 
-        <label asp-for="IsAccepted" class="col-md-2 control-label"></label>
         <div class="col-md-10">
+            <label asp-for="IsAccepted" class="col-md-2 control-label"></label>
             <input asp-for="IsAccepted" asp-items="@Model.IsAccepted">
         </div>
 
-        <label asp-for="DownPayment" class="col-md-2 control-label"></label>
         <div class="col-md-10">
+            <label asp-for="DownPayment" class="col-md-2 control-label"></label>
             <input asp-for="DownPayment" asp-items="@Model.DownPayment">
         </div>
 </div>
