@@ -97,8 +97,9 @@ namespace Qualco3.Controllers
                                                       County = eachLine[6],
                                                       BillId = eachLine[7],
                                                       Bill_description = eachLine[8],
-                                                      Amount = Decimal.Parse(eachLine[9]),
-                                                      DueDate = DateTime.ParseExact(eachLine[10],
+                                                      //Amount = Decimal.Parse(eachLine[9]),
+                                                      Amount = Decimal.Parse(eachLine[9], System.Globalization.CultureInfo.GetCultureInfo("el-GR")),
+                    DueDate = DateTime.ParseExact(eachLine[10],
                                                     "yyyyMMdd", CultureInfo.InvariantCulture)
 
                                                   };
@@ -106,7 +107,7 @@ namespace Qualco3.Controllers
                     //{
                     //    Console.WriteLine(p.FirstName + " - " + p.UserId + ", - " + p.DueDate);
                     //};
-
+                    var dd = decimal.Parse("10,33", CultureInfo.GetCultureInfo("el-GR"));
                     //clear citizen depts table
                     var all = from c in _context.CitizenDepts select c;
                     _context.CitizenDepts.RemoveRange(all);
@@ -230,7 +231,7 @@ namespace Qualco3.Controllers
                     foreach (var p in UpdCit)
                     {
                        
-                            Console.WriteLine("#############################loop " + p.VAT + " , " + p.Email + " , " + p.UserGUId);
+                            Console.WriteLine("#############################CITIZEN_DEPTS " + p.VAT + " , " + p.Email + " , " + p.UserGUId);
                             NewBill.GuId = p.BillId;
                             NewBill.Amount = p.Amount;
                             NewBill.DueDate = p.DueDate;
@@ -240,14 +241,15 @@ namespace Qualco3.Controllers
                             NewBill.PaymentMethodId = 1;
                             NewBill.SettlementId = 1;    
                             NewBillsls.Add(NewBill);
-                           //_context.Bills.Add(NewBill);
+                             NewBill = new Bills();
+                        //_context.Bills.Add(NewBill);
                     }
 
 
 
                     foreach (var c in NewBillsls)
                     {
-                        Console.WriteLine("#############################ALREADY REGISTERED " + c.GuId + " , " + c.UserId);
+                        Console.WriteLine("############################BILLS " + c.GuId + " , " + c.UserId);
                         _context.Bills.Add(c);
                     }
                     await _context.SaveChangesAsync();
