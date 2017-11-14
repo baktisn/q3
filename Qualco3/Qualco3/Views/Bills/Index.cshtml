@@ -8,19 +8,36 @@
 
 @using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
 {
-    <table class="table">
-        <tr>
-            <th>
-                Select
-            </th>
-            <th>
-                Name
-            </th>
-            <th></th>
-        </tr>
-        @Html.EditorFor(model => model.Bills)
-    </table>
+    <html>
+    <head>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row col-md-18 col-md-offset-0 custyle">
+                <table class="table table-striped custab">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Due Date
+                            </th>
+                            <th>
+                                Amount
+                            </th>
+                        </tr>
+                    </thead>
+
+                    @Html.EditorFor(model => model.Bills)
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
     <hr />
     <br />
-    <input type="submit" name="operation" id="submit" value="Submit Selected" />
+    <button type="submit" class="btn btn-primary" name="operation" id="sumbit">Submit Selected</button>
 }

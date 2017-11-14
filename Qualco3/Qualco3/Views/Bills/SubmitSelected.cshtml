@@ -3,17 +3,15 @@
     ViewData["Title"] = "SubmitSelected";
 }
 
-<h2>SubmitSelected</h2>
-
-To synoliko poso einai :
-   @Html.DisplayFor(model =>  model.TotalAmount)
-
+<hr />
+<h2>Το σύνολο του ποσού είναι: <span class="label label-default">$ @Html.DisplayFor(model => model.TotalAmount)</span></h2>
+<hr />
+<br />
 
 @foreach (var item in Model.Bills)
 {
     <table>
         <thead>
-
         </thead>
         <tbody>
             <tr>
@@ -27,13 +25,149 @@ To synoliko poso einai :
 
                     @Html.DisplayFor(modelItem => item.Amount)
                 </td>
+
             </tr>
         </tbody>
-
-
-     
-
     </table>
+<<<<<<< HEAD
+ 
+}
+<br />
+<button type="button" class="btn btn-primary">Pay</button>  
+<button type="button" class="btn btn-primary">Request Settlement</button> |
+<a asp-action="Index">Back to List</a>
+=======
 }
 
+<form id="Login" method="post">
+    <div class="form-group">
+        @*@foreach (var item in Model.Bills)
+        
+        {
+            
+            <div class="editor-field">
+                <input type="text"
+                       name="@item.Bill_description"
+                       value="@item.ID" />
+            </div>
+        }*@
+  
+           <label asp-for="SettlementType" class="col-md-2 control-label" hidden="hidden"></label>
+        <div class="col-md-10">
+            <select asp-for="SettlementType" asp-items="@Model.SettlementTypes" onchange="onChange()"></select>
+        </div>
+
+        <input asp-for="BillsStr" asp-items="@Model.BillsStr" type="hidden">
+       
+        <label asp-for="TotalAmount" class="col-md-2 control-label" type="hidden"></label>
+        <div class="col-md-10">
+            <input asp-for="TotalAmount" asp-items="@Model.TotalAmount.ToString("N2")">
+        </div>
+
+        <label asp-for="MaxNoOfInstallments" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <select asp-for="MaxNoOfInstallments" asp-items="@Model.Installments" onchange="onChange()"></select>
+        </div>
+
+        <label asp-for="Interest" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Interest" asp-items="@Model.Interest">
+        </div>
+
+        <label asp-for="IsAccepted" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="IsAccepted" asp-items="@Model.IsAccepted">
+        </div>
+
+        <label asp-for="DownPayment" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="DownPayment" asp-items="@Model.DownPayment">
+        </div>
+</div>
+</form>
+<div class="form-group">
+    <button type="submit" class="btn btn-default" onclick="Login1()"><i class="glyphicon glyphicon-log-in"></i> Procceed to Settlement</button>
+</div>
+
+
+    <script>
+
+
+
+    var selectElement = document.getElementById("SettlementType");
+    //selectElement.onchange = function () {
+    //    alert(selectElement.value);                                   // value of the selected element
+    //};
+
+        selectElement.onchange = function () {
+            $('#DownPayment').prop("disabled", false);
+            $('#IsAccepted').prop("disabled", false);
+            $('#BillsStr').prop("disabled", false);
+            $('#TotalAmount').prop("disabled", false);
+            $('#Interest').prop("disabled", false);
+
+            var data = $("#Login").serialize();
+            $.ajax({
+                type: "Post",
+                datatype: "json",
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                data: data,
+                xhrFields: {
+                    withCredentials: true
+                },
+                url: '@Url.Action("DDAjax","Bills")',
+
+                success: function (result, textstatus, xhr) {
+
+                    //alert(xhr.status + ' 2');
+                        $('#DownPayment').val(result.downPayment);
+                        $('#IsAccepted').val(result.isAccepted);
+                        $('#Interest').val(result.interest);
+                        $('#BillsStr').val(result.billsStr);
+                        $('#TotalAmount').val(result.totalAmount);
+                        $('#MaxNoOfInstallments').val(result.maxNoOfInstallments);
+                        $('#BillsStr').prop("disabled", true);
+                        $('#TotalAmount').prop("disabled", true);
+                        $('#Interest').prop("disabled", true);
+                        $('#DownPayment').prop("disabled", true);
+                        $('#IsAccepted').prop("disabled", true);
+                        $("#DownPayment").show('slow');
+                        $("#IsAccepted").show('slow');
+                        $("#Interest").show('slow');
+                        $("#MaxNoOfInstallments").show('slow');
+
+
+                }
+
+            });
+        };
+
+
+
+
+        var helpers =
+            {
+                buildDropdown: function (result, dropdown, emptyMessage) {
+                    // Remove current options
+                    dropdown.html('');
+                    // Add the empty option with the empty message
+                    dropdown.append('<option value="">' + emptyMessage + '</option>');
+                    // Check result isnt empty
+                    if (result != '') {
+                        // Loop through each of the results and append the option to the dropdown
+                        $.each(result, function (k, v) {
+                            dropdown.append('<option value="' + v.id + '">' + v.name + '</option>');
+                        });
+                    }
+                }
+            }
+
+
+
+
+
+>>>>>>> master
+
+
+    </script>
 
