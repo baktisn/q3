@@ -7,6 +7,10 @@
     <StartupObject>Qualco3.Program</StartupObject>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
+
 
   <ItemGroup>
    <PackageReference Include="MailKit" Version="1.20.0" />
