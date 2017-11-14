@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-Qualco3-521A6CD5-19B3-4407-BEE4-5A69CA61E9AC</UserSecretsId>
+    <ApplicationIcon>favicon1.ico</ApplicationIcon>
+    <StartupObject>Qualco3.Program</StartupObject>
   </PropertyGroup>
 
 

@@ -5,14 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Db.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Qualco3.Controllers
 {
+    [Authorize]
+    [Route("[controller]/[action]")]
+
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            //return RedirectToAction("Login", "Account");
+            
             return View();
         }
 
