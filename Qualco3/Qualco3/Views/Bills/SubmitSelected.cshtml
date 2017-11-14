@@ -8,6 +8,32 @@
 <hr />
 <br />
 
+<<<<<<< HEAD
+@foreach (var item in Model.Bills)
+{
+    <table>
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bill_description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+}
+
+=======
+>>>>>>> DEV
 <form id="Login" method="post">
     <div class="form-group">
         @*@foreach (var item in Model.Bills)
