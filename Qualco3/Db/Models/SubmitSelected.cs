@@ -13,6 +13,7 @@ namespace Db.Models
    
         public int SettlementType { get; set; }
         public SelectList SettlementTypes { get; set; }
+        public IEnumerable<SettlementTypes> SettlementTypesEnum { get; set; }
 
         public int MaxNoOfInstallments { get; set; }
         public SelectList Installments { get; set; }
@@ -20,6 +21,8 @@ namespace Db.Models
         public decimal Interest { get; set; }
         public byte IsAccepted { get; set; }
         public decimal DownPayment { get; set; }
-
+        public decimal Monthly { get; set; }
+        public decimal DownPaymentValue { get; set; }
+        public string SettlText { get; set; }
     }
 }

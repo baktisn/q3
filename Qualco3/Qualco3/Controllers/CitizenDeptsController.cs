@@ -99,7 +99,7 @@ namespace Qualco3.Controllers
                                                       Bill_description = eachLine[8],
                                                       //Amount = Decimal.Parse(eachLine[9]),
                                                       Amount = Decimal.Parse(eachLine[9], System.Globalization.CultureInfo.GetCultureInfo("el-GR")),
-                    DueDate = DateTime.ParseExact(eachLine[10],
+                                                     DueDate = DateTime.ParseExact(eachLine[10],
                                                     "yyyyMMdd", CultureInfo.InvariantCulture)
 
                                                   };
@@ -107,7 +107,7 @@ namespace Qualco3.Controllers
                     //{
                     //    Console.WriteLine(p.FirstName + " - " + p.UserId + ", - " + p.DueDate);
                     //};
-                    var dd = decimal.Parse("10,33", CultureInfo.GetCultureInfo("el-GR"));
+                  //  var dd = decimal.Parse("10,33", CultureInfo.GetCultureInfo("el-GR"));
                     //clear citizen depts table
                     var all = from c in _context.CitizenDepts select c;
                     _context.CitizenDepts.RemoveRange(all);
