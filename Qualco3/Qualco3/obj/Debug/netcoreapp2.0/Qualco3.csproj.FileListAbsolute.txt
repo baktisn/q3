@@ -49,3 +49,16 @@ C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qua
 C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyInfo.cs
 C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.dll
 C:\Users\Stratos\Documents\GitHub\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.pdb
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.deps.json
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.runtimeconfig.json
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.runtimeconfig.dev.json
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.dll
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Qualco3.pdb
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Db.dll
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\bin\Debug\netcoreapp2.0\Db.pdb
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.csprojResolveAssemblyReference.cache
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.csproj.CoreCompileInputs.cache
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyInfoInputs.cache
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.AssemblyInfo.cs
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.dll
+C:\Users\sp\source\Git\Test\q3\Qualco3\Qualco3\obj\Debug\netcoreapp2.0\Qualco3.pdb
