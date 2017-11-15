@@ -1,106 +1,186 @@
 ﻿@model Db.Models.SubmitSelected
 @{
     ViewData["Title"] = "SubmitSelected";
+
 }
+<h2>SubmitSelected</h2>
+<div>
+    <dl class="table-danger">
+        <dt>
+            Συνολικό Ποσό :
+            @Html.DisplayFor(model => model.TotalAmount)
+        </dt>
+    </dl>
+</div>
 
-<hr />
-<h2>Το σύνολο του ποσού είναι: <span class="label label-default">$ @Html.DisplayFor(model => model.TotalAmount)</span></h2>
-<hr />
-<br />
-
-<<<<<<< HEAD
 @foreach (var item in Model.Bills)
 {
-    <table>
-        <thead>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Bill_description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ID)
-                </td>
-                <td>
+    <div>
+        <dl class="table-light">
+            <dt>
+               Περιγραφή Λογαρισμού @Html.DisplayFor(modelItem => item.Bill_description)
+            </dt>
+            <dt>
+               Κωδικός Λογαριασμού @Html.DisplayFor(modelItem => item.ID)
+            </dt>
+            <dt>
 
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-
-            </tr>
-        </tbody>
-    </table>
+              Ποσό Λογαριασμού  @Html.DisplayFor(modelItem => item.Amount)
+            </dt>
+    </dl>
+    </div>
 }
 
-=======
->>>>>>> DEV
-<form id="Login" method="post">
-    <div class="form-group">
-        @*@foreach (var item in Model.Bills)
-        
+
+        @foreach (var item in Model.SettlementTypesEnum)
         {
-            
-            <div class="editor-field">
-                <input type="text"
-                       name="@item.Bill_description"
-                       value="@item.ID" />
+            <div>
+                <dl class="table-bordered">
+                    <dt>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </dt>
+                    <dd>
+                      Μεγιστος Αριθμός Δόσεων  @Html.DisplayFor(modelItem => item.MaxNoInstallments)
+                    </dd>
+                    <dd>
+                      Τόκος  @Html.DisplayFor(modelItem => item.Interest) %
+                    </dd>
+                    <dd>
+
+                      Προκαταβολή  @Html.DisplayFor(modelItem => item.DownPaymentPercentage) %
+                    </dd>
+                </dl>
             </div>
-        }*@
-  
-           
-        <div class="col-md-10">
-            <label asp-for="SettlementType" class="col-md-2 control-label" hidden="hidden"></label>
-            <select asp-for="SettlementType" asp-items="@Model.SettlementTypes" onchange="onChange()"></select>
-        </div>
+        }
 
-        <input asp-for="BillsStr" asp-items="@Model.BillsStr" type="hidden">
-       
-        <div class="col-md-10">
-            <label asp-for="TotalAmount" class="col-md-2 control-label" type="hidden"></label>
-            <input asp-for="TotalAmount" asp-items="@Model.TotalAmount.ToString("N2")">
-        </div>
 
-        <div class="col-md-10">
-            <label asp-for="MaxNoOfInstallments" class="col-md-2 control-label"></label>
-            <select asp-for="MaxNoOfInstallments" asp-items="@Model.Installments" onchange="onChange()"></select>
-        </div>
 
-        <div class="col-md-10">
-            <label asp-for="Interest" class="col-md-2 control-label"></label>
-            <input asp-for="Interest" asp-items="@Model.Interest">
-        </div>
 
-        <div class="col-md-10">
-            <label asp-for="IsAccepted" class="col-md-2 control-label"></label>
-            <input asp-for="IsAccepted" asp-items="@Model.IsAccepted">
-        </div>
 
-        <div class="col-md-10">
-            <label asp-for="DownPayment" class="col-md-2 control-label"></label>
-            <input asp-for="DownPayment" asp-items="@Model.DownPayment">
-        </div>
-</div>
+        <div class="row">
+            <div class="col-md-4">
+                <section>
+                    <form id="Login" method="post">
+                            @*@foreach (var item in Model.Bills)
+
+                        {
+
+                            <div class="editor-field">
+                                <input type="text"
+                                       name="@item.Bill_description"
+                                       value="@item.ID" />
+                            </div>
+                        }*@
+                            <div class="form-group">
+                                    <label class="control-label">Επιλέξτε Τύπο Διακανονισμού </label>
+                                    <select asp-for="SettlementType" class="form-control" asp-items="@Model.SettlementTypes" onchange="onChange()"></select>
+                            </div>
+                        <div class="form-group">
+                            <label  class="control-label" type="hidden" id="MaxNoOfInstallmentslb">Επιλέξτε Αριθμό Δόσεων</label>
+                            <select asp-for="MaxNoOfInstallments" class="form-control" asp-items="@Model.Installments" onchange="onChange2()" ></select>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label"  id="Interestlb">Τόκος %</label>
+                            <input asp-for="Interest" class="form-control" asp-items="@Model.Interest" >
+                        </div>
+
+                        <div class="form-group">
+                            <label  class="control-label" id="DownPaymentlb">Προκαταβολή %</label>
+                            <input asp-for="DownPayment" class="form-control" asp-items="@Model.DownPayment">
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="IsAccepted" class="control-label" type="hidden" id="IsAcceptedlb"></label>
+                            <input asp-for="IsAccepted" class="form-control" asp-items="@Model.IsAccepted" type="hidden">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TotalAmount" class="control-label" type="hidden" id="TotalAmountlb"></label>
+                            <input asp-for="TotalAmount" class="form-control" asp-items="@Model.TotalAmount" >
+                        </div>
+
+                                <div class="form-group">
+                                     <input asp-for="BillsStr" class="form-control" asp-items="@Model.BillsStr">
+                                </div>
+
+                        <div class="form-group">
+                            <label asp-for="Monthly" class="control-label" type="hidden" id="Monthlylb"></label>
+                            <input asp-for="Monthly" class="form-control" asp-items="@Model.Monthly">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="DownPaymentValue" class="control-label" type="hidden" id="DownPaymentValuelb"></label>
+                            <input asp-for="DownPaymentValue" class="form-control" asp-items="@Model.DownPaymentValue">
+                        </div>
+                        
+                        <div id="SettlText" class="form-group">
+                        </div>
+
+                        
+
 </form>
-<div class="form-group">
-    <button type="submit" class="btn btn-default" onclick="Login1()"><i class="glyphicon glyphicon-log-in"></i> Procceed to Settlement</button>
-</div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default" onclick="Login1()"><i class="glyphicon glyphicon-log-in"></i> Procceed to Settlement</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+        <script type="text/javascript">
+
+              $(document).ready(function () {
+                  $('#TotalAmount').hide();
+                  $('#TotalAmountlb').hide();
+                  $('#Interest').hide();
+                  $('#Interestlb').hide();
+                  $('#DownPayment').hide();
+                  $('#DownPaymentlb').hide();
+                  $('#DownPaymentValue').hide();
+                  $('#DownPaymentValuelb').hide();
+                  $('#MaxNoOfInstallments').hide();
+                  $('#MaxNoOfInstallmentslb').hide();
+                  $('#Monthlylb').hide();
+                  $('#Monthly').hide();
+                  $('#IsAccepted').hide();
+                $('#IsAcceptedlb').hide();
+                $('#BillsStr').hide();
+
+              $('#TotalAmount').prop("disabled", true);
+              $('#Interest').prop("disabled", true);
+              $('#DownPayment').prop("disabled", true);
+              $('#IsAccepted').prop("disabled", true); 
+              $('#BillsStr').prop("disabled", true);
+              $('#DownPaymentValuelb').prop("disabled", true);
+              $('#Monthly').prop("disabled", true);
+                });
 
 
-    <script>
+
+        var selectElement = document.getElementById("SettlementType");
+        var selectElement2 = document.getElementById("MaxNoOfInstallments");
 
 
-
-    var selectElement = document.getElementById("SettlementType");
-    //selectElement.onchange = function () {
-    //    alert(selectElement.value);                                   // value of the selected element
-    //};
-
-        selectElement.onchange = function () {
-            $('#DownPayment').prop("disabled", false);
-            $('#IsAccepted').prop("disabled", false);
-            $('#BillsStr').prop("disabled", false);
-            $('#TotalAmount').prop("disabled", false);
-            $('#Interest').prop("disabled", false);
+            selectElement.onchange = function () {
+                $('#TotalAmount').prop("disabled", true);
+                $('#Interest').prop("disabled", true);
+                $('#DownPayment').prop("disabled", true);
+                $('#IsAccepted').prop("disabled", true);
+                $('#BillsStr').prop("disabled", true);
+                $('#Monthlylb').prop("disabled", true);
+                $('#Monthly').prop("disabled", true);
+                $('#TotalAmount').hide();
+                $('#TotalAmountlb').hide();
+                $('#Interest').hide();
+                $('#Interestlb').hide();
+                $('#DownPayment').hide();
+                $('#DownPaymentlb').hide();
+                $('#MaxNoOfInstallments').hide();
+                $('#MaxNoOfInstallmentslb').hide();
+                $('#BillsStr').hide();
+                $('#Monthlylb').hide();
+                $('#Monthly').hide();
+                $('#DownPaymentValue').hide();
+                $('#DownPaymentValuelb').hide();
 
             var data = $("#Login").serialize();
             $.ajax({
@@ -111,29 +191,84 @@
                 xhrFields: {
                     withCredentials: true
                 },
-                url: '@Url.Action("DDAjax","Bills")',
+                url: '@Url.Action("DDAjax1","Bills")',
+
+                success: function (result) {
+                    $('#MaxNoOfInstallments').empty();
+                   // debugger;
+                    console.log(result);
+                    for (var i = 0; i < result.length; i++) {
+                        var opt = new Option(result[i]);
+                        $("#MaxNoOfInstallments").append(opt);
+                    }
+                    $("#MaxNoOfInstallmentslb").show('slow');
+                    $("#MaxNoOfInstallments").show('slow');
+                }
+                ,
+                fail: function (result)
+                { alert("Error filling drop down") }
+            });
+
+        }
+
+
+        selectElement2.onchange = function () {
+            $('#BillsStr').prop("disabled", false);
+            $('#TotalAmount').prop("disabled", false);
+            $('#Interest').prop("disabled", true);
+            $('#DownPayment').prop("disabled", true);
+            $('#DownPaymentValue').prop("disabled", true);
+            $('#IsAccepted').prop("disabled", true);
+            var data = $("#Login").serialize();
+            $.ajax({
+                type: "Post",
+                datatype: "json",
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                data: data,
+                xhrFields: {
+                    withCredentials: true
+                },
+                url: '@Url.Action("DDAjax2","Bills")',
 
                 success: function (result, textstatus, xhr) {
 
-                    //alert(xhr.status + ' 2');
                         $('#DownPayment').val(result.downPayment);
+                        $('#DownPaymentValue').val(result.downPaymentValue);
                         $('#IsAccepted').val(result.isAccepted);
                         $('#Interest').val(result.interest);
-                        $('#BillsStr').val(result.billsStr);
-                        $('#TotalAmount').val(result.totalAmount);
                         $('#MaxNoOfInstallments').val(result.maxNoOfInstallments);
+                        $('#Monthly').val(result.monthly);
+                        $('#SettlText').text(result.settlText);
+
+                    
                         $('#BillsStr').prop("disabled", true);
                         $('#TotalAmount').prop("disabled", true);
                         $('#Interest').prop("disabled", true);
                         $('#DownPayment').prop("disabled", true);
                         $('#IsAccepted').prop("disabled", true);
-                        $("#DownPayment").show('slow');
-                        $("#IsAccepted").show('slow');
-                        $("#Interest").show('slow');
-                        $("#MaxNoOfInstallments").show('slow');
+
+
+                        $('#Interest').show('slow');
+                        $('#Interestlb').show('slow');
+                        $('#DownPayment').show('slow');
+                        $('#DownPaymentlb').show('slow');
+                        $('#MaxNoOfInstallments').show('slow');
+                        $('#MaxNoOfInstallmentslb').show('slow');
+                        $('#Monthlylb').show('slow');
+                        $('#Monthly').show('slow');
+                        $('#DownPaymentValue').show('slow');
+                        $('#DownPaymentValuelb').show('slow');
+
+
+                        $('#TotalAmount').show('slow');
+                        $('#TotalAmountlb').show('slow');
+                       // $('#BillsStr').show('slow');
 
 
                 }
+                ,
+                fail: function (result)
+                { alert("Error filling drop down") }
 
             });
         };
@@ -141,29 +276,9 @@
 
 
 
-        var helpers =
-            {
-                buildDropdown: function (result, dropdown, emptyMessage) {
-                    // Remove current options
-                    dropdown.html('');
-                    // Add the empty option with the empty message
-                    dropdown.append('<option value="">' + emptyMessage + '</option>');
-                    // Check result isnt empty
-                    if (result != '') {
-                        // Loop through each of the results and append the option to the dropdown
-                        $.each(result, function (k, v) {
-                            dropdown.append('<option value="' + v.id + '">' + v.name + '</option>');
-                        });
-                    }
-                }
-            }
 
 
 
 
-
-
-
-
-    </script>
+        </script>
 

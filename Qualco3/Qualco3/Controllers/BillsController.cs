@@ -95,7 +95,11 @@ namespace Qualco3.Controllers
 
 
             //return View(await applicationDbContext.ToListAsync());
-            var SetTypeDD = _context.SettlementTypes.OrderBy(c => c.Code).Select(x => new { Id = x.ID, Value = x.Code });
+            var SetTypeDD = _context.SettlementTypes
+                .OrderBy(c => c.Code)
+                .Select(x => new { Id = x.ID, Value = x.Code+ " " +x.Interest+" " +x.MaxNoInstallments });
+          
+
             List<int> Installments = new List<int> () {};
             //var db2 = await _context.SettlementTypes.ToListAsync();
             //var SetTypeDD = from x in db2
@@ -119,24 +123,54 @@ namespace Qualco3.Controllers
 
             model2.SettlementTypes = new SelectList(SetTypeDD, "Id", "Value");
             model2.Installments = new SelectList(Installments);
+            model2.SettlementTypesEnum = _context.SettlementTypes
+              .OrderBy(c => c.Code)
+              .AsEnumerable();
 
             return View(model2);
         }
 
 
         [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> DDAjax(SubmitSelected model)
+        public async Task<JsonResult>  DDAjax1(SubmitSelected model)
         {
-            model.BillsStr = model.BillsStr;
-                model.MaxNoOfInstallments = 1;
-                model.Interest = 3.5M;
-                model.IsAccepted = 1;
-                model.DownPayment = 1.5M;
-   
-            return DDAjaxBack(model);
+            var SType = await _context.SettlementTypes
+                .Where(c => c.ID.Equals(model.SettlementType))
+                .SingleOrDefaultAsync();
+
+            List<int> NoInstallments = new List<int>();
+            for (var m = 3; m <= SType.MaxNoInstallments; m += 3)
+            {
+                NoInstallments.Add(m);
+            }
+            
+            return Json(NoInstallments);
         }
-        private IActionResult DDAjaxBack(SubmitSelected model)
+
+
+        [HttpPost]
+        public IActionResult DDAjax2(SubmitSelected model)
+        {
+
+            SettlementTypes CurSettl =  _context.SettlementTypes
+                .Where(c => c.ID.Equals(model.SettlementType))
+                .SingleOrDefault();
+
+
+                //model.BillsStr = model.BillsStr;
+               // model.MaxNoOfInstallments = CurSettl.MaxNoInstallments;
+                model.Interest = CurSettl.Interest;
+                //model.IsAccepted = 0;
+                model.DownPayment = CurSettl.DownPaymentPercentage;
+            //model.TotalAmount=model.TotalAmount.ToString("N2");
+            model.DownPaymentValue = model.TotalAmount * CurSettl.DownPaymentPercentage / 100;
+            model.Monthly = MonthlyInstallments(model.TotalAmount, model.SettlementType, model.MaxNoOfInstallments);
+            model.SettlText = "Βάση των επιλογών σας ο διακανονισμός προβλέπει προκαταβολή " + model.DownPaymentValue + ", και " + model.MaxNoOfInstallments + " μηνιαίες δόσεις ποσού "+ model.Monthly;
+
+            return  DDAjaxBack(model);
+        }
+
+        private JsonResult DDAjaxBack(SubmitSelected model)
         {
             // do something with the model here
             // ...
@@ -146,11 +180,56 @@ namespace Qualco3.Controllers
 
 
 
+        public static decimal MonthlyInstallments(decimal amount, int type, int installments)
+        {
+            double interest;
+
+            switch (type)
+            {
+                case 1:
+                    amount = Math.Round(amount - ((amount * 10) / 100));
+                    interest = 4.1 / (12 * 100);
+
+                    return Calculate(amount, interest, installments);
+
+                case 2:
+                    amount = Math.Round(amount - ((amount * 20) / 100));
+                    interest = 3.9 / (12 * 100);
+
+                    return Calculate(amount, interest, installments);
+
+                case 3:
+                    amount = Math.Round(amount - ((amount * 30) / 100));
+                    interest = 3.6 / (12 * 100);
+
+                    return Calculate(amount, interest, installments);
+
+                case 4:
+                    amount = Math.Round(amount - ((amount * 40) / 100));
+                    interest = 3.2 / (12 * 100);
+
+                    return Calculate(amount, interest, installments);
+
+                case 5:
+                    amount = Math.Round(amount - ((amount * 50) / 100));
+                    interest = 2.6 / (12 * 100);
+
+                    return Calculate(amount, interest, installments);
+            }
 
 
+            decimal Calculate(decimal amount2, double interest2, int installm)
+            {
+                decimal Calc = (decimal)Math.Round(amount2 * ((decimal)interest2 * (decimal)Math.Pow((1 + interest2), installm)) / (((decimal)Math.Pow((1 + interest2), installm)) - 1), 2);
+                Console.WriteLine(Calc);
+                return Calc;
+            }
+
+            return 0;
+        }
 
 
-
+       
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(User); 
 
