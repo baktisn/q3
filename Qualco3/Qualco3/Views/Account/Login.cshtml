@@ -199,6 +199,7 @@
             <p class="title">Καλωσορίσατε</p>
             <div asp-validation-summary="All" class="text-danger" id="error" style="color:crimson"></div>
             <br />
+
             <div class="form-group">
                 <span asp-validation-for="Email" class="text-danger" style="color:crimson"></span>
                 <input asp-for="Email" type="text" class="form-control" id="Email" placeholder="Email" autofocus />
@@ -273,16 +274,16 @@
             $this.addClass('loading');
             $state.html('Authenticating');
 
-            Login1(e);
+            
 
                 setTimeout(function () {
                     $state.html('Log in');
                     $this.removeClass('ok loading');
                     working = false;
 
-                }, 1000);
+                }, 4000);
           
-
+                Login1(e);
         });
 
         var Login1 = function (e)
