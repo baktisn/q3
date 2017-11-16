@@ -60,67 +60,59 @@
         <div class="row">
             <div class="col-md-4">
                 <section>
-                    <form id="Login" method="post">
-                            @*@foreach (var item in Model.Bills)
-
-                        {
-
-                            <div class="editor-field">
-                                <input type="text"
-                                       name="@item.Bill_description"
-                                       value="@item.ID" />
-                            </div>
-                        }*@
+                   
+                    <form id="Settlemetns"   >
+                          
                             <div class="form-group">
-                                    <label class="control-label">Επιλέξτε Τύπο Διακανονισμού </label>
-                                    <select asp-for="SettlementType" class="form-control" asp-items="@Model.SettlementTypes" onchange="onChange()"></select>
+                                <label class="control-label">Επιλέξτε Τύπο Διακανονισμού </label>
+                                <select asp-for="SettlementType" class="form-control" asp-items="@Model.SettlementTypes" onchange="onChange()"></select>
                             </div>
-                        <div class="form-group">
-                            <label  class="control-label" type="hidden" id="MaxNoOfInstallmentslb">Επιλέξτε Αριθμό Δόσεων</label>
-                            <select asp-for="MaxNoOfInstallments" class="form-control" asp-items="@Model.Installments" onchange="onChange2()" ></select>
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label"  id="Interestlb">Τόκος %</label>
-                            <input asp-for="Interest" class="form-control" asp-items="@Model.Interest" >
-                        </div>
+                            <div class="form-group">
+                                <label class="control-label" type="hidden" id="MaxNoOfInstallmentslb">Επιλέξτε Αριθμό Δόσεων</label>
+                                <select asp-for="MaxNoOfInstallments" class="form-control" asp-items="@Model.Installments" onchange="onChange2()"></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" id="Interestlb">Τόκος %</label>
+                                <input asp-for="Interest" class="form-control" asp-items="@Model.Interest">
+                            </div>
 
-                        <div class="form-group">
-                            <label  class="control-label" id="DownPaymentlb">Προκαταβολή %</label>
-                            <input asp-for="DownPayment" class="form-control" asp-items="@Model.DownPayment">
-                        </div>
+                            <div class="form-group">
+                                <label class="control-label" id="DownPaymentlb">Προκαταβολή %</label>
+                                <input asp-for="DownPayment" class="form-control" asp-items="@Model.DownPayment">
+                            </div>
 
-                        <div class="form-group">
-                            <label asp-for="IsAccepted" class="control-label" type="hidden" id="IsAcceptedlb"></label>
-                            <input asp-for="IsAccepted" class="form-control" asp-items="@Model.IsAccepted" type="hidden">
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="TotalAmount" class="control-label" type="hidden" id="TotalAmountlb"></label>
-                            <input asp-for="TotalAmount" class="form-control" asp-items="@Model.TotalAmount" >
-                        </div>
+                            <div class="form-group">
+                                <label asp-for="IsAccepted" class="control-label" type="hidden" id="IsAcceptedlb"></label>
+                                <input asp-for="IsAccepted" class="form-control" asp-items="@Model.IsAccepted" type="hidden">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TotalAmount" class="control-label" type="hidden" id="TotalAmountlb"></label>
+                                <input asp-for="TotalAmount" class="form-control" asp-items="@Model.TotalAmount">
+                            </div>
 
-                                <div class="form-group">
-                                     <input asp-for="BillsStr" class="form-control" asp-items="@Model.BillsStr">
-                                </div>
+                            <div class="form-group">
+                                <input asp-for="BillsStr" class="form-control" asp-items="@Model.BillsStr">
+                            </div>
 
-                        <div class="form-group">
-                            <label asp-for="Monthly" class="control-label" type="hidden" id="Monthlylb"></label>
-                            <input asp-for="Monthly" class="form-control" asp-items="@Model.Monthly">
-                        </div>
+                            <div class="form-group">
+                                <label asp-for="Monthly" class="control-label" type="hidden" id="Monthlylb"></label>
+                                <input asp-for="Monthly" class="form-control" asp-items="@Model.Monthly">
+                            </div>
 
 
-                        <div class="form-group">
-                            <label asp-for="DownPaymentValue" class="control-label" type="hidden" id="DownPaymentValuelb"></label>
-                            <input asp-for="DownPaymentValue" class="form-control" asp-items="@Model.DownPaymentValue">
-                        </div>
-                        
-                        <div id="SettlText" class="form-group">
-                        </div>
+                            <div class="form-group">
+                                <label asp-for="DownPaymentValue" class="control-label" type="hidden" id="DownPaymentValuelb"></label>
+                                <input asp-for="DownPaymentValue" class="form-control" asp-items="@Model.DownPaymentValue">
+                            </div>
 
-                        
+                            <div id="SettlText" class="form-group">
+                            </div>
 
-</form>
+
+
+                        </form>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default" onclick="Login1()"><i class="glyphicon glyphicon-log-in"></i> Procceed to Settlement</button>
+                        <button id="Submit" type="button" class="btn btn-default" onclick="Submit()"><i class="glyphicon glyphicon-log-in"></i> Procceed to Settlement</button>
                     </div>
                 </section>
             </div>
@@ -144,14 +136,17 @@
                   $('#IsAccepted').hide();
                 $('#IsAcceptedlb').hide();
                 $('#BillsStr').hide();
+                $('#Submit').hide();
+                $('#SettlText').hide();
 
               $('#TotalAmount').prop("disabled", true);
               $('#Interest').prop("disabled", true);
               $('#DownPayment').prop("disabled", true);
-              $('#IsAccepted').prop("disabled", true); 
+              $('#IsAccepted').prop("disabled", true);
               $('#BillsStr').prop("disabled", true);
               $('#DownPaymentValuelb').prop("disabled", true);
               $('#Monthly').prop("disabled", true);
+              $('#Submit').prop("disabled", true);
                 });
 
 
@@ -168,6 +163,7 @@
                 $('#BillsStr').prop("disabled", true);
                 $('#Monthlylb').prop("disabled", true);
                 $('#Monthly').prop("disabled", true);
+                $('#Submit').prop("disabled", true);
                 $('#TotalAmount').hide();
                 $('#TotalAmountlb').hide();
                 $('#Interest').hide();
@@ -181,8 +177,14 @@
                 $('#Monthly').hide();
                 $('#DownPaymentValue').hide();
                 $('#DownPaymentValuelb').hide();
+                $('#Submit').hide();
+                $('#SettlText').hide();
 
-            var data = $("#Login").serialize();
+                var data = $("#Settlemetns").serialize();
+                if ($('#SettlementType :selected').text() == '') {
+                    alert("Θα πρέπει να επιλέξετε ένα τύπο διακανονισμού!" );
+                   return;
+                }
             $.ajax({
                 type: "Post",
                 datatype: "json",
@@ -212,14 +214,21 @@
         }
 
 
-        selectElement2.onchange = function () {
-            $('#BillsStr').prop("disabled", false);
-            $('#TotalAmount').prop("disabled", false);
-            $('#Interest').prop("disabled", true);
-            $('#DownPayment').prop("disabled", true);
-            $('#DownPaymentValue').prop("disabled", true);
-            $('#IsAccepted').prop("disabled", true);
-            var data = $("#Login").serialize();
+            selectElement2.onchange = function () {
+                $('#BillsStr').prop("disabled", false);
+                $('#TotalAmount').prop("disabled", false);
+                $('#Interest').prop("disabled", true);
+                $('#DownPayment').prop("disabled", true);
+                $('#DownPaymentValue').prop("disabled", true);
+                $('#IsAccepted').prop("disabled", true);
+                $('#Submit').prop("disabled", true);
+
+                var data = $("#Settlemetns").serialize();
+
+                if ($('#MaxNoOfInstallments :selected').text() == '0')
+                   {alert('Δεν μπορείτε να επιλέξετε 0 δόσεις!Κάντε μια νέα επιλογή');
+                    return;}
+
             $.ajax({
                 type: "Post",
                 datatype: "json",
@@ -240,12 +249,13 @@
                         $('#Monthly').val(result.monthly);
                         $('#SettlText').text(result.settlText);
 
-                    
+
                         $('#BillsStr').prop("disabled", true);
                         $('#TotalAmount').prop("disabled", true);
                         $('#Interest').prop("disabled", true);
                         $('#DownPayment').prop("disabled", true);
                         $('#IsAccepted').prop("disabled", true);
+                        $('#Submit').prop("disabled", false);
 
 
                         $('#Interest').show('slow');
@@ -258,10 +268,10 @@
                         $('#Monthly').show('slow');
                         $('#DownPaymentValue').show('slow');
                         $('#DownPaymentValuelb').show('slow');
-
-
-                        $('#TotalAmount').show('slow');
-                        $('#TotalAmountlb').show('slow');
+                        $('#SettlText').show('slow');
+                      //  $('#TotalAmount').show('slow');
+                     //   $('#TotalAmountlb').show('slow');
+                        $('#Submit').show('slow');
                        // $('#BillsStr').show('slow');
 
 
@@ -274,9 +284,71 @@
         };
 
 
+            //function ConfirmDialog(message) {
+            //    $('<div></div>').appendTo('body')
+            //        .html('<div><h6>' + message + '?</h6></div>')
+            //        .dialog({
+            //            modal: true, title: 'Delete message', zIndex: 10000, autoOpen: true,
+            //            width: 'auto', resizable: false,
+            //            buttons: {
+            //                Yes: function () {
+            //                    // $(obj).removeAttr('onclick');                                
+            //                    // $(obj).parents('.Parent').remove();
+
+            //                    $('body').append('<h1>Confirm Dialog Result: <i>Yes</i></h1>');
+
+            //                    $(this).dialog("close");
+            //                },
+            //                No: function () {
+            //                    $('body').append('<h1>Confirm Dialog Result: <i>No</i></h1>');
+
+            //                    $(this).dialog("close");
+            //                }
+            //            },
+            //            close: function (event, ui) {
+            //                $(this).remove();
+            //            }
+            //        });
+            //};
 
 
 
+        var Submit = function (e)
+        {
+            //ConfirmDialog('Θελετε να αποσταλεί το αίτημαδιακανονισμού στην τράπεζα?')
+            if (confirm('Θελετε να αποσταλεί το αίτημα διακανονισμού στην τράπεζα?')) {
+                
+            } else {
+                return;
+            }
+          // e.preventDefault();
+            $('#BillsStr').prop("disabled", false);
+            $('#TotalAmount').prop("disabled", false);
+            $('#Interest').prop("disabled", false);
+            $('#DownPayment').prop("disabled", false);
+            $('#DownPaymentValue').prop("disabled", false);
+            $('#IsAccepted').prop("disabled", false);
+            var data = $("#Settlemetns").serialize();
+
+            $.ajax({
+                type: "Post",
+                datatype: "json",
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                data: data,
+                xhrFields: {
+                withCredentials: true
+                },
+                url: '@Url.Action("Submit","Bills")',
+
+                success: function (result) {
+                    alert("Ο Διακανονισμός που έχετε προτείνει θα αποσταλεί προς έκγκριση")
+                    window.location.replace("../Bills/Index");
+                },
+                fail: function (result) 
+                { alert("Error");}
+
+            });
+        };
 
 
 

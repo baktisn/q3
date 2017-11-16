@@ -10,6 +10,11 @@
 
 <hr />
 
+<td>
+    @Html.DisplayFor(model => model.Amount)
+</td>
+
+
 <div class="container">
     <div class="form-horizontal" role="form">
         <fieldset>
@@ -85,6 +90,23 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
+@*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+}*@
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+    $('#payment-form').submit(function () {
+
+    if (!$('#card-holder-name').val() || !$('#card-number').val() || $('#expiry-month').val()=="Month" || !$('#cvv').val() ) 
+        {
+            alert("Θα πρέπει να συμπληρώσετε όλα τα πεδία!");
+            return false;
+        }
+        else{}
+    });
+
+</script>

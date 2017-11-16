@@ -9,6 +9,7 @@ using Db.Data;
 using Db.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Globalization;
 
 
 namespace Qualco3.Controllers
@@ -62,24 +63,23 @@ namespace Qualco3.Controllers
         [HttpPost]
         public async Task<IActionResult> SubmitSelected(BillSelectionViewModel model)
         {
-            // get the ids of the items selected:
+
             var selectedIds = model.getSelectedIds();
-            // Use the ids to retrieve the records for the selected people
-            // from the database:
+
             var userid = _userManager.GetUserId(User);
             var user = GetCurrentUserAsync();
 
             var applicationDbContext = _context.Bills.Include(b => b.ApplicationUser).Include(b => b.PaymentMethods).Include(b => b.Settlement).Where(b => b.UserId == userid);
-            //return View(await applicationDbContext.ToListAsync());
+         
             var db = await applicationDbContext.ToListAsync();
             decimal amount = 0;
             var selectedBill = from x in db
                                where selectedIds.Contains(x.ID)
                                  select x;
-            // Process according to your requirements:
+     
             foreach (var bill in selectedBill)
             {
-                //bill.Amount = bill.Amount + amount;
+
                  amount += bill.Amount;
              
                 System.Diagnostics.Debug.WriteLine(bill.ID + " " +bill.Bill_description  +"  " + bill.Amount.ToString() );
@@ -89,25 +89,14 @@ namespace Qualco3.Controllers
             System.Diagnostics.Debug.WriteLine(model.TotalAmount.ToString());
 
 
-            // Redirect somewhere meaningful (probably to somewhere showing 
-            // the results of your processing):
-            // return RedirectToAction("Index", "Settlements");
-
-
-            //return View(await applicationDbContext.ToListAsync());
             var SetTypeDD = _context.SettlementTypes
                 .OrderBy(c => c.Code)
-                .Select(x => new { Id = x.ID, Value = x.Code+ " " +x.Interest+" " +x.MaxNoInstallments });
-          
+                .Select(x => new { Id = x.ID, Value = x.Code });
+            // .Select(x => new { Id = x.ID, Value = x.Code+ " " +x.Interest+" " +x.MaxNoInstallments });
+
 
             List<int> Installments = new List<int> () {};
-            //var db2 = await _context.SettlementTypes.ToListAsync();
-            //var SetTypeDD = from x in db2
-            //                    select x;
-            //foreach (var i in SetTypeDD)
-            //{
-            //  Console.WriteLine(i.ID + " " + i.DownPaymentPercentage + "  " + i.Interest);
-            //}
+
             SubmitSelected model2 = new SubmitSelected
             {
                 Bills = selectedBill,
@@ -138,7 +127,9 @@ namespace Qualco3.Controllers
                 .Where(c => c.ID.Equals(model.SettlementType))
                 .SingleOrDefaultAsync();
 
+
             List<int> NoInstallments = new List<int>();
+            NoInstallments.Add(0);
             for (var m = 3; m <= SType.MaxNoInstallments; m += 3)
             {
                 NoInstallments.Add(m);
@@ -156,25 +147,66 @@ namespace Qualco3.Controllers
                 .Where(c => c.ID.Equals(model.SettlementType))
                 .SingleOrDefault();
 
-
-                //model.BillsStr = model.BillsStr;
-               // model.MaxNoOfInstallments = CurSettl.MaxNoInstallments;
                 model.Interest = CurSettl.Interest;
-                //model.IsAccepted = 0;
+
                 model.DownPayment = CurSettl.DownPaymentPercentage;
-            //model.TotalAmount=model.TotalAmount.ToString("N2");
-            model.DownPaymentValue = model.TotalAmount * CurSettl.DownPaymentPercentage / 100;
-            model.Monthly = MonthlyInstallments(model.TotalAmount, model.SettlementType, model.MaxNoOfInstallments);
-            model.SettlText = "Βάση των επιλογών σας ο διακανονισμός προβλέπει προκαταβολή " + model.DownPaymentValue + ", και " + model.MaxNoOfInstallments + " μηνιαίες δόσεις ποσού "+ model.Monthly;
+            model.DownPaymentValue = Math.Round(model.TotalAmount * CurSettl.DownPaymentPercentage / 100,2);
+            model.Monthly = Math.Round(MonthlyInstallments(model.TotalAmount, model.SettlementType, model.MaxNoOfInstallments),2);
+            model.SettlText = "Βάσει των επιλογών σας ο διακανονισμός προβλέπει προκαταβολή " + model.DownPaymentValue + ", και " + model.MaxNoOfInstallments + " μηνιαίες δόσεις ποσού "+ model.Monthly;
 
             return  DDAjaxBack(model);
         }
 
+
+      //insert Setllement
+        [HttpPost]
+        public async Task<IActionResult>  Submit(SubmitSelected model)
+        {
+
+            //checked if data have changed
+            SettlementTypes CurSettl = _context.SettlementTypes
+                 .Where(c => c.ID.Equals(model.SettlementType))
+                 .SingleOrDefault();
+
+                
+                Settlements NewSettlement = new Settlements();
+
+                NewSettlement.RequestDate = DateTime.Now;
+                NewSettlement.AnswerDate = DateTime.ParseExact("19000101", "yyyyMMdd", CultureInfo.InvariantCulture);
+                NewSettlement.DownPayment = CurSettl.DownPaymentPercentage;
+                NewSettlement.Installments = model.MaxNoOfInstallments;
+                NewSettlement.Interest = CurSettl.Interest;
+                NewSettlement.IsAccepted = 0;
+                NewSettlement.SettlementTypeId = model.SettlementType;
+                _context.Settlements.Add(NewSettlement);
+                await _context.SaveChangesAsync();
+                int NewSettlementId = NewSettlement.ID;
+
+                string[] BillIds;
+                BillIds = model.BillsStr.Split(',');
+
+
+                for (var i = 0; i < BillIds.Length - 1; i++)
+                {
+                    var cols = _context.Bills
+                        .Where(w => w.ID == Int32.Parse(BillIds[i]));
+
+                    foreach (var b in cols)
+                    {
+                        b.Status = 2;
+                        b.SettlementId = NewSettlementId;
+                    }
+                    await _context.SaveChangesAsync();
+
+
+                }
+                return DDAjaxBack(model);
+
+            
+        }
+
         private JsonResult DDAjaxBack(SubmitSelected model)
         {
-            // do something with the model here
-            // ...
-            Console.WriteLine("iiiiiiiiiiii" + model.MaxNoOfInstallments.ToString());
             return Json(model);
         }
 
@@ -228,8 +260,7 @@ namespace Qualco3.Controllers
             return 0;
         }
 
-
-       
+   
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(User); 
 
@@ -372,6 +403,7 @@ namespace Qualco3.Controllers
         }
 
         // GET: Bills/CreditCardPayment/5
+
         public async Task<IActionResult> CreditCardPayment(int? id)
         {
             if (id == null)
@@ -397,7 +429,7 @@ namespace Qualco3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PaymentConfirmed(int id)
         {
-            Console.WriteLine("Bill Id   ---------  " + id.ToString());
+            //Console.WriteLine("Bill Id   ---------  " + id.ToString());
             var cols = _context.Bills.Where(w => w.ID == id);
 
             foreach (var b in cols)

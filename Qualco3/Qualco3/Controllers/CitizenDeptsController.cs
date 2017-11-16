@@ -241,11 +241,11 @@ namespace Qualco3.Controllers
                             NewBill.PaymentMethodId = 1;
                             NewBill.SettlementId = 1;    
                             NewBillsls.Add(NewBill);
-                             NewBill = new Bills();
+                            NewBill = new Bills();
                         //_context.Bills.Add(NewBill);
                     }
 
-
+                    //.... needs delete bills
 
                     foreach (var c in NewBillsls)
                     {
