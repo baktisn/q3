@@ -14,7 +14,14 @@
     <script src="~/lib/datatables/media/js/dataTables.bootstrap.min.js" asp-append-version="true"></script>
 </environment>
 
-<div class="box">
+
+
+
+
+
+
+
+@*<div class="box">
     <div class="box-body table-responsive">
         <table class="table table-bordered table-hover" id="TableId" cellspacing="0" align="center">
             <thead>
@@ -41,61 +48,61 @@
             <button class="btn btn-sm btn-primary" type="submit">Submit</button>
         </form>
     </div>
-</div>
+</div>*@
 
-<script>
-    $(document).ready(function () {
-        $('#TableId').DataTable(
-            {
-                searchDelay: 500,
-                "columnDefs": [
-                    { "width": "5%", "targets": [0] },
-                    { "className": "text-center", "targets": [0, 1, 2, 3, 4, 5, 6] },
-                    { "defaultContent": "<button class='btn btn-primary btn-sm'>Details</button>", "targets": [7] },
-                    { "searchable": false, "targets": [0, 2, 4, 5, 6] },
-                    {
-                        "render": function (data, type, row) {
-                            return ' <label class="label label-primary">' + data + '</label>';
-                        },
-                        "targets": [4]
-                    },
-                    {
-                        "render": function (data, type, row) {
-                            if (row['quantity'] > 1)
-                                return ' <label class="label label-success">' + row['quantity'] + '</label>'
-                            else
-                                return ' <label class="label label-default">' + row['quantity'] + '</label>';
-                        },
-                        "targets": [2]
-                    },
-                ],
-                "language":
+@*<script>
+        $(document).ready(function () {
+            $('#TableId').DataTable(
                 {
-                    "processing": "<div class=''><i class='fa fa-cog fa-spin site-loader-color'></i></div>",
-                    "search": "filter",
-                    "searchPlaceholder": "track num or product"
-                },
-                "processing": true,
-                "serverSide": true,
-                "ajax":
-                {
-                    "url": "/Home/GetData",
-                    "type": "POST",
-                    "dataType": "JSON"
-                },
-                "columns": [
-                    { "data": "sr" },
-                    { "data": "ordertracknumber" },
-                    { "data": "quantity" },
-                    { "data": "productname" },
-                    { "data": "specialoffer" },
-                    { "data": "unitprice" },
-                    { "data": "unitpricediscount" },
-                ],
-                "dom": "<'row'<'col-sm-6'l><'col-sm-6'<'#buttonContainer.site-datatable-button-container'>f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-            });
+                    searchDelay: 500,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "className": "text-center", "targets": [0, 1, 2, 3, 4, 5, 6] },
+                        { "defaultContent": "<button class='btn btn-primary btn-sm'>Details</button>", "targets": [7] },
+                        { "searchable": false, "targets": [0, 2, 4, 5, 6] },
+                        {
+                            "render": function (data, type, row) {
+                                return ' <label class="label label-primary">' + data + '</label>';
+                            },
+                            "targets": [4]
+                        },
+                        {
+                            "render": function (data, type, row) {
+                                if (row['quantity'] > 1)
+                                    return ' <label class="label label-success">' + row['quantity'] + '</label>'
+                                else
+                                    return ' <label class="label label-default">' + row['quantity'] + '</label>';
+                            },
+                            "targets": [2]
+                        },
+                    ],
+                    "language":
+                    {
+                        "processing": "<div class=''><i class='fa fa-cog fa-spin site-loader-color'></i></div>",
+                        "search": "filter",
+                        "searchPlaceholder": "track num or product"
+                    },
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax":
+                    {
+                        "url": "/Home/GetData",
+                        "type": "POST",
+                        "dataType": "JSON"
+                    },
+                    "columns": [
+                        { "data": "sr" },
+                        { "data": "ordertracknumber" },
+                        { "data": "quantity" },
+                        { "data": "productname" },
+                        { "data": "specialoffer" },
+                        { "data": "unitprice" },
+                        { "data": "unitpricediscount" },
+                    ],
+                    "dom": "<'row'<'col-sm-6'l><'col-sm-6'<'#buttonContainer.site-datatable-button-container'>f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                });
 
-        $("#buttonContainer").addClass("pull-right").append("<button class='btn btn-sm bg-olive'>Create</button>");
+            $("#buttonContainer").addClass("pull-right").append("<button class='btn btn-sm bg-olive'>Create</button>");
 
-    });
-</script>
+        });
+    </script>*@

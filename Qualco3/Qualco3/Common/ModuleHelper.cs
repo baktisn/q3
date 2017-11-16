@@ -55,7 +55,7 @@ namespace Qualco3.Common
                         Type = SidebarMenuType.Link,
                         Name = "Home",
                         IconClassName = "fa fa-link",
-                        URLPath = "/",
+                        URLPath = "/Home/Index",
                         LinkCounter = counter,
                     };
                 case Module.Login:

@@ -37,8 +37,7 @@ namespace Db.Data
         public DbSet<Db.Models.CitizenDepts> CitizenDepts { get; set; }
 
         public DbSet<Db.Models.Message> Message { get; set; }
-
-     //   public DbSet<Db.Models.SidebarMenu> SidebarMenu { get; set; }
+        
 
     }
 }

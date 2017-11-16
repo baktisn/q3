@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Qualco3.ViewComponents
 {
+    
     public class HeaderViewComponent : ViewComponent
     {
 
