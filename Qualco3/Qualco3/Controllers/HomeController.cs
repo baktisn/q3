@@ -14,7 +14,6 @@ namespace Qualco3.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-
     public class HomeController : Controller
 
     {

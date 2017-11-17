@@ -20,6 +20,7 @@ namespace Qualco3.Common
             Settlements,
             ApplicationUsers,
             GetFile,
+            PostFile,
             Error,
             Contact
         }
@@ -95,6 +96,15 @@ namespace Qualco3.Common
                         Name = "Get File",
                         IconClassName = "fa fa-group",
                         URLPath = "/CitizenDepts/GetFile",
+                        LinkCounter = counter,
+                    };
+                case Module.PostFile:
+                    return new SidebarMenu
+                    {
+                        Type = SidebarMenuType.Link,
+                        Name = "Post File",
+                        IconClassName = "fa fa-group",
+                        URLPath = "/PostFile/PostFile",
                         LinkCounter = counter,
                     };
                 case Module.Contact:
