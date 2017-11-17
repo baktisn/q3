@@ -6,7 +6,7 @@
 
 <h2>Bills</h2>
 
-@using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
+@using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" ,id="myForm"}))
 {
     <html>
     <head>
@@ -41,3 +41,26 @@
     <br />
     <button type="submit" class="btn btn-primary" name="operation" id="sumbit">Submit Selected</button>
 }
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    var countChecked = function () {
+        var n = $("input:checked").length;
+       // alert((n + (n === 1 ? " is" : " are") + " checked!"));
+        return n;
+    };
+    //countChecked();
+
+    $('#myForm').submit(function () {
+       
+        if (countChecked() == 0)
+        {
+            alert('Πρέπει να επιλέξετε έστω εναν λογαριασμό για να προχωρήσετε σε διακανονισμό');
+            return false;
+        }
+       
+    });
+
+    </script>

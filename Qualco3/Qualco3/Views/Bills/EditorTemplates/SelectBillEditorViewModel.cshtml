@@ -31,9 +31,16 @@
             <a asp-action="CreditCardPayment" asp-route-id="@Model.ID"><span class="glyphicon glyphicon-euro"></span> Πληρωμή Λογαριασμού </a>
 
         }
-        else
+        else if (@Model.Status == 1)
         {
             <p>Paid Bill</p>
         }
+        else
+        {
+            <p>Προς έγκριση διακανονισμού</p>
+        }
     </td>
 </tr>
+
+
+

@@ -10,6 +10,7 @@ using MailKit.Net.Smtp;
 
 
 
+
 ///
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.FileExtensions;
@@ -22,10 +23,12 @@ using System.Text;
 //using Microsoft.Azure.WebJobs;
 using Db.Models.AccountViewModels;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 /// 
 
 namespace Qualco3.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CitizenDeptsController : Controller
     {
 
@@ -38,6 +41,7 @@ namespace Qualco3.Controllers
             _userManager = userManager;
         }
 
+       
         public async Task<IActionResult> GetFile()
         {
             try
@@ -48,14 +52,17 @@ namespace Qualco3.Controllers
 
                 IConfigurationRoot configuration = builder.Build();
                 var allCitDebtsLines = new string[10000000];
-                var allSettlementsLines = new string[10000000];
-                var allPaymentLines = new string[10000000];
+
                 //  while (true)
                 //{
                 //  if (DateTime.Now.AddHours(3).ToShortTimeString() == "09:58:00 aM")
                 // {
-                List<string> fileNames = new List<string>();
-                List<string[]> lstCloudFilesdata = new List<string[]>();
+
+
+                //List<string> fileNames = new List<string>();
+                //List<string[]> lstCloudFilesdata = new List<string[]>();
+
+
                 CloudStorageAccount storageAccount = CloudStorageAccount.Parse($"{configuration["ConnectionString1"]}");
                 CloudFileClient fileClient = storageAccount.CreateCloudFileClient();
                 CloudFileShare fileShare = fileClient.GetShareReference("import");
@@ -241,9 +248,21 @@ namespace Qualco3.Controllers
                             NewBill.PaymentMethodId = 1;
                             NewBill.SettlementId = 1;    
                             NewBillsls.Add(NewBill);
-                             NewBill = new Bills();
+                            NewBill = new Bills();
                         //_context.Bills.Add(NewBill);
                     }
+
+                    //....  delete bills
+                    var allBills = from c in _context.Bills select c;
+                    _context.Bills.RemoveRange(allBills);
+                    await _context.SaveChangesAsync();
+
+                    //....  delete settlements
+                    _context.Settlements.RemoveRange(
+                                        _context.Settlements
+                                         .Where(s => s.ID !=1 )
+                                                             );
+                    await _context.SaveChangesAsync();
 
 
 
@@ -321,7 +340,7 @@ namespace Qualco3.Controllers
             message.Subject = "Your Temporary Password";
 
             var bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = @"<b>Dear " + lastName + ",</b></br> This is your temporary random generated password --<< <i>" + TempPass + "</i>  >>-- .</br>Please login with that and change it immediatelly ";
+            bodyBuilder.HtmlBody = @"<b>Dear " + lastName + ",</b></br> This is your temporary random generated password:  <b><i>" + TempPass + "</i></b>  .</br>Please login with that and change it immediatelly ";
             message.Body = bodyBuilder.ToMessageBody();
 
             //message.Body = new TextPart("plain")

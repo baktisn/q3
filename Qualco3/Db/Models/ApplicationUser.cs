@@ -20,6 +20,6 @@ namespace Db.Models
         public bool IsEmailed { get; set; }
 
 
-        public ICollection<Bills> Bills { get; set; }
+        public List<Bills> Bills { get; set; }
     }
 }
