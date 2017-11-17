@@ -4,7 +4,6 @@
     ViewBag.Title = "Bills";
 }
 
-<h2>Bills</h2>
 
 @using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform", id = "myForm" }))
 {
@@ -34,40 +33,42 @@
                         </table>
                     </div>
                 </div>
-                </div>
             </div>
+        </div>
        
     </body>
-    </html>
-    <hr />
-    <br />
-    <button type="submit" class="btn btn-primary" name="operation" id="sumbit">Submit Selected</button>
+</html>
+    <button type="submit" class="btn btn-primary btn-sm" name="operation" id="sumbit">New Settlement</button>
     }
 
-<br />
-<div class="col-md-6">
-    <div class="box box-solid">
+<hr />
+<hr />
+<div class="col-md-4">
+    <div class="box collapsed-box">
         <div class="box-header with-border">
-            <i class="fa fa-text-width"></i>
-
-            <h3 class="box-title">Description</h3>
+            <i class="fa fa-info"></i>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <h3 class="box-title">Information</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
             <dl>
-                <dt>Description lists</dt>
-                <dd>A description list is perfect for defining terms.</dd>
-                <dt>Euismod</dt>
-                <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
-                <dd>Donec id elit non mi porta gravida at eget metus.</dd>
-                <dt>Malesuada porta</dt>
-                <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+                <dt>Direct Payment</dt>
+                <dd>Use the buttons next to each bll you want to pay.</dd>
+                <dt>Settlements</dt>
+                <dd>1. Select the bills you want to set a new settlement.</dd>
+                <dd>2. Select "New Settlement" butons</dd>
             </dl>
         </div>
-        <!-- /.box-body -->
     </div>
-    <!-- /.box -->
 </div>
+
+
+
 
     <script type="text/javascript">
 

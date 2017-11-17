@@ -253,7 +253,6 @@ namespace Qualco3.Controllers
             decimal Calculate(decimal amount2, double interest2, int installm)
             {
                 decimal Calc = (decimal)Math.Round(amount2 * ((decimal)interest2 * (decimal)Math.Pow((1 + interest2), installm)) / (((decimal)Math.Pow((1 + interest2), installm)) - 1), 2);
-                Console.WriteLine(Calc);
                 return Calc;
             }
 
