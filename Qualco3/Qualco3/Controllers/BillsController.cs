@@ -93,19 +93,19 @@ namespace Qualco3.Controllers
 
 
             var db = await applicationDbContext.ToListAsync();
-            if (db.Count() == 0)
-            {
-                return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα\nΔεν έχετε εκκρεμείς λογαριασμούς!</b>");
-            }
+            //if (db.Count() == 0)
+            //{
+            //    return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα\nΔεν έχετε εκκρεμείς λογαριασμούς!</b>");
+            //}
             decimal amount = 0;
             var selectedBill = from x in db
                                where selectedIds.Contains(x.ID)
                                  select x;
 
-            if (selectedBill.Count() == 0)
-            {
-                return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα\nΔεν έχετε επιλέξει λογαριασμούς!");
-            }
+            //if (selectedBill.Count() == 0)
+            //{
+            //    return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα\nΔεν έχετε επιλέξει λογαριασμούς!");
+            //}
 
 
             foreach (var bill in selectedBill)

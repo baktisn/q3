@@ -13725,11 +13725,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Stratos\\Source\\Repos\\NewUI\\q3\\Qualco3\\Qualco3\\Qualco3.csproj",
+      "projectUniqueName": "C:\\Users\\Stratos\\source\\repos\\NewUI\\q3\\Qualco3\\Qualco3\\Qualco3.csproj",
       "projectName": "Qualco3",
-      "projectPath": "C:\\Users\\Stratos\\Source\\Repos\\NewUI\\q3\\Qualco3\\Qualco3\\Qualco3.csproj",
+      "projectPath": "C:\\Users\\Stratos\\source\\repos\\NewUI\\q3\\Qualco3\\Qualco3\\Qualco3.csproj",
       "packagesPath": "C:\\Users\\Stratos\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Stratos\\Source\\Repos\\NewUI\\q3\\Qualco3\\Qualco3\\obj\\",
+      "outputPath": "C:\\Users\\Stratos\\source\\repos\\NewUI\\q3\\Qualco3\\Qualco3\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -13748,8 +13748,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\Stratos\\Source\\Repos\\NewUI\\q3\\Qualco3\\Db\\Db.csproj": {
-              "projectPath": "C:\\Users\\Stratos\\Source\\Repos\\NewUI\\q3\\Qualco3\\Db\\Db.csproj"
+            "C:\\Users\\Stratos\\source\\repos\\NewUI\\q3\\Qualco3\\Db\\Db.csproj": {
+              "projectPath": "C:\\Users\\Stratos\\source\\repos\\NewUI\\q3\\Qualco3\\Db\\Db.csproj"
             }
           }
         }

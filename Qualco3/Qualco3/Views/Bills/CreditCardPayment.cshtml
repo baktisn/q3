@@ -3,84 +3,113 @@
 
 @{
     ViewData["Title"] = "CreditCardPayment";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Credit Card Payment</h2>
-
-<hr />
-
-<td>
-    @Html.DisplayFor(model => model.Amount)
-</td>
 
 
 <div class="container">
-    <div class="form-horizontal" role="form">
-        <fieldset>
-            <form asp-action="PaymentConfirmed" method="post" id="payment-form">
-                <span class="payment-errors"></span>
-                <input type="hidden" asp-for="ID" />
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="card-holder-name">Name on Card</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" name="card-holder-name" id="card-holder-name" placeholder="Card Holder's Name">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="card-number">Card Number</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" name="card-number" id="card-number" placeholder="Debit/Credit Card Number">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="expiry-month">Expiration Date</label>
-                    <div class="col-sm-9">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <select class="form-control col-sm-2" name="expiry-month" id="expiry-month">
-                                    <option>Month</option>
-                                    <option value="01">Jan (01)</option>
-                                    <option value="02">Feb (02)</option>
-                                    <option value="03">Mar (03)</option>
-                                    <option value="04">Apr (04)</option>
-                                    <option value="05">May (05)</option>
-                                    <option value="06">June (06)</option>
-                                    <option value="07">July (07)</option>
-                                    <option value="08">Aug (08)</option>
-                                    <option value="09">Sep (09)</option>
-                                    <option value="10">Oct (10)</option>
-                                    <option value="11">Nov (11)</option>
-                                    <option value="12">Dec (12)</option>
-                                </select>
-                            </div>
-                            <div class="col-xs-3">
-                                <select class="form-control" name="expiry-year">
-                                    <option value="17">2017</option>
-                                    <option value="18">2018</option>
-                                    <option value="19">2019</option>
-                                    <option value="20">2020</option>
-                                    <option value="21">2021</option>
-                                    <option value="22">2022</option>
-                                    <option value="23">2023</option>
-                                </select>
-                            </div>
+    <div class="notice notice-warning">
+        <strong><h4>Λογαρισμός προς πληρωμή</h4></strong>
+        <div class="panel notice-warning">
+
+            <table class="table table-hover" id="dev-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Είδος
+                        </th>
+                        <th>
+                            Ημερομηνία Λήξης
+                        </th>
+                        <th>
+                            Ποσό
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>
+                            @Html.DisplayFor(model => model.Bill_description)
+                        </th>
+                        <th>
+                            @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy hh:mm}")
+                        </th>
+                        <th>
+                            @Html.ValueFor(model => model.Amount, "{0:C}")
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+
+    <div class="notice notice-warning">
+        <div class="form-horizontal" role="form">
+            <fieldset>
+                <form asp-action="PaymentConfirmed" method="post" id="payment-form">
+                    <span class="payment-errors"></span>
+                    <input type="hidden" asp-for="ID" />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="card-holder-name">Όνομα κατόχου</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="card-holder-name" id="card-holder-name" placeholder="Όνομα κατόχου Κάρτας">
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="cvv">Card CVV</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" name="cvv" id="cvv" placeholder="Security Code">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="card-number">Αριθμός Κάρτας</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="card-number" id="card-number" placeholder="Αριθμός Πιστωτικής/Χρεωστικής Κάρτας">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-9">
-                        <input type="submit" value="Submit Payment" class="btn btn-success" />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="expiry-month">Ημ. Λήξης</label>
+                        <div class="col-sm-9">
+                                <div class="col-xs-3">
+                                    <select class="form-control col-sm-2" name="expiry-month" id="expiry-month">
+                                        <option>Month</option>
+                                        <option value="01">Ιανουάριος (01)</option>
+                                        <option value="02">Φεβρουάριος (2)</option>
+                                        <option value="03">Μάρτιος (03)</option>
+                                        <option value="04">Απρίλιος (04)</option>
+                                        <option value="05">Μάιος (05)</option>
+                                        <option value="06">Ιούνιος (06)</option>
+                                        <option value="07">Ιούλιος (07)</option>
+                                        <option value="08">Αύγουστος (08)</option>
+                                        <option value="09">Σεπτέμβριος (09)</option>
+                                        <option value="10">Οκτώβριος (10)</option>
+                                        <option value="11">Νοέμβριος (11)</option>
+                                        <option value="12">Δεκέμβριος (12)</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-3">
+                                    <select class="form-control" name="expiry-year">
+                                        <option value="17">2017</option>
+                                        <option value="18">2018</option>
+                                        <option value="19">2019</option>
+                                        <option value="20">2020</option>
+                                        <option value="21">2021</option>
+                                        <option value="22">2022</option>
+                                        <option value="23">2023</option>
+                                    </select>
+                                </div>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </fieldset>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="cvv">Αριθμός CVV</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" name="cvv" id="cvv" placeholder="Κωδικός Ασφαλείας">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-9">
+                            <button type="submit" class="btn btn-warning">Πληρωμή</button>
+                        </div>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
     </div>
 </div>
 
@@ -89,11 +118,6 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-@*@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}*@
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 <script type="text/javascript">
