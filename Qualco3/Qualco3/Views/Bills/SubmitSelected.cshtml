@@ -3,61 +3,88 @@
     ViewData["Title"] = "SubmitSelected";
 
 }
-<h2>SubmitSelected</h2>
-<div>
-    <dl class="table-danger">
-        <dt>
-            Συνολικό Ποσό :
-            @Html.DisplayFor(model => model.TotalAmount)
-        </dt>
-    </dl>
+<div class="notice notice-warning">
+    <strong><h4>Λογαριαμοί προς διακανονισμό</h4></strong>
+    <div class="panel notice-warning">
+        <table class="table table-hover" id="dev-table">
+            <thread>
+                <tr>
+                    <th>
+                        Είδος
+                    </th>
+                    <th>
+                        Ημερομηνία Λήξης
+                    </th>
+                    <th>
+                        Ποσό
+                    </th>
+                </tr>
+            </thread>
+            <tbody>
+                @foreach (var item in Model.Bills)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayFor(modelItem => item.Bill_description)
+                        </th>
+                        <th>
+                            @Html.ValueFor(modelItem => item.DueDate, "{0:dd/MM/yyyy hh:mm}")
+                        </th>
+                        <th>
+                            @Html.ValueFor(modelItem => item.Amount, "{0:C}")
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="panel notice-warning">
+        <table class="table table-hover" id="dev-table">
+            <tbody>
+                <tr>
+                    <th>
+                        Συνολικό ποσό προς διακανονισμό
+                    </th>
+
+                    <th>
+                        @Html.ValueFor(model => model.TotalAmount, "{0:C}")
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
-@foreach (var item in Model.Bills)
-{
-    <div>
-        <dl class="table-light">
-            <dt>
-               Περιγραφή Λογαρισμού @Html.DisplayFor(modelItem => item.Bill_description)
-            </dt>
-            <dt>
-               Κωδικός Λογαριασμού @Html.DisplayFor(modelItem => item.ID)
-            </dt>
-            <dt>
-
-              Ποσό Λογαριασμού  @Html.DisplayFor(modelItem => item.Amount)
-            </dt>
-    </dl>
-    </div>
-}
 
 
-        @foreach (var item in Model.SettlementTypesEnum)
+<div class="notice notice-warning">
+    <strong><h4>Διαθέσιμοι τύποι διακανονισμού</h4></strong>
+    @foreach (var item in Model.SettlementTypesEnum)
+    {
+        if (item.Code == "0")
         {
-            <div>
-                <dl class="table-bordered">
-                    <dt>
-                        @Html.DisplayFor(modelItem => item.Code)
-                    </dt>
-                    <dd>
-                      Μεγιστος Αριθμός Δόσεων  @Html.DisplayFor(modelItem => item.MaxNoInstallments)
-                    </dd>
-                    <dd>
-                      Τόκος  @Html.DisplayFor(modelItem => item.Interest) %
-                    </dd>
-                    <dd>
-
-                      Προκαταβολή  @Html.DisplayFor(modelItem => item.DownPaymentPercentage) %
-                    </dd>
-                </dl>
-            </div>
+            continue;
         }
+        <dl class="notice">
+            <dt>
+                @Html.DisplayFor(modelItem => item.Code)
+            </dt>
+            <dd>
+                Μεγιστος Αριθμός Δόσεων  @Html.DisplayFor(modelItem => item.MaxNoInstallments)
+            </dd>
+            <dd>
+                Τόκος  @Html.DisplayFor(modelItem => item.Interest) %
+            </dd>
+            <dd>
 
+                Προκαταβολή  @Html.DisplayFor(modelItem => item.DownPaymentPercentage) %
+            </dd>
+        </dl>
 
+    }
+</div>
 
-
-
-        <div class="row">
+<div class="row">
     <div class="col-md-4">
         <section>
 
@@ -311,7 +338,7 @@
             //            width: 'auto', resizable: false,
             //            buttons: {
             //                Yes: function () {
-            //                    // $(obj).removeAttr('onclick');                                
+            //                    // $(obj).removeAttr('onclick');
             //                    // $(obj).parents('.Parent').remove();
 
             //                    $('body').append('<h1>Confirm Dialog Result: <i>Yes</i></h1>');
@@ -375,5 +402,5 @@
 
 
 
-        </script>
+</script>
 
