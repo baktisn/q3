@@ -138,8 +138,23 @@
 
 
             </form>
-            <div class="form-group">
-                <button id="Submit" type="button" class="btn btn-default" onclick="Submit()"><i class="glyphicon glyphicon-log-in"></i> Procceed to Settlement</button>
+            <button id="Submit" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">Αίτηση Διακανονισμού</button>
+
+            <div class="modal modal-info fade" id="modal-info">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <p class="modal-title">Θελετε να αποσταλεί το αίτημα διακανονισμού στην τράπεζα προς έκγκριση?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Άκυρο</button>
+                            <button type="button" onclick="Submit()" class="btn btn-outline">Επιβεβαίωση</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
@@ -343,12 +358,8 @@
         var Submit = function (e)
         {
             //ConfirmDialog('Θελετε να αποσταλεί το αίτημαδιακανονισμού στην τράπεζα?')
-            if (confirm('Θελετε να αποσταλεί το αίτημα διακανονισμού στην τράπεζα?')) {
-
-            } else {
-                return;
-            }
-          // e.preventDefault();
+           // e.preventDefault();
+            $('#modal-info').modal('hide')
             $('#BillsStr').prop("disabled", false);
             $('#TotalAmount').prop("disabled", false);
             $('#Interest').prop("disabled", false);
@@ -368,11 +379,13 @@
                 url: '@Url.Action("Submit","Bills")',
 
                 success: function (result) {
-                    alert("Ο Διακανονισμός που έχετε προτείνει θα αποσταλεί προς έκγκριση")
+                   
                     window.location.replace("../Bills/Index");
                 },
                 fail: function (result)
-                { alert("Error");}
+                {
+                    alert("Error");
+                }
 
             });
         };
