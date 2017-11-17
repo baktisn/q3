@@ -10,7 +10,7 @@ using Db.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Globalization;
-
+using System.Net;
 
 namespace Qualco3.Controllers
 {
@@ -41,9 +41,17 @@ namespace Qualco3.Controllers
                 .Include(b => b.Settlement)
                 .Where(b => b.UserId == userid);
 
+          
+
             //return View(await applicationDbContext.ToListAsync());
             var db = await applicationDbContext.ToListAsync();
+            if (db.Count() == 0)
+            {
+                return RedirectToAction("NoBills", "Bills");
+            }
+
             var model = new BillSelectionViewModel();
+            decimal TotalAmount = 0;
             foreach (var bill in db)
             {
                 var editorViewModel = new SelectBillEditorViewModel()
@@ -53,12 +61,21 @@ namespace Qualco3.Controllers
                     Amount = bill.Amount,
                     DueDate = bill.DueDate,
                     Selected = false,
-                    Status=bill.Status
-                };
+                    Status=bill.Status,
+                  
+            };
+                TotalAmount += bill.Amount;
                 model.Bills.Add(editorViewModel);
             }
+            model.TotalAmount = TotalAmount;
             return View(model);
         }
+
+        public  IActionResult NoBills(Bills model)
+        {
+            return View(model);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> SubmitSelected(BillSelectionViewModel model)
@@ -69,14 +86,28 @@ namespace Qualco3.Controllers
             var userid = _userManager.GetUserId(User);
             var user = GetCurrentUserAsync();
 
-            var applicationDbContext = _context.Bills.Include(b => b.ApplicationUser).Include(b => b.PaymentMethods).Include(b => b.Settlement).Where(b => b.UserId == userid);
-         
+            var applicationDbContext = _context.Bills.Include(b => b.ApplicationUser)
+                .Include(b => b.PaymentMethods)
+                .Include(b => b.Settlement)
+                .Where(b => b.UserId == userid);
+
+
             var db = await applicationDbContext.ToListAsync();
+            if (db.Count() == 0)
+            {
+                return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα\nΔεν έχετε εκκρεμείς λογαριασμούς!</b>");
+            }
             decimal amount = 0;
             var selectedBill = from x in db
                                where selectedIds.Contains(x.ID)
                                  select x;
-     
+
+            if (selectedBill.Count() == 0)
+            {
+                return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα\nΔεν έχετε επιλέξει λογαριασμούς!");
+            }
+
+
             foreach (var bill in selectedBill)
             {
 
@@ -164,12 +195,21 @@ namespace Qualco3.Controllers
         {
 
             //checked if data have changed
-            SettlementTypes CurSettl = _context.SettlementTypes
+            SettlementTypes CurSettl =  _context.SettlementTypes
                  .Where(c => c.ID.Equals(model.SettlementType))
                  .SingleOrDefault();
 
-                
-                Settlements NewSettlement = new Settlements();
+                if (CurSettl == null)
+                {
+                    return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα\nΔεν έχετε επιλέξει υπαρκτό τύπο διακανονισμού!");
+                }
+
+                if (model.MaxNoOfInstallments == 0 || model.MaxNoOfInstallments > CurSettl.MaxNoInstallments)
+                {
+                    return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα!\nΟ αριθμός δόσεων δεν συνάδει με αυτόν που προβλέπει ο διακανονισμός !");
+                }
+
+            Settlements NewSettlement = new Settlements();
 
                 NewSettlement.RequestDate = DateTime.Now;
                 NewSettlement.AnswerDate = DateTime.ParseExact("19000101", "yyyyMMdd", CultureInfo.InvariantCulture);
@@ -408,7 +448,7 @@ namespace Qualco3.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return NotFound(HttpStatusCode.NotFound + "\nΣφάλμα!\nΔεν υπάρχει ο λογαριασμός!");
             }
             var userid = _userManager.GetUserId(User);
 
@@ -420,7 +460,7 @@ namespace Qualco3.Controllers
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (bills == null)
             {
-                return NotFound();
+                return NotFound(HttpStatusCode.NotAcceptable  + "\nΣφάλμα!\nΔεν έχετε πρόσβαση!");
             }
 
             return View(bills);
@@ -431,8 +471,14 @@ namespace Qualco3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PaymentConfirmed(int id)
         {
-            //Console.WriteLine("Bill Id   ---------  " + id.ToString());
-            var cols = _context.Bills.Where(w => w.ID == id);
+            var userid = _userManager.GetUserId(User);
+            var cols = _context.Bills.Where(w => w.ID == id && w.UserId== userid);
+
+            if (cols == null)
+            {
+                return NotFound(HttpStatusCode.NotFound + "\nΣφάλμα!\nΔεν μπορείτε να πληρώστε τον συγκεκριμένο λογαριασμό!");
+            }
+
 
             foreach (var b in cols)
             {
