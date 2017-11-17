@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Qualco3.ViewComponents
 {
-    
+    [Authorize]
     public class HeaderViewComponent : ViewComponent
     {
 

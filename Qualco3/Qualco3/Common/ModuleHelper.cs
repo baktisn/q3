@@ -1,4 +1,5 @@
 ﻿using Db.Models;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Qualco3.Common
 {
+    
     /// <summary>
     /// This is where you customize the navigation sidebar
     /// </summary>
@@ -14,11 +16,12 @@ namespace Qualco3.Common
         public enum Module
         {
             Home,
-            About,
-            Contact,
+            Bills,
+            Settlements,
+            ApplicationUsers,
+            GetFile,
             Error,
-            Login,
-            Register,
+            Contact
         }
 
         public static SidebarMenu AddHeader(string name)
@@ -58,31 +61,40 @@ namespace Qualco3.Common
                         URLPath = "/Home/Index",
                         LinkCounter = counter,
                     };
-                case Module.Login:
+                case Module.Bills:
                     return new SidebarMenu
                     {
                         Type = SidebarMenuType.Link,
-                        Name = "Login",
+                        Name = "Manage Bills",
                         IconClassName = "fa fa-sign-in",
-                        URLPath = "/Account/Login",
+                        URLPath = "/Bills/Index",
                         LinkCounter = counter,
                     };
-                case Module.Register:
+                case Module.Settlements:
                     return new SidebarMenu
                     {
                         Type = SidebarMenuType.Link,
-                        Name = "Register",
+                        Name = "Settlements",
                         IconClassName = "fa fa-user-plus",
-                        URLPath = "/Account/Register",
+                        URLPath = "/Settlements/Index",
                         LinkCounter = counter,
                     };
-                case Module.About:
+                case Module.ApplicationUsers:
                     return new SidebarMenu
                     {
                         Type = SidebarMenuType.Link,
-                        Name = "About",
+                        Name = "Manage Users",
                         IconClassName = "fa fa-group",
-                        URLPath = "/Home/About",
+                        URLPath = "/ApplicationUsers/Index",
+                        LinkCounter = counter,
+                    };
+               case Module.GetFile:
+                    return new SidebarMenu
+                    {
+                        Type = SidebarMenuType.Link,
+                        Name = "Get File",
+                        IconClassName = "fa fa-group",
+                        URLPath = "/CitizenDepts/GetFile",
                         LinkCounter = counter,
                     };
                 case Module.Contact:

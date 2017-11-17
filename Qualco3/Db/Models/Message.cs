@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Db.Models
@@ -7,8 +8,12 @@ namespace Db.Models
     public class Message
     {
         public int Id { get; set; }
-        public string UserId { get; set; }
-        public string DisplayName { get; set; }
+        [ForeignKey("ApplicationUser")]
+        public string VAT { get; set; }
+        public ApplicationUser UserId { get; set; }
+        [ForeignKey("ApplicationUser")]
+        public string FirstName { get; set; }
+        public ApplicationUser DisplayName { get; set; }
         public string FontAwesomeIcon { get; set; }
         public string AvatarURL { get; set; }
         public string URLPath { get; set; }

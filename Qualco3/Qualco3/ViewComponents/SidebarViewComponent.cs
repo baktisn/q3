@@ -6,9 +6,11 @@ using Db.Models;
 using System.Security.Claims;
 using Qualco3.Common.Extensions;
 using System;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Qualco3.ViewComponents
-{
+{   [Authorize]
     public class SidebarViewComponent : ViewComponent
     {
         public SidebarViewComponent()
@@ -26,17 +28,19 @@ namespace Qualco3.ViewComponents
 
             sidebars.Add(ModuleHelper.AddHeader("MAIN NAVIGATION"));
             sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Home));
-            sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Error, Tuple.Create(0, 0, 1)));
-            sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.About, Tuple.Create(0, 1, 0)));
-            sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Contact, Tuple.Create(1, 0, 0)));
-            sidebars.Add(ModuleHelper.AddTree("Account"));
+            sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Bills));
+            sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Settlements));
+            sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Contact));
+            sidebars.Add(ModuleHelper.AddTree("Admin"));
             sidebars.Last().TreeChild = new List<SidebarMenu>()
             {
-                ModuleHelper.AddModule(ModuleHelper.Module.Login),
-                ModuleHelper.AddModule(ModuleHelper.Module.Register, Tuple.Create(1, 1, 1)),
+                ModuleHelper.AddModule(ModuleHelper.Module.ApplicationUsers),
+                ModuleHelper.AddModule(ModuleHelper.Module.GetFile),
+                ModuleHelper.AddModule(ModuleHelper.Module.Error)
             };
 
             return View(sidebars);
         }
     }
 }
+

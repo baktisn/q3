@@ -3,7 +3,7 @@
  * ----------
  */
 .skin-blue .main-header .navbar {
-    background-color: #3c8dbc;
+    background-color: #2196F3;
 }
 
     .skin-blue .main-header .navbar .nav > li > a {
@@ -63,7 +63,7 @@
     }
 
 .skin-blue .main-header li.user-header {
-    background-color: #3c8dbc;
+    background-color: #2196F3;
 }
 
 .skin-blue .content-header {
@@ -94,7 +94,7 @@
 .skin-blue .sidebar-menu > li.active > a {
     color: #ffffff;
     background: #1e282c;
-    border-left-color: #3c8dbc;
+    border-left-color: #2196F3;
 }
 
 .skin-blue .sidebar-menu > li > .treeview-menu {
@@ -160,7 +160,7 @@
     }
 
 .skin-blue.layout-top-nav .main-header > .logo {
-    background-color: #3c8dbc;
+    background-color: #2196F3;
     color: #ffffff;
     border-bottom: 0 solid transparent;
 }
@@ -173,7 +173,7 @@
  * ----------
  */
 .skin-blue-light .main-header .navbar {
-    background-color: #3c8dbc;
+    background-color: #2196F3;
 }
 
     .skin-blue-light .main-header .navbar .nav > li > a {
@@ -223,7 +223,7 @@
 }
 
 .skin-blue-light .main-header .logo {
-    background-color: #3c8dbc;
+    background-color: #2196F3;
     color: #ffffff;
     border-bottom: 0 solid transparent;
 }
@@ -233,7 +233,7 @@
     }
 
 .skin-blue-light .main-header li.user-header {
-    background-color: #3c8dbc;
+    background-color: #2196F3;
 }
 
 .skin-blue-light .content-header {
@@ -279,7 +279,7 @@
     }
 
     .skin-blue-light .sidebar-menu > li.active {
-        border-left-color: #3c8dbc;
+        border-left-color: #2196F3;
     }
 
         .skin-blue-light .sidebar-menu > li.active > a {
@@ -362,7 +362,7 @@
 }
 
 .skin-blue.layout-top-nav .main-header > .logo {
-    background-color: #3c8dbc;
+    background-color: #2196F3;
     color: #ffffff;
     border-bottom: 0 solid transparent;
 }
