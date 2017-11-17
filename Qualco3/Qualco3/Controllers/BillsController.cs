@@ -403,18 +403,20 @@ namespace Qualco3.Controllers
         }
 
         // GET: Bills/CreditCardPayment/5
-
+ 
         public async Task<IActionResult> CreditCardPayment(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var userid = _userManager.GetUserId(User);
 
             var bills = await _context.Bills
                 .Include(b => b.ApplicationUser)
                 .Include(b => b.PaymentMethods)
                 .Include(b => b.Settlement)
+                .Where (b=>b.ApplicationUser.Id == userid)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (bills == null)
             {
@@ -435,6 +437,7 @@ namespace Qualco3.Controllers
             foreach (var b in cols)
             {
                 b.Status = 1;
+                b.DueDate = DateTime.Now;
             }
 
             await _context.SaveChangesAsync();
