@@ -1,4 +1,4 @@
-﻿@model Db.Models.BillSelectionViewModel
+@model Db.Models.BillSelectionViewModel
 
 @{
     ViewBag.Title = "Bills";
@@ -6,85 +6,67 @@
 
 <h2>Bills</h2>
 
-@using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform", id = "myForm" }))
+@using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" ,id="myForm"}))
 {
     <html>
+    <head>
+    </head>
     <body>
+        <div class="container">
+            <div class="row col-md-18 col-md-offset-0 custyle">
+                <table class="table table-striped custab">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Due Date
+                            </th>
+                            <th>
+                                Amount
+                            </th>
+                        </tr>
+                    </thead>
 
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Unpaid Bills</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body no-padding">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th> </th>
-                                    <th>Description</th>
-                                    <th>Due Date</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-
-                            @Html.EditorFor(model => model.Bills)
-
-                        </table>
-                    </div>
-                </div>
-                </div>
+                    @Html.EditorFor(model => model.Bills)
+                </table>
+               <dt>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.TotalAmount)
+                </dd>
             </div>
-       
+        </div>
     </body>
-    </html>
+</html>
     <hr />
     <br />
     <button type="submit" class="btn btn-primary" name="operation" id="sumbit">Submit Selected</button>
-    }
+}
 
-<br />
-<div class="col-md-6">
-    <div class="box box-solid">
-        <div class="box-header with-border">
-            <i class="fa fa-text-width"></i>
 
-            <h3 class="box-title">Description</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-            <dl>
-                <dt>Description lists</dt>
-                <dd>A description list is perfect for defining terms.</dd>
-                <dt>Euismod</dt>
-                <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
-                <dd>Donec id elit non mi porta gravida at eget metus.</dd>
-                <dt>Malesuada porta</dt>
-                <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
-            </dl>
-        </div>
-        <!-- /.box-body -->
-    </div>
-    <!-- /.box -->
-</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript">
 
-    <script type="text/javascript">
+    var countChecked = function () {
+        var n = $("input:checked").length;
+       // alert((n + (n === 1 ? " is" : " are") + " checked!"));
+        return n;
+    };
+    //countChecked();
 
-        var countChecked = function () {
-            var n = $("input:checked").length;
-            // alert((n + (n === 1 ? " is" : " are") + " checked!"));
-            return n;
-        };
-        //countChecked();
-
-        $('#myForm').submit(function () {
-
-            if (countChecked() == 0) {
-                alert('Πρέπει να επιλέξετε έστω εναν λογαριασμό για να προχωρήσετε σε διακανονισμό');
-                return false;
-            }
-
-        });
+    $('#myForm').submit(function () {
+       
+        if (countChecked() == 0)
+        {
+            alert('Πρέπει να επιλέξετε έστω εναν λογαριασμό για να προχωρήσετε σε διακανονισμό');
+            return false;
+        }
+       
+    });
 
     </script>
