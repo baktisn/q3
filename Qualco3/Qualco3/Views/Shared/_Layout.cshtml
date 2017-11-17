@@ -80,10 +80,10 @@ desired effect
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                @await Component.InvokeAsync("PageHeader")
-            
-                <br />
-                @await Component.InvokeAsync("PageAlert")
+               @await Component.InvokeAsync("PageHeader")
+            @await Component.InvokeAsync("Breadcrumb")
+            <br />
+            @await Component.InvokeAsync("PageAlert")
             </section>
             <!-- Main content -->
             <section class="content">
