@@ -22,6 +22,9 @@
                                 <th>
                                     Ποσό
                                 </th>
+                                <th>
+                                    Κατάσταση
+                                </th>
                             </tr>
                             <tbody>
                                 @Html.EditorFor(model => model.Bills)
@@ -29,21 +32,16 @@
                         </table>
                     </div>
 
-
-                    <div class="box box-info">
+                    <div class="box box-warning">
                         <table class="table table-hover" id="dev-table">
                             <tbody>
                                 <tr>
                                     <th>
-                                        Σύνολο Απλήρωτων Λογαριασμών
-                                    </th>
-                                    <th>
-                                        @Html.ValueFor(model => model.TotalAmount, "{0:C}")
+                                        Σύνολο απλήρωτων λογαριασμών:       @Html.DisplayFor(model => model.TotalAmount)€
                                     </th>
                                 </tr>
                             </tbody>
                         </table>
-                        <br />
                     </div>
                 </div>
             </section>
