@@ -7,10 +7,11 @@
 @using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
 {
         <div class="col-xs-12 center">
-        <div class="notice">
+        <div class="notice notice-info">
             <div class="box-body no-padding">
                 <table class="table table-condensed">
                     <tr>
+                        <th></th>
                         <th>
                             Είδος
                         </th>
@@ -28,7 +29,8 @@
             </div>
         </div>
     </div>
-    <div class="panel notice-warning">
+
+    <div class="panel notice-info">
         <table class="table table-hover" id="dev-table">
             <tbody>
                 <tr>
@@ -47,7 +49,7 @@
 
     <div class="col-xs-4">
         <br />
-        <button type="submit" class="btn btn-warning"><i class="fa fa-bank"></i>   Αίτηση Διακανονισμού</button>
+        <button type="submit" class="btn btn-info"><i class="fa fa-bank"></i>   Αίτηση Διακανονισμού</button>
     </div>
     
         }
