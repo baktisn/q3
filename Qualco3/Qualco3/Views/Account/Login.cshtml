@@ -29,7 +29,7 @@
         body {
             font-family: "Open Sans", sans-serif;
             height: 100vh;
-            background: url("https://i.imgur.com/HgflTDf.jpg") 50% fixed;
+            background: url("http://s.newsweek.com/sites/www.newsweek.com/files/styles/full/public/2015/06/09/0612wellbabies01.jpg") 50% fixed;
             background-size: cover;
         }
 
@@ -196,10 +196,10 @@
     <div class="wrapper">
         <form id="login" class="login" method="post">
 
-            <p class="title">Καλωσορίσατε</p>
+            <p class="title">ΔeΜΟΤΗΣ <small>portal</small></p>
             <div asp-validation-summary="All" class="text-danger" id="error" style="color:crimson"></div>
             <br />
-
+            
             <div class="form-group">
                 <span asp-validation-for="Email" class="text-danger" style="color:crimson"></span>
                 <input asp-for="Email" type="text" class="form-control" id="Email" placeholder="Email" autofocus />
@@ -255,8 +255,7 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
             asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js">
     </script>
-    @*<script src="~/js/index.js"></script>
-    <script src="~/js/login.js"></script>*@
+    
 
 
   <script type="text/javascript">

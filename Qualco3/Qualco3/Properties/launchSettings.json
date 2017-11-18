@@ -3,22 +3,23 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:56132/Account/Login",
-      "sslPort": 44355
+      "applicationUrl": "http://localhost:56112/Account/Login",
+      "sslPort": 44329
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "https://localhost:44355/Account/Login",
+      "launchUrl": "https://localhost:44329/Account/Login",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "Qualco3": {
-      "commandName": "Project",
+      "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "https://localhost:44329/Account/Login",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

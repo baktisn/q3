@@ -7,33 +7,43 @@
 
 <tr>
     <td style="text-align:center">
-        @if (@Model.Status == 0)
-        {
-            @Html.CheckBoxFor(model => model.Selected)
-        }
+        <div class="btn-group btn-group-xs" data-toggle="buttons">
+            @if (@Model.Status == 0)
+            {
+                <label class="btn btn-default">
+                    <input type="checkbox" autocomplete="off">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    @Html.CheckBoxFor(model => model.Selected)
+                </label>
+            }
+        </div>
 
     </td>
-    <td>
+    <th>
         @Html.DisplayFor(model => model.Bill_description)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.DueDate)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.Amount)
-    </td>
-    <td>
-        @Html.HiddenFor(model => model.ID)
-    </td>
+    </th>
+    <th>
+        @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy hh:mm}")
+    </th>
+    <th>
+        @Html.ValueFor(model => model.Amount, "{0:C}")
+    </th>
     <td>
         @if (@Model.Status == 0)
-        {
-            <a asp-action="CreditCardPayment" asp-route-id="@Model.ID"><span class="glyphicon glyphicon-euro"></span> Πληρωμή Λογαριασμού </a>
+            {
+            <a asp-action="CreditCardPayment" asp-route-id="@Model.ID" class="btn btn-info btn-sm" role="button"> Πληρωμή Λογαριασμού </a>
 
+        }
+        else if (@Model.Status == 1)
+        {
+            <h4><label class="btn btn-success btn-sm">Εξοφλημένος Λογαριασμός</label></h4>
         }
         else
         {
-            <p>Paid Bill</p>
+            <h4><label class="btn btn-default btn-sm">Προς έγκριση διακανονισμού</label></h4>
         }
     </td>
+
 </tr>
+
+@Html.HiddenFor(model => model.ID)

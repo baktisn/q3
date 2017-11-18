@@ -6755,3 +6755,267 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+/*Custom*/
+.btn span.glyphicon {
+    opacity: 0;
+}
+
+.btn.active span.glyphicon {
+    opacity: 2;
+}
+
+.regular-checkbox + label {
+}
+
+.notice {
+    padding: 15px;
+    background-color: #fafafa;
+    border-left: 6px solid #7f7f84;
+    margin-bottom: 10px;
+    -webkit-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+    box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+}
+
+.notice-sm {
+    padding: 10px;
+    font-size: 80%;
+}
+
+.notice-lg {
+    padding: 35px;
+    font-size: large;
+}
+
+.notice-success {
+    border-color: #80D651;
+}
+
+    .notice-success > strong {
+        color: #80D651;
+    }
+
+.notice-info {
+    border-color: #45ABCD;
+}
+
+    .notice-info > strong {
+        color: #45ABCD;
+    }
+
+.notice-warning {
+    border-color: #FEAF20;
+}
+
+    .notice-warning > strong {
+        color: #FEAF20;
+    }
+
+.notice-danger {
+    border-color: #d73814;
+}
+
+    .notice-danger > strong {
+        color: #d73814;
+    }
+
+.row {
+    margin-top: 40px;
+    padding: 0 10px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.panel-heading span {
+    margin-top: -20px;
+    font-size: 15px;
+}
+
+/* Padding - just for asthetics on Bootsnipp.com */
+body {
+    margin-top: 20px;
+}
+
+/* CSS for Credit Card Payment form */
+.credit-card-box .panel-title {
+    display: inline;
+    font-weight: bold;
+}
+
+.credit-card-box .form-control.error {
+    border-color: red;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+}
+
+.credit-card-box label.error {
+    font-weight: bold;
+    color: red;
+    padding: 2px 8px;
+    margin-top: 2px;
+}
+
+.credit-card-box .payment-errors {
+    font-weight: bold;
+    color: red;
+    padding: 2px 8px;
+    margin-top: 2px;
+}
+
+.credit-card-box label {
+    display: block;
+}
+/* The old "center div vertically" hack */
+.credit-card-box .display-table {
+    display: table;
+}
+
+.credit-card-box .display-tr {
+    display: table-row;
+}
+
+.credit-card-box .display-td {
+    display: table-cell;
+    vertical-align: middle;
+    width: 50%;
+}
+/* Just looks nicer */
+.credit-card-box .panel-heading img {
+    min-width: 180px;
+}
+
+body {
+    margin-top: 10px;
+    background: #e0e0e0;
+}
+
+.update-nag {
+    display: inline-block;
+    font-size: 14px;
+    text-align: left;
+    background-color: #fff;
+    height: 40px;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.2);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    margin-bottom: 10px;
+}
+
+    .update-nag:hover {
+        cursor: pointer;
+        -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.4);
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
+    }
+
+    .update-nag > .update-split {
+        background: #337ab7;
+        width: 33px;
+        float: left;
+        color: #fff !important;
+        height: 100%;
+        text-align: center;
+    }
+
+        .update-nag > .update-split > .glyphicon {
+            position: relative;
+            top: calc(50% - 9px) !important; /* 50% - 3/4 of icon height */
+        }
+
+        .update-nag > .update-split.update-success {
+            background: #5cb85c !important;
+        }
+
+        .update-nag > .update-split.update-danger {
+            background: #d9534f !important;
+        }
+
+        .update-nag > .update-split.update-info {
+            background: #5bc0de !important;
+        }
+
+
+
+    .update-nag > .update-text {
+        line-height: 19px;
+        padding-top: 11px;
+        padding-left: 45px;
+        padding-right: 20px;
+    }
+
+table {
+    counter-reset: tableCount;
+}
+
+.counterCell:before {
+    content: counter(tableCount);
+    counter-increment: tableCount;
+}
+
+.clean.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle:focus {
+    outline: 0;
+}
+
+.clean.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    left: 0;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 15px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #fafafa;
+    border: 1px solid #8f8f8f;
+    border-radius: 2px;
+}
+
+    .clean.dropdown-menu:before {
+        content: "\00a0";
+        display: block;
+        height: 10px;
+        width: 10px;
+        position: absolute;
+        top: -6px;
+        border: 1px solid #8f8f8f;
+        border-right: 0;
+        border-bottom: 0;
+        background-color: #fafafa;
+        right: 10px;
+        -webkit-transform: rotate(48deg) skew(5deg);
+        transform: rotate(48deg) skew(5deg);
+    }
+
+    .clean.dropdown-menu .divider {
+        height: 1px;
+        margin: 9px 0;
+        overflow: hidden;
+        background-color: #8f8f8f;
+    }
+
+    .clean.dropdown-menu > li > a {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        text-decoration: none;
+        line-height: 2;
+        color: #8f8f8f;
+        white-space: nowrap;
+    }
+
+        .clean.dropdown-menu > li > a:hover,
+        .clean.dropdown-menu > li > a:focus {
+            text-decoration: none;
+            color: #808080;
+            background-color: #f3f3f3;
+        }

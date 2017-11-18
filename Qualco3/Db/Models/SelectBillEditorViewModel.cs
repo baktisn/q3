@@ -12,6 +12,7 @@ namespace Db.Models
         public DateTime DueDate { get; set; }
         public string Bill_description { get; set; }
         public byte Status { get; set; }
+        public decimal Total_Amount { get; set; }
 
     }
 }

@@ -15,7 +15,7 @@ namespace Db.Models
         public SelectList SettlementTypes { get; set; }
         public IEnumerable<SettlementTypes> SettlementTypesEnum { get; set; }
 
-        public int MaxNoOfInstallments { get; set; }
+        public Int16 MaxNoOfInstallments { get; set; }
         public SelectList Installments { get; set; }
 
         public decimal Interest { get; set; }
