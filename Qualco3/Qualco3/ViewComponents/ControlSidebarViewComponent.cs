@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Diagnostics;
 using System.IO;
 
 namespace Qualco3.ViewComponents
 {
+    [Authorize]
+    [Route("[controller]/[action]")]
     public class ControlSidebarViewComponent : ViewComponent
     {
 

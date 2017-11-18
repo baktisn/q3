@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Qualco3.ViewComponents
 {
+    [Authorize]
+    [Route("[controller]/[action]")]
     public class FooterViewComponent : ViewComponent
     {
 
