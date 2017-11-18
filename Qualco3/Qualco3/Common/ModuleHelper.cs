@@ -57,7 +57,7 @@ namespace Qualco3.Common
                     return new SidebarMenu
                     {
                         Type = SidebarMenuType.Link,
-                        Name = "Home",
+                        Name = "Αρχική",
                         IconClassName = "fa fa-pie-chart",
                         URLPath = "/Home/Index",
                         LinkCounter = counter,
@@ -66,7 +66,7 @@ namespace Qualco3.Common
                     return new SidebarMenu
                     {
                         Type = SidebarMenuType.Link,
-                        Name = "Manage Bills",
+                        Name = "Λογαριασμοί",
                         IconClassName = "fa fa-suitcase",
                         URLPath = "/Bills/Index",
                         LinkCounter = counter,
@@ -111,7 +111,7 @@ namespace Qualco3.Common
                     return new SidebarMenu
                     {
                         Type = SidebarMenuType.Link,
-                        Name = "Contact",
+                        Name = "Επικοινωνία",
                         IconClassName = "fa fa-paper-plane",
                         URLPath = "/Home/Contact",
                         LinkCounter = counter,
