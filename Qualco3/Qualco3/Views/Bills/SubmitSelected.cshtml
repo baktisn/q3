@@ -1,13 +1,16 @@
 ﻿@model Db.Models.SubmitSelected
 @{
-    ViewData["Title"] = "SubmitSelected";
+    ViewData["Title"] = "Διακανονισμός";
 
 }
-<div class="notice notice-warning">
-    <strong><h4>Λογαριαμοί προς διακανονισμό</h4></strong>
-    <div class="panel notice-warning">
-        <table class="table table-hover" id="dev-table">
-            <thread>
+
+<div class="col-xs-12 center">
+    <div class="notice notice-warning">
+       
+            <h4 class="box-title"><strong>Επιλεγμένοι Λογαριασμοί</strong></h4>
+
+        <div class="box-body no-padding">
+            <table class="table table-condensed">
                 <tr>
                     <th>
                         Είδος
@@ -19,149 +22,183 @@
                         Ποσό
                     </th>
                 </tr>
-            </thread>
-            <tbody>
-                @foreach (var item in Model.Bills)
+                <tbody>
+                    @foreach (var item in Model.Bills)
+                    {
+                        <tr>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.Bill_description)
+                            </th>
+                            <th>
+                                @Html.ValueFor(modelItem => item.DueDate, "{0:dd/MM/yyyy hh:mm}")
+                            </th>
+                            <th>
+                                @Html.ValueFor(modelItem => item.Amount, "{0:C}")
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="panel notice-warning">
+    <table class="table table-hover" id="dev-table">
+        <tbody>
+            <tr>
+                <th>
+                    Συνολικό ποσό προς διακανονισμό
+                </th>
+
+                <th>
+                    @Html.ValueFor(model => model.TotalAmount, "{0:C}")
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<br />
+<br />
+
+
+    <div class="col-xs-4">
+        <div class="box box-warning">
+            <div class="box-header">
+                <strong><h4>Διαθέσιμοι τύποι διακανονισμού</h4></strong>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                @foreach (var item in Model.SettlementTypesEnum)
+            {
+                if (item.Code == "0")
                 {
-                    <tr>
-                        <th>
-                            @Html.DisplayFor(modelItem => item.Bill_description)
-                        </th>
-                        <th>
-                            @Html.ValueFor(modelItem => item.DueDate, "{0:dd/MM/yyyy hh:mm}")
-                        </th>
-                        <th>
-                            @Html.ValueFor(modelItem => item.Amount, "{0:C}")
-                        </th>
-                    </tr>
+                    continue;
                 }
-            </tbody>
-        </table>
+
+                <dl class="col-xs-6 notice">
+
+                    <dt>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </dt>
+                    <dd>
+                        Μεγιστος Αριθμός Δόσεων  @Html.DisplayFor(modelItem => item.MaxNoInstallments)
+                    </dd>
+                    <dd>
+                        Τόκος  @Html.DisplayFor(modelItem => item.Interest) %
+                    </dd>
+                    <dd>
+                        Προκαταβολή  @Html.DisplayFor(modelItem => item.DownPaymentPercentage)%
+                    </dd>
+                </dl>
+
+
+                }
+
+            </div>
+        </div>
     </div>
-    <div class="panel notice-warning">
-        <table class="table table-hover" id="dev-table">
-            <tbody>
-                <tr>
-                    <th>
-                        Συνολικό ποσό προς διακανονισμό
-                    </th>
-
-                    <th>
-                        @Html.ValueFor(model => model.TotalAmount, "{0:C}")
-                    </th>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 
 
 
-<div class="notice notice-warning">
-    <strong><h4>Διαθέσιμοι τύποι διακανονισμού</h4></strong>
-    @foreach (var item in Model.SettlementTypesEnum)
-    {
-        if (item.Code == "0")
-        {
-            continue;
-        }
-        <dl class="notice">
-            <dt>
-                @Html.DisplayFor(modelItem => item.Code)
-            </dt>
-            <dd>
-                Μεγιστος Αριθμός Δόσεων  @Html.DisplayFor(modelItem => item.MaxNoInstallments)
-            </dd>
-            <dd>
-                Τόκος  @Html.DisplayFor(modelItem => item.Interest) %
-            </dd>
-            <dd>
 
-                Προκαταβολή  @Html.DisplayFor(modelItem => item.DownPaymentPercentage) %
-            </dd>
-        </dl>
 
-    }
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <section>
 
-            <form id="Settlemetns">
+    <div class="row">
+        <div class="col-xs-4">
+            <section>
+                <div class="box box-danger">
+                    <div class="box-body ">
+                        <form id="Settlemetns">
 
-                <div class="form-group">
-                    <label class="control-label">Επιλέξτε Τύπο Διακανονισμού </label>
-                    <select asp-for="SettlementType" class="form-control" asp-items="@Model.SettlementTypes" onchange="onChange()"></select>
+                            <div class="form-group">
+                                <label class="control-label box-header">Επιλέξτε Τύπο Διακανονισμού </label>
+                                <select asp-for="SettlementType" class="form-control" asp-items="@Model.SettlementTypes" onchange="onChange()"></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label box-header" type="hidden" id="MaxNoOfInstallmentslb">Επιλέξτε Αριθμό Δόσεων</label>
+                                <select asp-for="MaxNoOfInstallments" class="form-control" asp-items="@Model.Installments" onchange="onChange2()"></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label box-header" id="Interestlb">Τόκος %</label>
+                                <input asp-for="Interest" class="form-control" asp-items="@Model.Interest">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label box-header" id="DownPaymentlb">Προκαταβολή %</label>
+                                <input asp-for="DownPayment" class="form-control" asp-items="@Model.DownPayment">
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="IsAccepted" class="control-label box-header" type="hidden" id="IsAcceptedlb"></label>
+                                <input asp-for="IsAccepted" class="form-control" asp-items="@Model.IsAccepted" type="hidden">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TotalAmount" class="control-label box-header" type="hidden" id="TotalAmountlb"></label>
+                                <input asp-for="TotalAmount" class="form-control" asp-items="@Model.TotalAmount">
+                            </div>
+
+                            <div class="form-group">
+                                <input asp-for="BillsStr" class="form-control box-header" asp-items="@Model.BillsStr">
+                            </div>
+
+                        
+                            <div class="form-group">
+                                <label asp-for="Monthly" class="control-label box-header" type="hidden" id="Monthlylb"></label>
+                                <input asp-for="Monthly" class="form-control" asp-items="@Model.Monthly">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="DownPaymentValue" class="control-label box-header" type="hidden" id="DownPaymentValuelb"></label>
+                                <input asp-for="DownPaymentValue" class="form-control" asp-items="@Model.DownPaymentValue" >
+                            </div>
+                            
+                            <hr />
+                            <div id="SettlText" class="form-group  box-info">
+                            </div>
+                        </form>
+
+                        <button id="Submit" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">Αίτηση Διακανονισμού</button>
+                    </div>
+
+
                 </div>
-                <div class="form-group">
-                    <label class="control-label" type="hidden" id="MaxNoOfInstallmentslb">Επιλέξτε Αριθμό Δόσεων</label>
-                    <select asp-for="MaxNoOfInstallments" class="form-control" asp-items="@Model.Installments" onchange="onChange2()"></select>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" id="Interestlb">Τόκος %</label>
-                    <input asp-for="Interest" class="form-control" asp-items="@Model.Interest">
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label" id="DownPaymentlb">Προκαταβολή %</label>
-                    <input asp-for="DownPayment" class="form-control" asp-items="@Model.DownPayment">
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="IsAccepted" class="control-label" type="hidden" id="IsAcceptedlb"></label>
-                    <input asp-for="IsAccepted" class="form-control" asp-items="@Model.IsAccepted" type="hidden">
-                </div>
-                <div class="form-group">
-                    <label asp-for="TotalAmount" class="control-label" type="hidden" id="TotalAmountlb"></label>
-                    <input asp-for="TotalAmount" class="form-control" asp-items="@Model.TotalAmount">
-                </div>
-
-                <div class="form-group">
-                    <input asp-for="BillsStr" class="form-control" asp-items="@Model.BillsStr">
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Monthly" class="control-label" type="hidden" id="Monthlylb"></label>
-                    <input asp-for="Monthly" class="form-control" asp-items="@Model.Monthly">
-                </div>
-
-
-                <div class="form-group">
-                    <label asp-for="DownPaymentValue" class="control-label" type="hidden" id="DownPaymentValuelb"></label>
-                    <input asp-for="DownPaymentValue" class="form-control" asp-items="@Model.DownPaymentValue">
-                </div>
-
-                <div id="SettlText" class="form-group">
-                </div>
-
-
-
-            </form>
-            <button id="Submit" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">Αίτηση Διακανονισμού</button>
-
-            <div class="modal modal-info fade" id="modal-info">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <p class="modal-title">Θελετε να αποσταλεί το αίτημα διακανονισμού στην τράπεζα προς έκγκριση?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Άκυρο</button>
-                            <button type="button" onclick="Submit()" class="btn btn-outline">Επιβεβαίωση</button>
+                <div class="modal modal-info fade" id="modal-info">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <p class="modal-title">Θελετε να αποσταλεί το αίτημα διακανονισμού στην τράπεζα προς έκγκριση?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Άκυρο</button>
+                                <button type="button" onclick="Submit()" class="btn btn-outline">Επιβεβαίωση</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+
+            </section>
+        </div>
     </div>
-</div>
+
+        <br />
+        <br />
 
 
-<script type="text/javascript">
+
+
+        <script type="text/javascript">
 
               $(document).ready(function () {
                   $('#TotalAmount').hide();
@@ -380,7 +417,7 @@
                 url: '@Url.Action("Submit","Bills")',
 
                 success: function (result) {
-                   
+
                     window.location.replace("../Bills/Index");
                 },
                 fail: function (result)
@@ -393,5 +430,5 @@
 
 
 
-</script>
+        </script>
 
