@@ -4,44 +4,50 @@
 }
 @using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
 {
-    <div class="col-xs-12 center">
-        <div class="notice notice-info">
-            <div class="box-body no-padding">
-                <table class="table table-condensed">
-                    <tr>
-                        <th></th>
-                        <th>
-                            Είδος
-                        </th>
-                        <th>
-                            Ημερομηνία Λήξης
-                        </th>
-                        <th>
-                            Ποσό
-                        </th>
-                    </tr>
-                    <tbody>
-                        @Html.EditorFor(model => model.Bills)
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 
-    <div class="panel notice-info">
-        <table class="table table-hover" id="dev-table">
-            <tbody>
-                <tr>
-                    <th>
-                        Σύνολο Απλήρωτων Λογαριασμών
-                    </th>
-                    <th>
-                        @Html.ValueFor(model => model.TotalAmount, "{0:C}")
-                    </th>
-                </tr>
-            </tbody>
-        </table>
-        <br />
+    <div class="row">
+        <div class="col-xs-8">
+            <section>
+                <div class="box box-info">
+                    <div class="box-body ">
+                        <table class="table table-condensed">
+                            <tr>
+                                <th></th>
+                                <th>
+                                    Είδος
+                                </th>
+                                <th>
+                                    Ημερομηνία Λήξης
+                                </th>
+                                <th>
+                                    Ποσό
+                                </th>
+                            </tr>
+                            <tbody>
+                                @Html.EditorFor(model => model.Bills)
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="box box-info">
+                        <table class="table table-hover" id="dev-table">
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        Σύνολο Απλήρωτων Λογαριασμών
+                                    </th>
+                                    <th>
+                                        @Html.ValueFor(model => model.TotalAmount, "{0:C}")
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+                </div>
+            </section>
+        </div>
     </div>
 
 
@@ -52,22 +58,25 @@
 
 }
 
+
+
+
 <script type="text/javascript">
 
-            var countChecked = function () {
-                var n = $("input:checked").length;
-                // alert((n + (n === 1 ? " is" : " are") + " checked!"));
-                return n;
-            };
-            //countChecked();
+    var countChecked = function () {
+        var n = $("input:checked").length;
+        // alert((n + (n === 1 ? " is" : " are") + " checked!"));
+        return n;
+    };
+    //countChecked();
 
-            $('#myForm').submit(function () {
+    $('#myForm').submit(function () {
 
-                if (countChecked() == 0) {
-                    alert('Πρέπει να επιλέξετε έστω εναν λογαριασμό για να προχωρήσετε σε διακανονισμό');
-                    return false;
-                }
+        if (countChecked() == 0) {
+            alert('Πρέπει να επιλέξετε έστω εναν λογαριασμό για να προχωρήσετε σε διακανονισμό');
+            return false;
+        }
 
-            });
+    });
 
 </script>
