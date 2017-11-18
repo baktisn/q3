@@ -52,6 +52,8 @@ namespace Qualco3.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Route("")]
+        [Route("/")]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
