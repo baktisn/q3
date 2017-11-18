@@ -4,10 +4,9 @@
 
 }
 
+
 <div class="col-xs-12 center">
-    <div class="notice notice-warning">
-       
-            <h4 class="box-title"><strong>Επιλεγμένοι Λογαριασμοί</strong></h4>
+    <div class="notice notice-info">
 
         <div class="box-body no-padding">
             <table class="table table-condensed">
@@ -43,7 +42,7 @@
     </div>
 </div>
 
-<div class="panel notice-warning">
+<div class="panel notice-info">
     <table class="table table-hover" id="dev-table">
         <tbody>
             <tr>
@@ -64,18 +63,20 @@
 <br />
 <br />
 
-
-    <div class="col-xs-4">
-        <div class="box box-warning">
-            <div class="box-header">
+<div class="col-xs-12 center">
+    <div class="notice notice-info">
+        <div class="box-body no-padding">
+            <table class="table table-condensed">
                 <strong><h4>Διαθέσιμοι τύποι διακανονισμού</h4></strong>
-            </div>
+            </table>
         </div>
+    </div>
+</div>
 
-
-        <div class="row">
-            <div class="col-sm-12">
-                @foreach (var item in Model.SettlementTypesEnum)
+<div class="panel notice-info">
+    <div class="row">
+        <div class="col-sm-12">
+            @foreach (var item in Model.SettlementTypesEnum)
             {
                 if (item.Code == "0")
                 {
@@ -99,106 +100,102 @@
                 </dl>
 
 
-                }
+            }
 
-            </div>
         </div>
     </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-4">
+        <section>
+            <div class="box box-info">
+                <div class="box-body ">
+                    <form id="Settlemetns">
+
+                        <div class="form-group">
+                            <label class="control-label box-header">Τύπος Διακανονισμού </label>
+                            <select asp-for="SettlementType" class="form-control" asp-items="@Model.SettlementTypes" onchange="onChange()">
+                                <option disabled selected>Επιλέξτε</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label box-header" type="hidden" id="MaxNoOfInstallmentslb">Επιλέξτε Αριθμό Δόσεων</label>
+                            <select asp-for="MaxNoOfInstallments" class="form-control" asp-items="@Model.Installments" onchange="onChange2()"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label box-header" id="Interestlb">Τόκος %</label>
+                            <input asp-for="Interest" class="form-control" asp-items="@Model.Interest">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label box-header" id="DownPaymentlb">Προκαταβολή %</label>
+                            <input asp-for="DownPayment" class="form-control" asp-items="@Model.DownPayment">
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="IsAccepted" class="control-label box-header" type="hidden" id="IsAcceptedlb"></label>
+                            <input asp-for="IsAccepted" class="form-control" asp-items="@Model.IsAccepted" type="hidden">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TotalAmount" class="control-label box-header" type="hidden" id="TotalAmountlb"></label>
+                            <input asp-for="TotalAmount" class="form-control" asp-items="@Model.TotalAmount">
+                        </div>
+
+                        <div class="form-group">
+                            <input asp-for="BillsStr" class="form-control box-header" asp-items="@Model.BillsStr">
+                        </div>
 
 
+                        <div class="form-group">
+                            <label asp-for="Monthly" class="control-label box-header" type="hidden" id="Monthlylb"></label>
+                            <input asp-for="Monthly" class="form-control" asp-items="@Model.Monthly">
+                        </div>
 
 
+                        <div class="form-group">
+                            <label asp-for="DownPaymentValue" class="control-label box-header" type="hidden" id="DownPaymentValuelb"></label>
+                            <input asp-for="DownPaymentValue" class="form-control" asp-items="@Model.DownPaymentValue">
+                        </div>
 
+                        <hr />
+                        <div id="SettlText" class="form-group  box-info">
+                        </div>
+                    </form>
 
-
-    <div class="row">
-        <div class="col-xs-4">
-            <section>
-                <div class="box box-danger">
-                    <div class="box-body ">
-                        <form id="Settlemetns">
-
-                            <div class="form-group">
-                                <label class="control-label box-header">Επιλέξτε Τύπο Διακανονισμού </label>
-                                <select asp-for="SettlementType" class="form-control" asp-items="@Model.SettlementTypes" onchange="onChange()"></select>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label box-header" type="hidden" id="MaxNoOfInstallmentslb">Επιλέξτε Αριθμό Δόσεων</label>
-                                <select asp-for="MaxNoOfInstallments" class="form-control" asp-items="@Model.Installments" onchange="onChange2()"></select>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label box-header" id="Interestlb">Τόκος %</label>
-                                <input asp-for="Interest" class="form-control" asp-items="@Model.Interest">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label box-header" id="DownPaymentlb">Προκαταβολή %</label>
-                                <input asp-for="DownPayment" class="form-control" asp-items="@Model.DownPayment">
-                            </div>
-
-                            <div class="form-group">
-                                <label asp-for="IsAccepted" class="control-label box-header" type="hidden" id="IsAcceptedlb"></label>
-                                <input asp-for="IsAccepted" class="form-control" asp-items="@Model.IsAccepted" type="hidden">
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="TotalAmount" class="control-label box-header" type="hidden" id="TotalAmountlb"></label>
-                                <input asp-for="TotalAmount" class="form-control" asp-items="@Model.TotalAmount">
-                            </div>
-
-                            <div class="form-group">
-                                <input asp-for="BillsStr" class="form-control box-header" asp-items="@Model.BillsStr">
-                            </div>
-
-                        
-                            <div class="form-group">
-                                <label asp-for="Monthly" class="control-label box-header" type="hidden" id="Monthlylb"></label>
-                                <input asp-for="Monthly" class="form-control" asp-items="@Model.Monthly">
-                            </div>
-
-
-                            <div class="form-group">
-                                <label asp-for="DownPaymentValue" class="control-label box-header" type="hidden" id="DownPaymentValuelb"></label>
-                                <input asp-for="DownPaymentValue" class="form-control" asp-items="@Model.DownPaymentValue" >
-                            </div>
-                            
-                            <hr />
-                            <div id="SettlText" class="form-group  box-info">
-                            </div>
-                        </form>
-
-                        <button id="Submit" type="button" class="btn btn-info fa fa-check" data-toggle="modal" data-target="#modal-info">Αίτηση Διακανονισμού</button>
-                    </div>
-
-
+                    <button id="Submit" type="button" class="btn btn-info fa fa-check" data-toggle="modal" data-target="#modal-info">Αίτηση Διακανονισμού</button>
                 </div>
-                <div class="modal modal-info fade" id="modal-info">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <p class="modal-title">Θελετε να αποσταλεί το αίτημα διακανονισμού στην τράπεζα προς έκγκριση?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Άκυρο</button>
-                                <button type="button" onclick="Submit()" class="btn btn-outline">Επιβεβαίωση</button>
-                            </div>
+
+
+            </div>
+            <div class="modal modal-info fade" id="modal-info">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <p class="modal-title">Θελετε να αποσταλεί το αίτημα διακανονισμού στην τράπεζα προς έκγκριση?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Άκυρο</button>
+                            <button type="button" onclick="Submit()" class="btn btn-outline">Επιβεβαίωση</button>
                         </div>
                     </div>
                 </div>
+            </div>
 
-            </section>
-        </div>
+        </section>
     </div>
+</div>
 
-        <br />
-        <br />
+<br />
+<br />
 
 
 
 
-        <script type="text/javascript">
+<script type="text/javascript">
 
               $(document).ready(function () {
                   $('#TotalAmount').hide();
@@ -354,14 +351,13 @@
                         $('#Submit').show('slow');
                        // $('#BillsStr').show('slow');
 
-                        
+
                 }
                 ,
                 fail: function (result)
                 { alert("Error filling drop down") }
 
-                });
-            window.scrollTo(0, document.body.scrollHeight);
+            });
         };
 
 
@@ -431,5 +427,4 @@
 
 
 
-        </script>
-
+</script>

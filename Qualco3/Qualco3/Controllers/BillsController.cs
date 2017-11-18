@@ -41,7 +41,7 @@ namespace Qualco3.Controllers
                 .Include(b => b.Settlement)
                 .Where(b => b.UserId == userid);
 
-          
+
 
             //return View(await applicationDbContext.ToListAsync());
             var db = await applicationDbContext.ToListAsync();
@@ -61,17 +61,20 @@ namespace Qualco3.Controllers
                     Amount = bill.Amount,
                     DueDate = bill.DueDate,
                     Selected = false,
-                    Status=bill.Status,
-                  
-            };
-                TotalAmount += bill.Amount;
+                    Status = bill.Status,
+
+                };
+                if (bill.Status == 0)
+                {
+                    TotalAmount += bill.Amount;
+                }
                 model.Bills.Add(editorViewModel);
             }
             model.TotalAmount = TotalAmount;
             return View(model);
         }
 
-        public  IActionResult NoBills(Bills model)
+        public IActionResult NoBills(Bills model)
         {
             return View(model);
         }
@@ -100,7 +103,7 @@ namespace Qualco3.Controllers
             decimal amount = 0;
             var selectedBill = from x in db
                                where selectedIds.Contains(x.ID)
-                                 select x;
+                               select x;
 
             if (selectedBill.Count() == 0)
             {
@@ -111,11 +114,11 @@ namespace Qualco3.Controllers
             foreach (var bill in selectedBill)
             {
 
-                 amount += bill.Amount;
-             
-                System.Diagnostics.Debug.WriteLine(bill.ID + " " +bill.Bill_description  +"  " + bill.Amount.ToString() );
+                amount += bill.Amount;
+
+                System.Diagnostics.Debug.WriteLine(bill.ID + " " + bill.Bill_description + "  " + bill.Amount.ToString());
             }
-           
+
             model.TotalAmount = amount;
             System.Diagnostics.Debug.WriteLine(model.TotalAmount.ToString());
 
@@ -126,7 +129,7 @@ namespace Qualco3.Controllers
             // .Select(x => new { Id = x.ID, Value = x.Code+ " " +x.Interest+" " +x.MaxNoInstallments });
 
 
-            List<int> Installments = new List<int> () {};
+            List<int> Installments = new List<int>() { };
 
             SubmitSelected model2 = new SubmitSelected
             {
@@ -138,8 +141,8 @@ namespace Qualco3.Controllers
             };
 
             foreach (var i in selectedIds)
-            { model2.BillsStr = model2.BillsStr+ i + ",";  }
-            
+            { model2.BillsStr = model2.BillsStr + i + ","; }
+
 
             model2.SettlementTypes = new SelectList(SetTypeDD, "Id", "Value");
             model2.Installments = new SelectList(Installments);
@@ -152,7 +155,7 @@ namespace Qualco3.Controllers
 
 
         [HttpPost]
-        public async Task<JsonResult>  DDAjax1(SubmitSelected model)
+        public async Task<JsonResult> DDAjax1(SubmitSelected model)
         {
             var SType = await _context.SettlementTypes
                 .Where(c => c.ID.Equals(model.SettlementType))
@@ -165,7 +168,7 @@ namespace Qualco3.Controllers
             {
                 NoInstallments.Add(m);
             }
-            
+
             return Json(NoInstallments);
         }
 
@@ -174,75 +177,75 @@ namespace Qualco3.Controllers
         public IActionResult DDAjax2(SubmitSelected model)
         {
 
-            SettlementTypes CurSettl =  _context.SettlementTypes
+            SettlementTypes CurSettl = _context.SettlementTypes
                 .Where(c => c.ID.Equals(model.SettlementType))
                 .SingleOrDefault();
 
-                model.Interest = CurSettl.Interest;
+            model.Interest = CurSettl.Interest;
 
-                model.DownPayment = CurSettl.DownPaymentPercentage;
-            model.DownPaymentValue = Math.Round(model.TotalAmount * CurSettl.DownPaymentPercentage / 100,2);
-            model.Monthly = Math.Round(MonthlyInstallments(model.TotalAmount, model.SettlementType, model.MaxNoOfInstallments),2);
-            model.SettlText = "Βάσει των επιλογών σας ο διακανονισμός προβλέπει προκαταβολή " + model.DownPaymentValue + ", και " + model.MaxNoOfInstallments + " μηνιαίες δόσεις ποσού "+ model.Monthly;
+            model.DownPayment = CurSettl.DownPaymentPercentage;
+            model.DownPaymentValue = Math.Round(model.TotalAmount * CurSettl.DownPaymentPercentage / 100, 2);
+            model.Monthly = Math.Round(MonthlyInstallments(model.TotalAmount, model.SettlementType, model.MaxNoOfInstallments), 2);
+            model.SettlText = "Βάσει των επιλογών σας ο διακανονισμός προβλέπει προκαταβολή " + model.DownPaymentValue + "€ και " + model.MaxNoOfInstallments + " μηνιαίες δόσεις ποσού " + model.Monthly + "€.";
 
-            return  DDAjaxBack(model);
+            return DDAjaxBack(model);
         }
 
 
-      //insert Setllement
+        //insert Setllement
         [HttpPost]
-        public async Task<IActionResult>  Submit(SubmitSelected model)
+        public async Task<IActionResult> Submit(SubmitSelected model)
         {
 
             //checked if data have changed
-            SettlementTypes CurSettl =  _context.SettlementTypes
+            SettlementTypes CurSettl = _context.SettlementTypes
                  .Where(c => c.ID.Equals(model.SettlementType))
                  .SingleOrDefault();
 
-                if (CurSettl == null)
-                {
-                    return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα\nΔεν έχετε επιλέξει υπαρκτό τύπο διακανονισμού!");
-                }
+            if (CurSettl == null)
+            {
+                return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα\nΔεν έχετε επιλέξει υπαρκτό τύπο διακανονισμού!");
+            }
 
-                if (model.MaxNoOfInstallments == 0 || model.MaxNoOfInstallments > CurSettl.MaxNoInstallments)
-                {
-                    return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα!\nΟ αριθμός δόσεων δεν συνάδει με αυτόν που προβλέπει ο διακανονισμός !");
-                }
+            if (model.MaxNoOfInstallments == 0 || model.MaxNoOfInstallments > CurSettl.MaxNoInstallments)
+            {
+                return NotFound(HttpStatusCode.NoContent + "\nΣφάλμα!\nΟ αριθμός δόσεων δεν συνάδει με αυτόν που προβλέπει ο διακανονισμός !");
+            }
 
             Settlements NewSettlement = new Settlements();
 
-                NewSettlement.RequestDate = DateTime.Now;
-                NewSettlement.AnswerDate = DateTime.ParseExact("19000101", "yyyyMMdd", CultureInfo.InvariantCulture);
-                NewSettlement.DownPayment = CurSettl.DownPaymentPercentage;
-                NewSettlement.Installments = model.MaxNoOfInstallments;
-                NewSettlement.Interest = CurSettl.Interest;
-                NewSettlement.IsAccepted = 0;
-                NewSettlement.SettlementTypeId = model.SettlementType;
-                _context.Settlements.Add(NewSettlement);
-                await _context.SaveChangesAsync();
-                int NewSettlementId = NewSettlement.ID;
+            NewSettlement.RequestDate = DateTime.Now;
+            NewSettlement.AnswerDate = DateTime.ParseExact("19000101", "yyyyMMdd", CultureInfo.InvariantCulture);
+            NewSettlement.DownPayment = CurSettl.DownPaymentPercentage;
+            NewSettlement.Installments = model.MaxNoOfInstallments;
+            NewSettlement.Interest = CurSettl.Interest;
+            NewSettlement.IsAccepted = 0;
+            NewSettlement.SettlementTypeId = model.SettlementType;
+            _context.Settlements.Add(NewSettlement);
+            await _context.SaveChangesAsync();
+            int NewSettlementId = NewSettlement.ID;
 
-                string[] BillIds;
-                BillIds = model.BillsStr.Split(',');
+            string[] BillIds;
+            BillIds = model.BillsStr.Split(',');
 
 
-                for (var i = 0; i < BillIds.Length - 1; i++)
+            for (var i = 0; i < BillIds.Length - 1; i++)
+            {
+                var cols = _context.Bills
+                    .Where(w => w.ID == Int32.Parse(BillIds[i]));
+
+                foreach (var b in cols)
                 {
-                    var cols = _context.Bills
-                        .Where(w => w.ID == Int32.Parse(BillIds[i]));
-
-                    foreach (var b in cols)
-                    {
-                        b.Status = 2;
-                        b.SettlementId = NewSettlementId;
-                    }
-                    await _context.SaveChangesAsync();
-
-
+                    b.Status = 2;
+                    b.SettlementId = NewSettlementId;
                 }
-                return DDAjaxBack(model);
+                await _context.SaveChangesAsync();
 
-            
+
+            }
+            return DDAjaxBack(model);
+
+
         }
 
         private JsonResult DDAjaxBack(SubmitSelected model)
@@ -300,9 +303,9 @@ namespace Qualco3.Controllers
             return 0;
         }
 
-   
 
-        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(User); 
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(User);
 
         // GET: Bills/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -443,7 +446,7 @@ namespace Qualco3.Controllers
         }
 
         // GET: Bills/CreditCardPayment/5
- 
+
         public async Task<IActionResult> CreditCardPayment(int? id)
         {
             if (id == null)
@@ -456,11 +459,11 @@ namespace Qualco3.Controllers
                 .Include(b => b.ApplicationUser)
                 .Include(b => b.PaymentMethods)
                 .Include(b => b.Settlement)
-                .Where (b=>b.ApplicationUser.Id == userid)
+                .Where(b => b.ApplicationUser.Id == userid)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (bills == null)
             {
-                return NotFound(HttpStatusCode.NotAcceptable  + "\nΣφάλμα!\nΔεν έχετε πρόσβαση!");
+                return NotFound(HttpStatusCode.NotAcceptable + "\nΣφάλμα!\nΔεν έχετε πρόσβαση!");
             }
 
             return View(bills);
@@ -472,7 +475,7 @@ namespace Qualco3.Controllers
         public async Task<IActionResult> PaymentConfirmed(int id)
         {
             var userid = _userManager.GetUserId(User);
-            var cols = _context.Bills.Where(w => w.ID == id && w.UserId== userid);
+            var cols = _context.Bills.Where(w => w.ID == id && w.UserId == userid);
 
             if (cols == null)
             {

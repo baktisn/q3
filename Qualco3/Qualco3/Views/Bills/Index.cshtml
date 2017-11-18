@@ -1,12 +1,10 @@
 @model Db.Models.BillSelectionViewModel
-
 @{
     ViewBag.Title = "Οι Λογαριασμοί μου";
 }
-
 @using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
 {
-        <div class="col-xs-12 center">
+    <div class="col-xs-12 center">
         <div class="notice notice-info">
             <div class="box-body no-padding">
                 <table class="table table-condensed">
@@ -35,9 +33,8 @@
             <tbody>
                 <tr>
                     <th>
-                        Συνολικό ποσό προς διακανονισμό
+                        Σύνολο Απλήρωτων Λογαριασμών
                     </th>
-
                     <th>
                         @Html.ValueFor(model => model.TotalAmount, "{0:C}")
                     </th>
@@ -52,12 +49,10 @@
         <br />
         <button type="submit" class="btn btn-info"><i class="fa fa-bank"></i>   Αίτηση Διακανονισμού</button>
     </div>
-    
-        }
 
+}
 
-
-        <script type="text/javascript">
+<script type="text/javascript">
 
             var countChecked = function () {
                 var n = $("input:checked").length;
@@ -75,4 +70,4 @@
 
             });
 
-        </script>
+</script>
