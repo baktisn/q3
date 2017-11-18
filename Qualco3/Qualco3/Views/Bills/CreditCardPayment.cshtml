@@ -34,7 +34,7 @@
                                     @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy hh:mm}")
                                 </th>
                                 <th>
-                                    @Html.ValueFor(model => model.Amount, "{0:C}")
+                                    @Html.DisplayFor(model => model.Amount)€
                                 </th>
                             </tr>
                         </tbody>
@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="cvv">Αριθμός CVV</label>
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-2">
                                         <input type="text" class="form-control" name="cvv" id="cvv">
                                     </div>
                                 </div>
