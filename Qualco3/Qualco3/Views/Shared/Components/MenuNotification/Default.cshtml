@@ -10,15 +10,15 @@
         <li>
             <!-- Inner Menu: contains the notifications -->
             <ul class="menu">
-            @foreach (var message in Model)
+                @foreach (var message in Model)
             {
-                <li>
-                    <!-- start notification -->
-                    <a href="@message.URLPath">
-                        <i class="@message.FontAwesomeIcon"></i> @message.ShortDesc
-                    </a>
-                </li>
-            }
+                    <li>
+                        <!-- start notification -->
+                        <a href="@message.URLPath">
+                            <i class="@message.FontAwesomeIcon"></i> @message.ShortDesc
+                        </a>
+                    </li>
+                }
                 <!-- end notification -->
             </ul>
         </li>

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Qualco3.ViewComponents
 {   [Authorize]
+    [Route("[controller]/[action]")]
     public class SidebarViewComponent : ViewComponent
     {
         public SidebarViewComponent()
