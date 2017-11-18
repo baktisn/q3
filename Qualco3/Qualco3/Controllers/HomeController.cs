@@ -20,6 +20,7 @@ namespace Qualco3.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("")]
+        [Route("/")]
         public IActionResult Index()
         {
 
