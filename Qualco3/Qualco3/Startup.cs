@@ -47,6 +47,7 @@ namespace Qualco3
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
+               
             }
             else
             {

@@ -6,18 +6,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Db.Models;
 using Microsoft.AspNetCore.Authorization;
+using Db.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Qualco3.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-
     public class HomeController : Controller
+
     {
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("")]
+        [Route("/")]
         public IActionResult Index()
         {
-            
+
             return View();
+
+
         }
 
         public IActionResult About()
@@ -29,7 +38,7 @@ namespace Qualco3.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Μπορείτε να επικοινωνίσετε μαζί μας με τους παρκάτω τρόπους:";
 
             return View();
         }

@@ -24,6 +24,9 @@ using System.Text;
 using Db.Models.AccountViewModels;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
+using System.Net;
+using System.Transactions;
+using System.Text.RegularExpressions;
 /// 
 
 namespace Qualco3.Controllers
@@ -33,11 +36,13 @@ namespace Qualco3.Controllers
     {
 
         private readonly Db.Data.ApplicationDbContext _context;
+        private readonly Db.Data.ApplicationDbContext _context2;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public CitizenDeptsController(UserManager<ApplicationUser> userManager, Db.Data.ApplicationDbContext context)
         {
             _context = context;
+            _context2 = context;
             _userManager = userManager;
         }
 
@@ -76,23 +81,79 @@ namespace Qualco3.Controllers
 
                     List<string> sl = new List<string>();
 
-                    CloudFile file = rootDir.GetFileReference("CitizenDebts_1M_3.txt");
+                    string bigfilename = "CitizenDebts_1M_3Big.txt";
+                    string fileName = "CitizenDebts_1M_3.txt";
+                        //"DEBTS_" + DateTime.Now.ToString("yyyyMMdd") + ".txt";
+                    CloudFile file = rootDir.GetFileReference(fileName);
+                    string checkfile = bigfilename;
                     //if the file exists
+                    
                     bool asd = await file.ExistsAsync();
                     if (asd)
                     {
                         //adds new datasting array
                         sl = await ReadDataAsync(file);
+                        if (sl is null)
+                        { return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα\nΤο αρχείο δεν περιέχει σωστό αριθμό στηλών</b>"); }
+                    }
+                    else
+                    {
+                        return NotFound(HttpStatusCode.NotFound+ "\n" + "\nΣφάλμα\nΔεν βρέθηκε το αρχείο</b>");
                     }
 
+                    Console.WriteLine("File into List "+DateTime.Now.ToString());
                     //foreach (string y in sl)
                     //{ Console.WriteLine("From list new : " + y); };
+                    string[] cols;
+                    
+                        for (int i = sl.Count - 1; i >= 0; i--)
+                        {
+
+                            cols = sl.ElementAt(i).Split(';');
+                        if (cols[0].Trim().Length !=10 || !cols[0].All(char.IsDigit))
+                        {  sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος ΑΦΜ"); }
+
+                            if (cols[1].Trim().Length ==0 )
+                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Όνομα "); }
+
+                        if (cols[2].Trim().Length == 0)
+                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Επώνυμο "); }
+
+                        if (cols[3].Trim().Length == 0 || !Regex.IsMatch(cols[3], @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"))
+                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Email "); }
+
+                        if (cols[4].Trim().Length == 0 || !cols[4].All(char.IsDigit))
+                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Τηλέφωνο "); }
+
+                        if (cols[5].Trim().Length == 0)
+                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Διεύθυσνη "); }
+
+                        if (cols[6].Trim().Length == 0)
+                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Περιοχή "); }
+                        //!Regex.IsMatch(cols[7], @"^(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})$")
+                        if (cols[7].Trim().Length == 0 )
+                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Αρ.Λογαριασμού "); }
+                  
+                        if (cols[8].Trim().Length == 0)
+                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Περιγραφή Λογαριασμού "); }
+
+                        decimal number;
+                        if (cols[9].Trim().Length == 0 || !Decimal.TryParse(cols[9], out number) || cols[9].Contains('.'))
+         
+                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Ποσό"); }
+
+                        DateTime d;
+                        if (cols[10].Trim().Length == 0 || !DateTime.TryParseExact(cols[10], "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None,out d))
+                        { sl.RemoveAt(i); continue;return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Ημερομηνία "); }
+                    }
+
+
 
                     IEnumerable<CitizenDepts> o = from eachLine in (
                      from inner in sl
                      select inner.Split(';')
                  )
-
+                
                                                   select new CitizenDepts
                                                   {
                                                       VAT = eachLine[0],
@@ -110,26 +171,79 @@ namespace Qualco3.Controllers
                                                     "yyyyMMdd", CultureInfo.InvariantCulture)
 
                                                   };
-                    //foreach (var p in o)
-                    //{
-                    //    Console.WriteLine(p.FirstName + " - " + p.UserId + ", - " + p.DueDate);
-                    //};
-                  //  var dd = decimal.Parse("10,33", CultureInfo.GetCultureInfo("el-GR"));
-                    //clear citizen depts table
-                    var all = from c in _context.CitizenDepts select c;
+                    Console.WriteLine("File splitted " + DateTime.Now.ToString());
+
+
+                    
+                    
+                        //foreach (var p in o)
+                        //{
+                        //    Console.WriteLine(p.FirstName + " - " + p.UserId + ", - " + p.DueDate);
+                        //};
+                        //  var dd = decimal.Parse("10,33", CultureInfo.GetCultureInfo("el-GR"));
+                        //clear citizen depts table
+                        var all = from c in _context.CitizenDepts select c;
                     _context.CitizenDepts.RemoveRange(all);
                     await _context.SaveChangesAsync();
-
+                    Console.WriteLine("CitizenDept table deleted " + DateTime.Now.ToString());
                     // add new citizendepts
-                    foreach (var p in o)
-                    {
-                        _context.Add(p);
-                    }
-                    await _context.SaveChangesAsync();
+
+                        //foreach (var p in o)
+                        //{
+                        //    _context.Add(p);
+                        //}
+                        //_context2.AddRange(o);
+
+                   
+                        //try
+                        //{
+                        //    _context2.ChangeTracker.AutoDetectChangesEnabled = false;
+                            foreach (var p in o)
+                            {
+                                _context.Add(p);
+                            }
+                            Console.WriteLine("Context filledup " + DateTime.Now.ToString());
+                            await _context.SaveChangesAsync();
+                        //}
+                        //finally
+                        //{
+                        //    _context2.ChangeTracker.AutoDetectChangesEnabled = true;
+                        //}
+                     
+                  
+
+              
+
+                    //using (var scope = new TransactionScope())
+                    //{
+
+                    //    using (_context)
+                    //    {
+                    //        // This is optional
+                    //        _context.ChangeTracker.AutoDetectChangesEnabled = false;
+
+                    //        for (var i = 0; i < 100000; i++)
+                    //        {
+                    //            // create product
+
+                    //            // insert in batch
+                    //            _context = _context.BulkInsert(o, i, 100);
+                    //        }
+
+                    //        _context.SaveChanges(); // save remaining items
+                    //    }
+
+                    //    scope.Complete();
+                    //}
+
+
+                     Console.WriteLine("Context saved to DB " + DateTime.Now.ToString());
 
                     //filter citizens
-                    IEnumerable<CitizenDepts> NewCitizens = o.Where(x => !((_context.ApplicationUser.Any(y => y.VAT == x.VAT)) || (_context.ApplicationUser.Any(y => y.Email == x.Email))))
+                    IEnumerable<CitizenDepts> NewCitizens = o.
+                        Where(x => !((_context.ApplicationUser.Any(y => y.VAT == x.VAT)) || (_context.ApplicationUser.Any(y => y.Email == x.Email))))
                         .Select(x => x).AsEnumerable();
+                    Console.WriteLine("Citizens filterd " + DateTime.Now.ToString());
 
 
                     foreach (var p in NewCitizens)
@@ -137,7 +251,7 @@ namespace Qualco3.Controllers
                         Console.WriteLine(p.VAT + " , " + p.Email + " , " + p.LastName + " , " + p.Bill_description);
 
                     }
-
+                    Console.WriteLine("Citizens log " + DateTime.Now.ToString());
                     //only new citizens
                     foreach (var p in NewCitizens.Distinct())
                     {
@@ -149,7 +263,13 @@ namespace Qualco3.Controllers
                         var result = await _userManager.CreateAsync(user, TempPass);
                         if (result.Succeeded)
                         {
-                            SendMail(p.LastName, p.Email, TempPass);
+                            if  (checkfile!= "CitizenDebts_1M_3.txt")
+                            {
+                                Console.WriteLine("Sending Emails");
+                                SendMail(p.LastName, p.Email, TempPass);
+                            }
+                            
+
                             var query =
                               from UserUpd in _context.ApplicationUser
                               where UserUpd.Email == p.Email
@@ -172,7 +292,7 @@ namespace Qualco3.Controllers
 
                     };
                     await _context.SaveChangesAsync();
-
+                    Console.WriteLine("New Users Registered and Emailed " + DateTime.Now.ToString());
 
                     // IEnumerable<Bills> NewBills = o.Where(x => o.Any())
                     //.Select(x => new
@@ -187,17 +307,17 @@ namespace Qualco3.Controllers
                     //    NewBills.SettlementId = 0
                     //});
 
-                   
-                    foreach (var p in _context.ApplicationUser)
+
+                    foreach (var a in _context.ApplicationUser)
                     {
                         var query2 =
                               from UIdUpd in _context.CitizenDepts
-                              where UIdUpd.VAT == p.VAT
+                              where UIdUpd.VAT == a.VAT
                               select UIdUpd;
 
                         foreach (CitizenDepts UIdUpd in query2)
                         {
-                            UIdUpd.UserGUId = p.Id;
+                            UIdUpd.UserGUId = a.Id;
                         }
                     };
 
@@ -231,20 +351,20 @@ namespace Qualco3.Controllers
 
                     List<CitizenDepts> UpdCit = new List<CitizenDepts>();
 
-                    foreach (var p in _context.CitizenDepts)
-                    {
-                        UpdCit.Add(p);
-                    }
-                    foreach (var p in UpdCit)
+                    //foreach (var p in _context.CitizenDepts)
+                    //{
+                        UpdCit.AddRange(_context.CitizenDepts);
+                    //}
+                    foreach (var e in UpdCit)
                     {
                        
-                            Console.WriteLine("#############################CITIZEN_DEPTS " + p.VAT + " , " + p.Email + " , " + p.UserGUId);
-                            NewBill.GuId = p.BillId;
-                            NewBill.Amount = p.Amount;
-                            NewBill.DueDate = p.DueDate;
-                            NewBill.Bill_description = p.Bill_description;
+                            Console.WriteLine("#############################CITIZEN_DEPTS " + e.VAT + " , " + e.Email + " , " + e.UserGUId);
+                            NewBill.GuId = e.BillId;
+                            NewBill.Amount = e.Amount;
+                            NewBill.DueDate = e.DueDate;
+                            NewBill.Bill_description = e.Bill_description;
                             NewBill.Status = 0;
-                            NewBill.UserId = p.UserGUId;
+                            NewBill.UserId = e.UserGUId;
                             NewBill.PaymentMethodId = 1;
                             NewBill.SettlementId = 1;    
                             NewBillsls.Add(NewBill);
@@ -266,15 +386,15 @@ namespace Qualco3.Controllers
 
 
 
-                    foreach (var c in NewBillsls)
-                    {
-                        Console.WriteLine("############################BILLS " + c.GuId + " , " + c.UserId);
-                        _context.Bills.Add(c);
-                    }
+                   // foreach (var c in NewBillsls)
+                   // {
+                     //   Console.WriteLine("############################BILLS " + c.GuId + " , " + c.UserId);
+                        _context.Bills.AddRange(NewBillsls);
+                  //  }
                     await _context.SaveChangesAsync();
 
 
-                    return View(o);
+                    return View(NewCitizens);
                 }
                     // }
                 
@@ -282,11 +402,11 @@ namespace Qualco3.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                return NotFound(HttpStatusCode.ExpectationFailed + "\n" + ex.Message+ "\nΣφάλμα\nΣτην Εισαγωγή του αρχείου</b>");
             }
             finally
             {
-
+                Console.WriteLine("Import Finished Successfully " + DateTime.Now.ToString());
             }
 
             return View();
@@ -366,7 +486,7 @@ namespace Qualco3.Controllers
             return;
         }
 
-      
+
 
         private static async Task<List<string>> ReadDataAsync(CloudFile file)
         {
@@ -381,7 +501,13 @@ namespace Qualco3.Controllers
                         int x = 0;
                         while ((s = reader.ReadLine()) != null)
                         {
-                           if (s.Contains("VAT") == false)
+
+                            if (s.Count(f => f == ';') != 10)
+                            {
+                              return null;
+                            }
+
+                            if (s.Contains("VAT") == false)
                             {
                                 sl.Add(s);
                             //Console.WriteLine(s);
@@ -395,6 +521,25 @@ namespace Qualco3.Controllers
             catch (Exception ex) { return null; }
         }
 
-        
+        //public static Db.Data.ApplicationDbContext BulkInsert<CitizenDepts>(this Db.Data.ApplicationDbContext _context, CitizenDepts entity, int count, int batchSize) 
+        //{
+        //    _context.Set<CitizenDepts>.Add(entity);
+
+        //    if (count % batchSize == 0)
+        //    {
+        //        _context.SaveChanges();
+        //        _context.Dispose();
+        //        _context = context;
+
+        //        // This is optional
+        //        _context.ChangeTracker.AutoDetectChangesEnabled = false;
+        //    }
+        //    return _context;
+        //}
+
+
+
+
+
     }
 }

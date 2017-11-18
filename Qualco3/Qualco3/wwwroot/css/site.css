@@ -1,6 +1,5 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+
 }
 
 /* Wrapping element */
@@ -33,3 +32,17 @@
         display: none;
     }
 }
+
+/*site specifics*/
+.site-loader-color {
+    color: #000000 !important;
+    font-size: 50px !important;
+}
+
+.site-datatable-button-container {
+    margin-left: 10px;
+}
+
+.button-create {
+}
+

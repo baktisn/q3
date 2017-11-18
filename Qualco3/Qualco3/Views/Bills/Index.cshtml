@@ -1,72 +1,78 @@
-﻿@model Db.Models.BillSelectionViewModel
+@model Db.Models.BillSelectionViewModel
 
 @{
-    ViewBag.Title = "Bills";
+    ViewBag.Title = "Οι Λογαριασμοί μου";
 }
 
-<h2>Bills</h2>
-
-@using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" ,id="myForm"}))
+@using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
 {
-    <html>
-    <head>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row col-md-18 col-md-offset-0 custyle">
-                <table class="table table-striped custab">
-                    <thead>
-                        <tr>
-                            <th>
-                            </th>
-                            <th>
-                                Description
-                            </th>
-                            <th>
-                                Due Date
-                            </th>
-                            <th>
-                                Amount
-                            </th>
-                        </tr>
-                    </thead>
-
-                    @Html.EditorFor(model => model.Bills)
+        <div class="col-xs-12 center">
+        <div class="notice notice-info">
+            <div class="box-body no-padding">
+                <table class="table table-condensed">
+                    <tr>
+                        <th></th>
+                        <th>
+                            Είδος
+                        </th>
+                        <th>
+                            Ημερομηνία Λήξης
+                        </th>
+                        <th>
+                            Ποσό
+                        </th>
+                    </tr>
+                    <tbody>
+                        @Html.EditorFor(model => model.Bills)
+                    </tbody>
                 </table>
-               <dt>
-                @Html.DisplayNameFor(model => model.TotalAmount)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.TotalAmount)
-                </dd>
             </div>
         </div>
-    </body>
-</html>
-    <hr />
-    <br />
-    <button type="submit" class="btn btn-primary" name="operation" id="sumbit">Submit Selected</button>
-}
+    </div>
+
+    <div class="panel notice-info">
+        <table class="table table-hover" id="dev-table">
+            <tbody>
+                <tr>
+                    <th>
+                        Συνολικό ποσό προς διακανονισμό
+                    </th>
+
+                    <th>
+                        @Html.ValueFor(model => model.TotalAmount, "{0:C}")
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script type="text/javascript">
-
-    var countChecked = function () {
-        var n = $("input:checked").length;
-       // alert((n + (n === 1 ? " is" : " are") + " checked!"));
-        return n;
-    };
-    //countChecked();
-
-    $('#myForm').submit(function () {
-       
-        if (countChecked() == 0)
-        {
-            alert('Πρέπει να επιλέξετε έστω εναν λογαριασμό για να προχωρήσετε σε διακανονισμό');
-            return false;
+    <div class="col-xs-4">
+        <br />
+        <button type="submit" class="btn btn-info"><i class="fa fa-bank"></i>   Αίτηση Διακανονισμού</button>
+    </div>
+    
         }
-       
-    });
 
-    </script>
+
+
+        <script type="text/javascript">
+
+            var countChecked = function () {
+                var n = $("input:checked").length;
+                // alert((n + (n === 1 ? " is" : " are") + " checked!"));
+                return n;
+            };
+            //countChecked();
+
+            $('#myForm').submit(function () {
+
+                if (countChecked() == 0) {
+                    alert('Πρέπει να επιλέξετε έστω εναν λογαριασμό για να προχωρήσετε σε διακανονισμό');
+                    return false;
+                }
+
+            });
+
+        </script>

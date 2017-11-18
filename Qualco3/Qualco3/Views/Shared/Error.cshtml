@@ -1,23 +1,16 @@
-﻿@model Db.Models.ErrorViewModel
-@{
-    ViewData["Title"] = "Error";
-}
-
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
-
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+﻿  
+<section class="content">
+    <div class="error-page">
+        <h2 class="headline text-yellow"> 404</h2>
+        <div class="error-content">
+            <br />
+            <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
+            <p>
+                We could not find the page you were looking for.
+                Meanwhile, you may <a href="../Home/Index">return to dashboard</a> or <a href="../Home/Contact">scold us</a> to learn faster.
 </p>
-<p>
-    <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
-</p>
-    
+        </div>
+        <!-- /.error-content -->
+    </div>
+    <!-- /.error-page -->
+</section>
