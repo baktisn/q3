@@ -58,7 +58,7 @@ namespace Qualco3.Common
                     {
                         Type = SidebarMenuType.Link,
                         Name = "Home",
-                        IconClassName = "fa fa-link",
+                        IconClassName = "fa fa-pie-chart",
                         URLPath = "/Home/Index",
                         LinkCounter = counter,
                     };
@@ -67,7 +67,7 @@ namespace Qualco3.Common
                     {
                         Type = SidebarMenuType.Link,
                         Name = "Manage Bills",
-                        IconClassName = "fa fa-sign-in",
+                        IconClassName = "fa fa-suitcase",
                         URLPath = "/Bills/Index",
                         LinkCounter = counter,
                     };
@@ -112,7 +112,7 @@ namespace Qualco3.Common
                     {
                         Type = SidebarMenuType.Link,
                         Name = "Contact",
-                        IconClassName = "fa fa-phone",
+                        IconClassName = "fa fa-paper-plane",
                         URLPath = "/Home/Contact",
                         LinkCounter = counter,
                     };

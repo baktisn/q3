@@ -17,12 +17,16 @@ namespace Qualco3.Controllers
     public class HomeController : Controller
 
     {
-      
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("")]
+        [Route("/")]
         public IActionResult Index()
         {
-                   
+
             return View();
-            
+
+
         }
 
         public IActionResult About()
@@ -34,7 +38,7 @@ namespace Qualco3.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Μπορείτε να επικοινωνίσετε μαζί μας με τους παρκάτω τρόπους:";
 
             return View();
         }
