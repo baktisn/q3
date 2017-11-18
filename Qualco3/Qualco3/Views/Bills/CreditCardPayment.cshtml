@@ -5,127 +5,130 @@
     ViewBag.Title = "Λογαριασμός προς πληρωμή";
 }
 
-<div class="col-xs-12 center">
-    <div class="notice notice-info">
-        <div class="box-body no-padding">
+<div class="row">
+    <div class="col-xs-8">
+        <section>
+            <div class="box box-info">
+                <div class="box-body ">
 
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th>
-                            Είδος
-                        </th>
-                        <th>
-                            Ημερομηνία Λήξης
-                        </th>
-                        <th>
-                            Ποσό
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>
-                            @Html.DisplayFor(model => model.Bill_description)
-                        </th>
-                        <th>
-                            @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy hh:mm}")
-                        </th>
-                        <th>
-                            @Html.ValueFor(model => model.Amount, "{0:C}")
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Είδος
+                                </th>
+                                <th>
+                                    Ημερομηνία Λήξης
+                                </th>
+                                <th>
+                                    Ποσό
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    @Html.DisplayFor(model => model.Bill_description)
+                                </th>
+                                <th>
+                                    @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy hh:mm}")
+                                </th>
+                                <th>
+                                    @Html.ValueFor(model => model.Amount, "{0:C}")
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
     </div>
-
-    <br />
-
-    <div class="notice notice-info">
-        <div class="form-horizontal" role="form">
-            <fieldset>
-                <form asp-action="PaymentConfirmed" method="post" id="payment-form">
-                    <span class="payment-errors"></span>
-                    <input type="hidden" asp-for="ID" />
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="card-holder-name">Όνομα κατόχου</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="card-holder-name" id="card-holder-name" placeholder="Όνομα κατόχου Κάρτας">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="card-number">Αριθμός Κάρτας</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="card-number" id="card-number" placeholder="Αριθμός Πιστωτικής/Χρεωστικής Κάρτας">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="expiry-month">Ημ. Λήξης</label>
-                        <div class="col-sm-9">
-                            <div class="col-xs-3">
-                                <select class="form-control col-sm-2" name="expiry-month" id="expiry-month">
-                                    <option>Month</option>
-                                    <option value="01">Ιανουάριος (01)</option>
-                                    <option value="02">Φεβρουάριος (2)</option>
-                                    <option value="03">Μάρτιος (03)</option>
-                                    <option value="04">Απρίλιος (04)</option>
-                                    <option value="05">Μάιος (05)</option>
-                                    <option value="06">Ιούνιος (06)</option>
-                                    <option value="07">Ιούλιος (07)</option>
-                                    <option value="08">Αύγουστος (08)</option>
-                                    <option value="09">Σεπτέμβριος (09)</option>
-                                    <option value="10">Οκτώβριος (10)</option>
-                                    <option value="11">Νοέμβριος (11)</option>
-                                    <option value="12">Δεκέμβριος (12)</option>
-                                </select>
-                            </div>
-                            <div class="col-xs-3">
-                                <select class="form-control" name="expiry-year">
-                                    <option value="17">2017</option>
-                                    <option value="18">2018</option>
-                                    <option value="19">2019</option>
-                                    <option value="20">2020</option>
-                                    <option value="21">2021</option>
-                                    <option value="22">2022</option>
-                                    <option value="23">2023</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="cvv">Αριθμός CVV</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" name="cvv" id="cvv" placeholder="Κωδικός Ασφαλείας">
-                        </div>
-                    </div>
-                    
-                        <div class="col-xs-4">
-                            <button type="submit" class="btn btn-info">Πληρωμή</button>
-                        </div>
-                    
-                </form>
-            </fieldset>
-        </div>
-    </div>
-    <br />
 </div>
 
-<div class="panel notice-info">
-    <table class="table table-hover" id="dev-table">
-        <tbody>
-            <tr>
-               
-            </tr>
-        </tbody>
-    </table>
-</div>
 
-<hr />
+
+<br />
+
+<div class="row">
+    <div class="col-xs-8">
+        <section>
+            <div class="box box-info">
+                <div class="box-body ">
+                    <div class="form-horizontal" role="form">
+                        <fieldset>
+                            <form asp-action="PaymentConfirmed" method="post" id="payment-form">
+                                <span class="payment-errors"></span>
+                                <input type="hidden" asp-for="ID" />
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="card-holder-name">Όνομα κατόχου</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" name="card-holder-name" id="card-holder-name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="card-number">Αριθμός Κάρτας</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" name="card-number" id="card-number">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="expiry-month">Ημ. Λήξης</label>
+                                    <div class="col-sm-9">
+                                        <div class="col-xs-3">
+                                            <select class="form-control col-sm-2" name="expiry-month" id="expiry-month">
+                                                <option>Μήνας</option>
+                                                <option value="01">Ιανουάριος (01)</option>
+                                                <option value="02">Φεβρουάριος (2)</option>
+                                                <option value="03">Μάρτιος (03)</option>
+                                                <option value="04">Απρίλιος (04)</option>
+                                                <option value="05">Μάιος (05)</option>
+                                                <option value="06">Ιούνιος (06)</option>
+                                                <option value="07">Ιούλιος (07)</option>
+                                                <option value="08">Αύγουστος (08)</option>
+                                                <option value="09">Σεπτέμβριος (09)</option>
+                                                <option value="10">Οκτώβριος (10)</option>
+                                                <option value="11">Νοέμβριος (11)</option>
+                                                <option value="12">Δεκέμβριος (12)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <select class="form-control" name="expiry-year">
+                                                <option value="17">2017</option>
+                                                <option value="18">2018</option>
+                                                <option value="19">2019</option>
+                                                <option value="20">2020</option>
+                                                <option value="21">2021</option>
+                                                <option value="22">2022</option>
+                                                <option value="23">2023</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="cvv">Αριθμός CVV</label>
+                                    <div class="col-sm-1">
+                                        <input type="text" class="form-control" name="cvv" id="cvv">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="col-xs-4">
+                                    <button type="submit" class="btn btn-info">Πληρωμή</button>
+                                </div>
+
+                            </form>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<br />
+<br />
+<br />
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Πίσω</a>
 </div>
 
 <script type="text/javascript">
@@ -133,12 +136,11 @@
 
     $('#payment-form').submit(function () {
 
-    if (!$('#card-holder-name').val() || !$('#card-number').val() || $('#expiry-month').val()=="Month" || !$('#cvv').val() ) 
-        {
+        if (!$('#card-holder-name').val() || !$('#card-number').val() || $('#expiry-month').val() == "Month" || !$('#cvv').val()) {
             alert("Θα πρέπει να συμπληρώσετε όλα τα πεδία!");
             return false;
         }
-        else{}
+        else { }
     });
 
 </script>
