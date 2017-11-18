@@ -7,18 +7,13 @@
 
 <tr>
     <td style="text-align:center">
-        <div class="btn-group btn-group-xs" data-toggle="buttons">
-            @if (@Model.Status == 0)
-            {
-                <label class="btn btn-default">
-                    <input type="checkbox" autocomplete="off">
-                    <span class="glyphicon glyphicon-ok"></span>
-                    @Html.CheckBoxFor(model => model.Selected)
-                </label>
-            }
-        </div>
+        @if (@Model.Status == 0)
+        {
+            @Html.CheckBoxFor(model => model.Selected)
+        }
 
     </td>
+
     <th>
         @Html.DisplayFor(model => model.Bill_description)
     </th>
