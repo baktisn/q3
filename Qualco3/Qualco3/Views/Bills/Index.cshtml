@@ -1,69 +1,54 @@
 @model Db.Models.BillSelectionViewModel
 
 @{
-    ViewBag.Title = "Λογαριασμοί";
+    ViewBag.Title = "Οι Λογαριασμοί μου";
 }
 
 @using (Html.BeginForm("SubmitSelected", "Bills", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
 {
-    <html>
-    <body>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="panel panel-default">
-                   
-                    <div class="panel-body">
-                        <table class="table table-hover " id="dev-table">
-                            <thead>
-                                <tr>
-                                    <th>
-                                    </th>
-                                    <th>
-                                        Είδος
-                                    </th>
-                                    <th>
-                                        Ημερομηνία Λήξης
-                                    </th>
-                                    <th>
-                                        Ποσό
-                                    </th>
-                                    <th>
-                                        
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @Html.EditorFor(model => model.Bills)
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="panel notice-warning">
-                    <table class="table table-striped" id="dev-table">
-                        <tbody>
-                            <tr>
-                                <th>
-                                    Συνολικό ποσό λογαριασμών
-                                </th>
-
-                                <th>
-                                    @Html.DisplayFor(model => model.TotalAmount)
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="col-xs-4">
-                <br />
-            <button type="submit" class="btn btn-warning"><i class="fa fa-bank"></i>   Αίτηση Διακανονισμού</button>
+        <div class="col-xs-12 center">
+        <div class="notice">
+            <div class="box-body no-padding">
+                <table class="table table-condensed">
+                    <tr>
+                        <th>
+                            Είδος
+                        </th>
+                        <th>
+                            Ημερομηνία Λήξης
+                        </th>
+                        <th>
+                            Ποσό
+                        </th>
+                    </tr>
+                    <tbody>
+                        @Html.EditorFor(model => model.Bills)
+                    </tbody>
+                </table>
             </div>
         </div>
-    </body>
-    </html>
+    </div>
+    <div class="panel notice-warning">
+        <table class="table table-hover" id="dev-table">
+            <tbody>
+                <tr>
+                    <th>
+                        Συνολικό ποσό προς διακανονισμό
+                    </th>
+
+                    <th>
+                        @Html.ValueFor(model => model.TotalAmount, "{0:C}")
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="col-xs-4">
+        <br />
+        <button type="submit" class="btn btn-warning"><i class="fa fa-bank"></i>   Αίτηση Διακανονισμού</button>
+    </div>
     
         }
 

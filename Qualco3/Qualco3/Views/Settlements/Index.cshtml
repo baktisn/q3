@@ -1,72 +1,58 @@
 ﻿@model IEnumerable<Db.Models.Settlements>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Οι Διακανονισμοί μου";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="col-xs-12 center">
+    <div class="notice notice-warning">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.RequestDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AnswerDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DownPayment)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Installments)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Interest)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsAccepted)
-                </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SettlementType)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnswerDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DownPayment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Installments)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Interest)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsAccepted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SettlementType.ID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+  
+
+        <div class="box-body no-padding">
+            <table class="table table-condensed">
+                <tr>
+                    <th>
+                        Date Requested
+                    </th>
+                    <th>
+                        Down Payment
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Installments)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Interest)
+                    </th>
+                    <th>
+                    </th>
+
+                </tr>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RequestDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DownPayment)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Installments)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Interest)
+                            </td>
+                            <td class="button">
+                                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                            </td>
+
+                       </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
