@@ -354,13 +354,14 @@
                         $('#Submit').show('slow');
                        // $('#BillsStr').show('slow');
 
-
+                        
                 }
                 ,
                 fail: function (result)
                 { alert("Error filling drop down") }
 
-            });
+                });
+            window.scrollTo(0, document.body.scrollHeight);
         };
 
 
