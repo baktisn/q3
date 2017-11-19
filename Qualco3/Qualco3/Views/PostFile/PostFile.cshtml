@@ -1,21 +1,37 @@
 ﻿@model Db.Models.PostFile
 
-<div>
+
     <h4>Εξαγωγη αρχείων</h4>
     <hr />
-    <dl class=" center-block">
-        <dt>
-            Δημιουργήθηκε αρχείο διακανονισμών με αριθμό εγγραφών: @Html.DisplayFor(model => model.SettlementsCount)
-        </dt>
-        <dd>
-          
-        </dd>
-        <dt>
-            Δημιουργήθηκε αρχείο πληρωμών με αριθμό εγγραφών: @Html.DisplayFor(model => model.PaymentsCount)
-        </dt>
-        <dd>
-          
-        </dd>
-    </dl>
+ 
+
+
+<div class="row">
+    <div class="col-xs-8">
+        <section>
+            <div class="box box-info">
+                <div class="box-body ">
+                    <table class="table table-condensed">
+                        <tr>
+                            <th>
+                                Δημιουργήθηκε αρχείο διακανονισμών με αριθμό εγγραφών: @Html.DisplayFor(model => model.SettlementsCount)
+                            </th>
+
+                        </tr>
+
+                        <tbody>
+                            <tr>
+                                <th>
+                                    Δημιουργήθηκε αρχείο πληρωμών με αριθμό εγγραφών: @Html.DisplayFor(model => model.PaymentsCount)
+                                </th>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
+
 

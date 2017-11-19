@@ -1,0 +1,68 @@
+﻿@model Db.Models.DeptResults
+
+@{
+    ViewData["Title"] = "Αποτελέσματα Εισαγωγής";
+}
+
+
+
+<div class="row">
+    <div class="col-xs-8">
+        <section>
+            <div class="box box-info">
+                <div class="box-body ">
+                    <table class="table table-condensed">
+                        <tr>
+                            <th>
+                                Νέοι Λογαριασμοί
+                            </th>
+                            <th>
+                                Νέοι Χρήστες
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+                                Ενημέρωση
+                            </th>
+                            </tr>
+
+<tbody>
+    <tr>
+        <th>
+            @Model.BillsCount
+        </th>
+        <th>
+            @Model.NewUsers
+        </th>
+        <th>
+            @Model.HttpStatus
+        </th>
+        <th>
+            @Model.Message
+        </th>
+    </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+
+
+
+@*@foreach (var item in Model.ErrorLines) {
+ 
+              
+                @item.ErrorMessage
+
+                @item.line
+
+               @item.LineString
+
+}*@
+
+
