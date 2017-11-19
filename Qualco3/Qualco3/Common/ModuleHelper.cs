@@ -22,7 +22,8 @@ namespace Qualco3.Common
             GetFile,
             PostFile,
             Error,
-            Contact
+            Contact,
+            GetFile2
         }
 
         public static SidebarMenu AddHeader(string name)
@@ -114,6 +115,16 @@ namespace Qualco3.Common
                         Name = "Επικοινωνία",
                         IconClassName = "fa fa-paper-plane",
                         URLPath = "/Home/Contact",
+                        LinkCounter = counter,
+                    };
+
+                case Module.GetFile2:
+                    return new SidebarMenu
+                    {
+                        Type = SidebarMenuType.Link,
+                        Name = "Get File No Email",
+                        IconClassName = "fa fa-paper-plane",
+                        URLPath = "/CitizenDepts/GetFile2",
                         LinkCounter = counter,
                     };
                 case Module.Error:

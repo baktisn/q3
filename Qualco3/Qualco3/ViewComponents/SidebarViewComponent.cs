@@ -40,10 +40,9 @@ namespace Qualco3.ViewComponents
                 sidebars.Add(ModuleHelper.AddTree("Admin"));
                 sidebars.Last().TreeChild = new List<SidebarMenu>()
             {
-                ModuleHelper.AddModule(ModuleHelper.Module.ApplicationUsers),
                 ModuleHelper.AddModule(ModuleHelper.Module.GetFile),
                 ModuleHelper.AddModule(ModuleHelper.Module.PostFile),
-                ModuleHelper.AddModule(ModuleHelper.Module.Error)
+                 ModuleHelper.AddModule(ModuleHelper.Module.GetFile2)
             };
             }
 

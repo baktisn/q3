@@ -1,7 +1,14 @@
 ﻿
+@using Microsoft.AspNetCore.Identity
+@using Db.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <html>
 <body>
 
+    @if (!@User.IsInRole("Admin"))
+    {
     <div class="row">
         <div class="col-xs-5">
             <div class="box box-info">
@@ -26,6 +33,21 @@
             </div>
         </div>
     </div>
+    }
+    else
+    {
+    <div class="row">
+        <div class="col-xs-5">
+            <div class="box box-info">
+                <div class="box-header">
+                    <h2>Διαχείριση Αρχείων</h2>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
 
 </body>
 </html>
