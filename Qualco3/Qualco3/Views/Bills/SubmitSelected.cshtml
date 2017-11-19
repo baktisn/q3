@@ -34,23 +34,19 @@
                                         @Html.ValueFor(modelItem => item.DueDate, "{0:dd/MM/yyyy hh:mm}")
                                     </th>
                                     <th>
-                                        @Html.ValueFor(modelItem => item.Amount, "{0:C}")
+                                        @Html.DisplayFor(modelItem => item.Amount)€
                                     </th>
                                 </tr>
                             }
                         </tbody>
                     </table>
                 </div>
-                <div class="box box-info">
+                <div class="box box-warning">
                     <table class="table table-hover" id="dev-table">
                         <tbody>
                             <tr>
                                 <th>
-                                    Συνολικό ποσό προς διακανονισμό
-                                </th>
-
-                                <th>
-                                    @Html.ValueFor(model => model.TotalAmount, "{0:C}")
+                                    Συνολικό ποσό προς διακανονισμό:        @Html.DisplayFor(model => model.TotalAmount)€
                                 </th>
                             </tr>
                         </tbody>
@@ -69,7 +65,7 @@
     <div class="col-xs-8">
         <section>
             <div class="box box-info">
-                <div class="box-body ">
+                <div class="box-header">
                     <table class="table table-condensed">
                         <thead>
                             <h4>Διαθέσιμοι τύποι διακανονισμού</h4>
@@ -77,16 +73,16 @@
                     </table>
                 </div>
 
-
+                <div class="box-body">
 
                 @foreach (var item in Model.SettlementTypesEnum)
-            {
+                {
                 if (item.Code == "0")
                 {
                     continue;
                 }
 
-                <dl class="col-xs-6">
+                <dl class="box box-warning">
 
                     <dt>
                         @Html.DisplayFor(modelItem => item.Code)
@@ -104,8 +100,9 @@
                 </dl>
 
 
-                }
-            </div>
+                    }
+                </div>
+          </div>
 
         </section>
     </div>

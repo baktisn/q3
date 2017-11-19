@@ -13,7 +13,6 @@
         }
 
     </td>
-
     <th>
         @Html.DisplayFor(model => model.Bill_description)
     </th>
@@ -21,7 +20,7 @@
         @Html.ValueFor(model => model.DueDate, "{0:dd/MM/yyyy hh:mm}")
     </th>
     <th>
-        @Html.ValueFor(model => model.Amount, "{0:C}")
+        @Html.DisplayFor(model => model.Amount)€
     </th>
     <td>
         @if (@Model.Status == 0)

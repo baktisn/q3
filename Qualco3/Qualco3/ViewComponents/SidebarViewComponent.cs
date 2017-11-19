@@ -27,7 +27,7 @@ namespace Qualco3.ViewComponents
             //{
             //}
 
-            sidebars.Add(ModuleHelper.AddHeader("MAIN NAVIGATION"));
+
             sidebars.Add(ModuleHelper.AddModule(ModuleHelper.Module.Home));
             if (!User.IsInRole("Admin"))
             {
