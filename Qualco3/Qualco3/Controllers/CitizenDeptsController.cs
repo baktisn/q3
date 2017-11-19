@@ -38,6 +38,8 @@ namespace Qualco3.Controllers
         private readonly Db.Data.ApplicationDbContext _context;
         private readonly Db.Data.ApplicationDbContext _context2;
         private readonly UserManager<ApplicationUser> _userManager;
+        private int NewUsers;
+        private IEnumerable<CitizenDepts> NewCitizens;
 
         public CitizenDeptsController(UserManager<ApplicationUser> userManager, Db.Data.ApplicationDbContext context)
         {
@@ -81,6 +83,12 @@ namespace Qualco3.Controllers
 
                     List<string> sl = new List<string>();
 
+                    DeptResults DeptResults = new DeptResults();
+                    List<ErrorLines> ErrorLines= new List<ErrorLines>();
+                    ErrorLines ErrorLine = new ErrorLines();
+
+
+
                     string bigfilename = "CitizenDebts_1M_3Big.txt";
                     string fileName = "CitizenDebts_1M_3.txt";
                         //"DEBTS_" + DateTime.Now.ToString("yyyyMMdd") + ".txt";
@@ -94,11 +102,16 @@ namespace Qualco3.Controllers
                         //adds new datasting array
                         sl = await ReadDataAsync(file);
                         if (sl is null)
-                        { return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα\nΤο αρχείο δεν περιέχει σωστό αριθμό στηλών</b>"); }
+                        { 
+                            //return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα\nΤο αρχείο δεν περιέχει σωστό αριθμό στηλών</b>");
+                            Redirect(DeptResults.BillsCount=0,DeptResults.NewUsers=0, HttpStatusCode.NotFound.ToString(),null, "\n" + "\nΣφάλμα\nΤο αρχείο δεν περιέχει σωστό αριθμό στηλών</b>");
+                        }
                     }
                     else
                     {
-                        return NotFound(HttpStatusCode.NotFound+ "\n" + "\nΣφάλμα\nΔεν βρέθηκε το αρχείο</b>");
+                        Redirect(DeptResults.BillsCount = 0, DeptResults.NewUsers = 0, HttpStatusCode.NotFound.ToString(), null, "\n" + "\nΣφάλμα\nΔεν βρέθηκε το αρχείο</b>");
+
+                       // return NotFound(HttpStatusCode.NotFound+ "\n" + "\nΣφάλμα\nΔεν βρέθηκε το αρχείο</b>");
                     }
 
                     Console.WriteLine("File into List "+DateTime.Now.ToString());
@@ -110,41 +123,102 @@ namespace Qualco3.Controllers
                         {
 
                             cols = sl.ElementAt(i).Split(';');
-                        if (cols[0].Trim().Length !=10 || !cols[0].All(char.IsDigit))
-                        {  sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος ΑΦΜ"); }
-
+                        if (cols[0].Trim().Length != 10 || !cols[0].All(char.IsDigit))
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος ΑΦΜ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                            continue;
+                            //return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος ΑΦΜ");}
+                        }
                             if (cols[1].Trim().Length ==0 )
-                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Όνομα "); }
+                        {
+                                ErrorLine.line = i;
+                                ErrorLine.ErrorMessage = "Σφάλμα Λάθος Όνομα ";
+                                ErrorLine.LineString = sl[i];
+                                ErrorLines.Add(ErrorLine);
+                                sl.RemoveAt(i); //return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Όνομα ");
+                        }
 
                         if (cols[2].Trim().Length == 0)
-                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Επώνυμο "); }
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Επώνυμο ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
 
-                        if (cols[3].Trim().Length == 0 || !Regex.IsMatch(cols[3], @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"))
-                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Email "); }
+                            if (cols[3].Trim().Length == 0 || !Regex.IsMatch(cols[3], @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"))
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Email   ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                            }
 
                         if (cols[4].Trim().Length == 0 || !cols[4].All(char.IsDigit))
-                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Τηλέφωνο "); }
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Τηλέφωνο  ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                            }
 
                         if (cols[5].Trim().Length == 0)
-                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Διεύθυσνη "); }
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Διεύθυσνη ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
 
                         if (cols[6].Trim().Length == 0)
                         { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Περιοχή "); }
                         //!Regex.IsMatch(cols[7], @"^(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})$")
                         if (cols[7].Trim().Length == 0 )
-                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Αρ.Λογαριασμού "); }
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Αρ.Λογαριασμού ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
                   
                         if (cols[8].Trim().Length == 0)
-                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Περιγραφή Λογαριασμού "); }
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Περιγραφή Λογαριασμού";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                         }
 
                         decimal number;
                         if (cols[9].Trim().Length == 0 || !Decimal.TryParse(cols[9], out number) || cols[9].Contains('.'))
-         
-                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Ποσό"); }
+
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Ποσό";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                         }
 
                         DateTime d;
                         if (cols[10].Trim().Length == 0 || !DateTime.TryParseExact(cols[10], "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None,out d))
-                        { sl.RemoveAt(i); continue;return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Ημερομηνία "); }
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Ημερομηνία";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
                     }
 
 
@@ -174,73 +248,25 @@ namespace Qualco3.Controllers
                     Console.WriteLine("File splitted " + DateTime.Now.ToString());
 
 
-                    
-                    
-                        //foreach (var p in o)
-                        //{
-                        //    Console.WriteLine(p.FirstName + " - " + p.UserId + ", - " + p.DueDate);
-                        //};
-                        //  var dd = decimal.Parse("10,33", CultureInfo.GetCultureInfo("el-GR"));
-                        //clear citizen depts table
+          
                         var all = from c in _context.CitizenDepts select c;
                     _context.CitizenDepts.RemoveRange(all);
                     await _context.SaveChangesAsync();
                     Console.WriteLine("CitizenDept table deleted " + DateTime.Now.ToString());
-                    // add new citizendepts
 
-                        //foreach (var p in o)
-                        //{
-                        //    _context.Add(p);
-                        //}
-                        //_context2.AddRange(o);
-
-                   
-                        //try
-                        //{
-                        //    _context2.ChangeTracker.AutoDetectChangesEnabled = false;
                             foreach (var p in o)
                             {
                                 _context.Add(p);
                             }
                             Console.WriteLine("Context filledup " + DateTime.Now.ToString());
                             await _context.SaveChangesAsync();
-                        //}
-                        //finally
-                        //{
-                        //    _context2.ChangeTracker.AutoDetectChangesEnabled = true;
-                        //}
-                     
-                  
-
-              
-
-                    //using (var scope = new TransactionScope())
-                    //{
-
-                    //    using (_context)
-                    //    {
-                    //        // This is optional
-                    //        _context.ChangeTracker.AutoDetectChangesEnabled = false;
-
-                    //        for (var i = 0; i < 100000; i++)
-                    //        {
-                    //            // create product
-
-                    //            // insert in batch
-                    //            _context = _context.BulkInsert(o, i, 100);
-                    //        }
-
-                    //        _context.SaveChanges(); // save remaining items
-                    //    }
-
-                    //    scope.Complete();
-                    //}
+        
 
 
                      Console.WriteLine("Context saved to DB " + DateTime.Now.ToString());
 
                     //filter citizens
-                    IEnumerable<CitizenDepts> NewCitizens = o.
+                    NewCitizens = o.
                         Where(x => !((_context.ApplicationUser.Any(y => y.VAT == x.VAT)) || (_context.ApplicationUser.Any(y => y.Email == x.Email))))
                         .Select(x => x).AsEnumerable();
                     Console.WriteLine("Citizens filterd " + DateTime.Now.ToString());
@@ -253,8 +279,11 @@ namespace Qualco3.Controllers
                     }
                     Console.WriteLine("Citizens log " + DateTime.Now.ToString());
                     //only new citizens
+                    
                     foreach (var p in NewCitizens.Distinct())
                     {
+                        
+                       
                         var user = new ApplicationUser { UserName = p.Email, Email = p.Email };
 
                         var TempPass = GeneratePassword(3, 3, 3, 3);
@@ -289,23 +318,385 @@ namespace Qualco3.Controllers
                         }
                         else
                         { Console.WriteLine("#############################ALREADY REGISTERED " + p.VAT + " , " + p.Email + " , " + p.LastName); }
-
+                        NewUsers++;
                     };
+                   
+                     await _context.SaveChangesAsync();
+                    Console.WriteLine("New Users Registered and Emailed " + DateTime.Now.ToString());
+                    
+
+                    foreach (var a in _context.ApplicationUser)
+                    {
+                        var query2 =
+                              from UIdUpd in _context.CitizenDepts
+                              where UIdUpd.VAT == a.VAT
+                              select UIdUpd;
+
+                        foreach (CitizenDepts UIdUpd in query2)
+                        {
+                            UIdUpd.UserGUId = a.Id;
+                        }
+                    };
+
+                    await _context.SaveChangesAsync();
+
+
+
+
+                    List<Bills> NewBillsls = new List<Bills>();
+                    Bills NewBill = new Bills();
+
+                    List<CitizenDepts> UpdCit = new List<CitizenDepts>();
+
+
+                        UpdCit.AddRange(_context.CitizenDepts);
+
+                    foreach (var e in UpdCit)
+                    {
+                       
+                            Console.WriteLine("#############################CITIZEN_DEPTS " + e.VAT + " , " + e.Email + " , " + e.UserGUId);
+                            NewBill.GuId = e.BillId;
+                            NewBill.Amount = e.Amount;
+                            NewBill.DueDate = e.DueDate;
+                            NewBill.Bill_description = e.Bill_description;
+                            NewBill.Status = 0;
+                            NewBill.UserId = e.UserGUId;
+                            NewBill.PaymentMethodId = 1;
+                            NewBill.SettlementId = 1;    
+                            NewBillsls.Add(NewBill);
+                            NewBill = new Bills();
+                    }
+
+                    //....  delete bills
+                    var allBills = from c in _context.Bills select c;
+                    _context.Bills.RemoveRange(allBills);
+                    await _context.SaveChangesAsync();
+
+                    //....  delete settlements
+                    _context.Settlements.RemoveRange(
+                                        _context.Settlements
+                                         .Where(s => s.ID !=1 )
+                                                             );
+                    await _context.SaveChangesAsync();
+
+                        _context.Bills.AddRange(NewBillsls);
+  
+                    await _context.SaveChangesAsync();
+
+                    string Mes;
+                    if (ErrorLines.Count()>0)
+                    { Mes = "Ύπήρχαν "+ ErrorLines.Count() + " σφάλματα στην εισαγωγή του αρχείου"; }
+                    else
+                    { Mes = "Δεν Υπήρχαν Σφάλματα στην εισαγωγή του αρχείου"; }
+                 
+
+                    //  return View(NewCitizens);
+                        return RedirectToAction("DeptResults", "DeptResults", new DeptResults
+                    {
+                        BillsCount = NewBillsls.Count(),
+                        NewUsers = NewUsers,
+                        HttpStatus = "",
+                        ErrorLines = ErrorLines,
+                        Message = Mes
+                    });
+                      
+                }
+                else
+                {
+                    return NotFound(HttpStatusCode.NotFound + "\n" + "\nΔεν βρέθηκε ο κοινός φάκελος!");
+                }
+    
+            }
+            catch (Exception ex)
+            {
+                return NotFound(HttpStatusCode.ExpectationFailed + "\n" + ex.Message+ "\nΣφάλμα\nΑπροσδιόριστο σφάλμα Στην Εισαγωγή του αρχείου</b>");
+            }
+            finally
+            {
+                Console.WriteLine("Import Finished Successfully " + DateTime.Now.ToString());
+            }
+
+            return View();
+
+        }
+
+
+
+
+        public async Task<IActionResult> GetFile2()
+        {
+            try
+            {
+                var builder = new ConfigurationBuilder()
+.SetBasePath(Directory.GetCurrentDirectory())
+.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+                IConfigurationRoot configuration = builder.Build();
+                var allCitDebtsLines = new string[10000000];
+
+                //  while (true)
+                //{
+                //  if (DateTime.Now.AddHours(3).ToShortTimeString() == "09:58:00 aM")
+                // {
+
+
+                //List<string> fileNames = new List<string>();
+                //List<string[]> lstCloudFilesdata = new List<string[]>();
+
+
+                CloudStorageAccount storageAccount = CloudStorageAccount.Parse($"{configuration["ConnectionString1"]}");
+                CloudFileClient fileClient = storageAccount.CreateCloudFileClient();
+                CloudFileShare fileShare = fileClient.GetShareReference("import");
+                //looks for a file share in the cloud
+                bool fileShareExists = await fileShare.ExistsAsync();
+                if (fileShareExists)
+                {
+
+                    List<CloudFile> lstCloudFiles = new List<CloudFile>();
+                    CloudFileDirectory rootDir = fileShare.GetRootDirectoryReference();
+
+                    List<string> sl = new List<string>();
+
+                    DeptResults DeptResults = new DeptResults();
+                    List<ErrorLines> ErrorLines = new List<ErrorLines>();
+                    ErrorLines ErrorLine = new ErrorLines();
+
+
+
+                    string bigfilename = "CitizenDebts_1M_3Big.txt";
+                   // string fileName = "CitizenDebts_1M_3.txt";
+                    //"DEBTS_" + DateTime.Now.ToString("yyyyMMdd") + ".txt";
+                    CloudFile file = rootDir.GetFileReference(bigfilename);
+                    string checkfile = bigfilename;
+                    //if the file exists
+
+                    bool asd = await file.ExistsAsync();
+                    if (asd)
+                    {
+                        //adds new datasting array
+                        sl = await ReadDataAsync(file);
+                        if (sl is null)
+                        {
+                            //return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα\nΤο αρχείο δεν περιέχει σωστό αριθμό στηλών</b>");
+                            Redirect(DeptResults.BillsCount = 0, DeptResults.NewUsers = 0, HttpStatusCode.NotFound.ToString(), null, "\n" + "\nΣφάλμα\nΤο αρχείο δεν περιέχει σωστό αριθμό στηλών</b>");
+                        }
+                    }
+                    else
+                    {
+                        Redirect(DeptResults.BillsCount = 0, DeptResults.NewUsers = 0, HttpStatusCode.NotFound.ToString(), null, "\n" + "\nΣφάλμα\nΔεν βρέθηκε το αρχείο</b>");
+
+                        // return NotFound(HttpStatusCode.NotFound+ "\n" + "\nΣφάλμα\nΔεν βρέθηκε το αρχείο</b>");
+                    }
+
+                    Console.WriteLine("File into List " + DateTime.Now.ToString());
+                    //foreach (string y in sl)
+                    //{ Console.WriteLine("From list new : " + y); };
+                    string[] cols;
+
+                    for (int i = sl.Count - 1; i >= 0; i--)
+                    {
+
+                        cols = sl.ElementAt(i).Split(';');
+                        if (cols[0].Trim().Length != 10 || !cols[0].All(char.IsDigit))
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος ΑΦΜ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                            continue;
+                            //return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος ΑΦΜ");}
+                        }
+                        if (cols[1].Trim().Length == 0)
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Όνομα ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i); //return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Όνομα ");
+                        }
+
+                        if (cols[2].Trim().Length == 0)
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Επώνυμο ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
+
+                        if (cols[3].Trim().Length == 0 || !Regex.IsMatch(cols[3], @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"))
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Email   ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
+
+                        if (cols[4].Trim().Length == 0 || !cols[4].All(char.IsDigit))
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Τηλέφωνο  ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
+
+                        if (cols[5].Trim().Length == 0)
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Διεύθυσνη ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
+
+                        if (cols[6].Trim().Length == 0)
+                        { sl.RemoveAt(i); return NotFound(HttpStatusCode.NotFound + "\n" + "\nΣφάλμα Λάθος Περιοχή "); }
+                        //!Regex.IsMatch(cols[7], @"^(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})$")
+                        if (cols[7].Trim().Length == 0)
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Αρ.Λογαριασμού ";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
+
+                        if (cols[8].Trim().Length == 0)
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Περιγραφή Λογαριασμού";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
+
+                        decimal number;
+                        if (cols[9].Trim().Length == 0 || !Decimal.TryParse(cols[9], out number) || cols[9].Contains('.'))
+
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Ποσό";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
+
+                        DateTime d;
+                        if (cols[10].Trim().Length == 0 || !DateTime.TryParseExact(cols[10], "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out d))
+                        {
+                            ErrorLine.line = i;
+                            ErrorLine.ErrorMessage = "Σφάλμα Λάθος Ημερομηνία";
+                            ErrorLine.LineString = sl[i];
+                            ErrorLines.Add(ErrorLine);
+                            sl.RemoveAt(i);
+                        }
+                    }
+
+
+
+                    IEnumerable<CitizenDepts> o = from eachLine in (
+                     from inner in sl
+                     select inner.Split(';')
+                 )
+
+                                                  select new CitizenDepts
+                                                  {
+                                                      VAT = eachLine[0],
+                                                      FirstName = eachLine[1],
+                                                      LastName = eachLine[2],
+                                                      Email = eachLine[3],
+                                                      Phone = eachLine[4],
+                                                      Address = eachLine[5],
+                                                      County = eachLine[6],
+                                                      BillId = eachLine[7],
+                                                      Bill_description = eachLine[8],
+                                                      //Amount = Decimal.Parse(eachLine[9]),
+                                                      Amount = Decimal.Parse(eachLine[9], System.Globalization.CultureInfo.GetCultureInfo("el-GR")),
+                                                      DueDate = DateTime.ParseExact(eachLine[10],
+                                                    "yyyyMMdd", CultureInfo.InvariantCulture)
+
+                                                  };
+                    Console.WriteLine("File splitted " + DateTime.Now.ToString());
+
+
+
+                    var all = from c in _context.CitizenDepts select c;
+                    _context.CitizenDepts.RemoveRange(all);
+                    await _context.SaveChangesAsync();
+                    Console.WriteLine("CitizenDept table deleted " + DateTime.Now.ToString());
+
+                    foreach (var p in o)
+                    {
+                        _context.Add(p);
+                    }
+                    Console.WriteLine("Context filledup " + DateTime.Now.ToString());
+                    await _context.SaveChangesAsync();
+
+
+
+                    Console.WriteLine("Context saved to DB " + DateTime.Now.ToString());
+
+                    //filter citizens
+                    NewCitizens = o.
+                        Where(x => !((_context.ApplicationUser.Any(y => y.VAT == x.VAT)) || (_context.ApplicationUser.Any(y => y.Email == x.Email))))
+                        .Select(x => x).AsEnumerable();
+                    Console.WriteLine("Citizens filterd " + DateTime.Now.ToString());
+
+
+                    foreach (var p in NewCitizens)
+                    {
+                        Console.WriteLine(p.VAT + " , " + p.Email + " , " + p.LastName + " , " + p.Bill_description);
+
+                    }
+                    Console.WriteLine("Citizens log " + DateTime.Now.ToString());
+                    //only new citizens
+
+                    foreach (var p in NewCitizens.Distinct())
+                    {
+
+
+                        var user = new ApplicationUser { UserName = p.Email, Email = p.Email };
+
+                        var TempPass = GeneratePassword(3, 3, 3, 3);
+                        // int lowercase, int uppercase, int numerics, int symbols
+                        Console.WriteLine(TempPass);
+                        var result = await _userManager.CreateAsync(user, TempPass);
+                        if (result.Succeeded)
+                        {
+                            if (checkfile != "CitizenDebts_1M_3.txt")
+                            {
+                                Console.WriteLine("Sending Emails");
+                                SendMail(p.LastName, p.Email, TempPass);
+                            }
+
+
+                            var query =
+                              from UserUpd in _context.ApplicationUser
+                              where UserUpd.Email == p.Email
+                              select UserUpd;
+
+                            foreach (ApplicationUser UserUpd in query)
+                            {
+                                UserUpd.VAT = p.VAT;
+                                UserUpd.IsFirst = true;
+                                UserUpd.LastName = p.LastName;
+                                UserUpd.FirstName = p.FirstName;
+                                UserUpd.Phone = p.Phone;
+                                UserUpd.County = p.County;
+                                UserUpd.Address = p.Address;
+
+                            }
+                        }
+                        else
+                        { Console.WriteLine("#############################ALREADY REGISTERED " + p.VAT + " , " + p.Email + " , " + p.LastName); }
+                        NewUsers++;
+                    };
+
                     await _context.SaveChangesAsync();
                     Console.WriteLine("New Users Registered and Emailed " + DateTime.Now.ToString());
-
-                    // IEnumerable<Bills> NewBills = o.Where(x => o.Any())
-                    //.Select(x => new
-                    //{
-                    //    NewBills.GuId = x.UserId,
-                    //    NewBills.Amount = x.Amount,
-                    //    NewBills.DueDate = x.DueDate,
-                    //    NewBills.Bill_description = x.Bill_description,
-                    //    NewBills.Status = 0,
-                    //    NewBills.User_id = x.VAT,
-                    //    NewBills.PaymentMethodId = 1,
-                    //    NewBills.SettlementId = 0
-                    //});
 
 
                     foreach (var a in _context.ApplicationUser)
@@ -323,53 +714,31 @@ namespace Qualco3.Controllers
 
                     await _context.SaveChangesAsync();
 
-                    //foreach (var p in o)
-                    //{
-                    //    var query3 =
-                    //            from NewBills in _context.Bills
-                    //            select NewBills;
-
-                    //    foreach (Bills NewBills in query3)
-                    //    {
-                    //        NewBills.GuId = p.BillId;
-                    //        NewBills.Amount = p.Amount;
-                    //        NewBills.DueDate = p.DueDate;
-                    //        NewBills.Bill_description = p.Bill_description;
-                    //        NewBills.Status = 0;
-                    //        NewBills.UserId = p.UserGUId;
-                    //        NewBills.PaymentMethodId = 1;
-                    //        NewBills.SettlementId = 1;
-
-                    //    }
-                    //};
 
 
-                    //IEnumerable<Bills> NewBillsls = new List<Bills>();
+
                     List<Bills> NewBillsls = new List<Bills>();
                     Bills NewBill = new Bills();
-                    //etc for your other entities
 
                     List<CitizenDepts> UpdCit = new List<CitizenDepts>();
 
-                    //foreach (var p in _context.CitizenDepts)
-                    //{
-                        UpdCit.AddRange(_context.CitizenDepts);
-                    //}
+
+                    UpdCit.AddRange(_context.CitizenDepts);
+
                     foreach (var e in UpdCit)
                     {
-                       
-                            Console.WriteLine("#############################CITIZEN_DEPTS " + e.VAT + " , " + e.Email + " , " + e.UserGUId);
-                            NewBill.GuId = e.BillId;
-                            NewBill.Amount = e.Amount;
-                            NewBill.DueDate = e.DueDate;
-                            NewBill.Bill_description = e.Bill_description;
-                            NewBill.Status = 0;
-                            NewBill.UserId = e.UserGUId;
-                            NewBill.PaymentMethodId = 1;
-                            NewBill.SettlementId = 1;    
-                            NewBillsls.Add(NewBill);
-                            NewBill = new Bills();
-                        //_context.Bills.Add(NewBill);
+
+                        Console.WriteLine("#############################CITIZEN_DEPTS " + e.VAT + " , " + e.Email + " , " + e.UserGUId);
+                        NewBill.GuId = e.BillId;
+                        NewBill.Amount = e.Amount;
+                        NewBill.DueDate = e.DueDate;
+                        NewBill.Bill_description = e.Bill_description;
+                        NewBill.Status = 0;
+                        NewBill.UserId = e.UserGUId;
+                        NewBill.PaymentMethodId = 1;
+                        NewBill.SettlementId = 1;
+                        NewBillsls.Add(NewBill);
+                        NewBill = new Bills();
                     }
 
                     //....  delete bills
@@ -380,29 +749,41 @@ namespace Qualco3.Controllers
                     //....  delete settlements
                     _context.Settlements.RemoveRange(
                                         _context.Settlements
-                                         .Where(s => s.ID !=1 )
+                                         .Where(s => s.ID != 1)
                                                              );
                     await _context.SaveChangesAsync();
 
+                    _context.Bills.AddRange(NewBillsls);
 
-
-                   // foreach (var c in NewBillsls)
-                   // {
-                     //   Console.WriteLine("############################BILLS " + c.GuId + " , " + c.UserId);
-                        _context.Bills.AddRange(NewBillsls);
-                  //  }
                     await _context.SaveChangesAsync();
 
+                    string Mes;
+                    if (ErrorLines.Count() > 0)
+                    { Mes = "Ύπήρχαν " + ErrorLines.Count() + " σφάλματα στην εισαγωγή του αρχείου"; }
+                    else
+                    { Mes = "Δεν Υπήρχαν Σφάλματα στην εισαγωγή του αρχείου"; }
 
-                    return View(NewCitizens);
+
+                    //  return View(NewCitizens);
+                    return RedirectToAction("DeptResults", "DeptResults", new DeptResults
+                    {
+                        BillsCount = NewBillsls.Count(),
+                        NewUsers = NewUsers,
+                        HttpStatus = "",
+                        ErrorLines = ErrorLines,
+                        Message = Mes
+                    });
+
                 }
-                    // }
-                
-                //}
+                else
+                {
+                    return NotFound(HttpStatusCode.NotFound + "\n" + "\nΔεν βρέθηκε ο κοινός φάκελος!");
+                }
+
             }
             catch (Exception ex)
             {
-                return NotFound(HttpStatusCode.ExpectationFailed + "\n" + ex.Message+ "\nΣφάλμα\nΣτην Εισαγωγή του αρχείου</b>");
+                return NotFound(HttpStatusCode.ExpectationFailed + "\n" + ex.Message + "\nΣφάλμα\nΑπροσδιόριστο σφάλμα Στην Εισαγωγή του αρχείου</b>");
             }
             finally
             {
@@ -412,6 +793,8 @@ namespace Qualco3.Controllers
             return View();
 
         }
+
+
 
 
         public static string GeneratePassword(int lowercase, int uppercase, int numerics, int symbols)
@@ -520,6 +903,22 @@ namespace Qualco3.Controllers
             }
             catch (Exception ex) { return null; }
         }
+
+        public  ActionResult Redirect(int Bills,int Users,string status,List<ErrorLines> lines,string Message)
+        {
+            TempData["list"] = lines;
+            return RedirectToAction("DeptResults", "DeptResults", new DeptResults
+            {
+                BillsCount = Bills,
+                NewUsers = Users,
+                HttpStatus = status,
+                ErrorLines = lines,
+                Message = Message
+            }
+                              );
+        }
+
+
 
         //public static Db.Data.ApplicationDbContext BulkInsert<CitizenDepts>(this Db.Data.ApplicationDbContext _context, CitizenDepts entity, int count, int batchSize) 
         //{
