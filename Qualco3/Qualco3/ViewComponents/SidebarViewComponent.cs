@@ -42,7 +42,7 @@ namespace Qualco3.ViewComponents
             {
                 ModuleHelper.AddModule(ModuleHelper.Module.GetFile),
                 ModuleHelper.AddModule(ModuleHelper.Module.PostFile),
-                 ModuleHelper.AddModule(ModuleHelper.Module.GetFile2)
+              
             };
             }
 
